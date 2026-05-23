@@ -1,16 +1,16 @@
+"use client";
+
 import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import Footer from "@/components/landing/footer";
 import ToolGlyph from "@/components/tools/tool-glyph";
 import { toolCatalog } from "@/data/tools";
-
-export const metadata = {
-  title: "Property Tools | YetiHomes",
-  description:
-    "Dedicated real estate calculators and conversion tools built for Nepali property decisions.",
-};
+import { useEffect } from "react";
 
 export default function ToolsPage() {
+  useEffect(() => {
+    document.title = "Property Tools | YetiHomes";
+  }, []);
   const toolStats = [
     {
       label: "Live Tools",

@@ -15,6 +15,8 @@ import { getCachedLandingPageData } from "@/lib/landing-server-cache";
 import { getCachedTeamMembers } from "@/lib/team-server-cache";
 import { getCachedReviews } from "@/lib/review-server-cache";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const [teamMembers, reviews, propertyShowcases, landingPageData] =
     await Promise.all([
