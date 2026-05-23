@@ -137,23 +137,16 @@ import {
   IconThermometer,
   IconShirt,
   IconSquareCheck,
+  IconWifi,
+  IconPlug,
+  IconPaw,
+  IconTractor,
+  IconSofa,
+  IconPool,
+  IconBarbell,
+  IconWash,
+  IconPlant,
 } from '@tabler/icons-react';
-
-import {
-  Bed as BedPhosphor,
-  Shower as ShowerPhosphor,
-  WifiHigh,
-  Plug,
-  PawPrint,
-  Tractor,
-  CookingPot,
-  Couch,
-  Plant,
-  SecurityCamera,
-  SwimmingPool,
-  Barbell,
-  WashingMachine,
-} from '@phosphor-icons/react';
 
 export const PropertyTypeIcons = {
   house: IconHome2,
@@ -167,15 +160,15 @@ export const PropertyTypeIcons = {
   studio: IconLayoutGrid,
   commercial: IconBuildingSkyscraper,
   office: IconBuildingSkyscraper,
-  agricultural: Tractor,
+  agricultural: IconTractor,
   residential_plot: IconBuilding,
   commercial_plot: IconBuildingSkyscraper,
 } as const;
 
 export const PropertyDetailIcons = {
-  bedroom: BedPhosphor,
+  bedroom: IconBed,
   bathroom: IconBath,
-  bathroom_alt: ShowerPhosphor,
+  bathroom_alt: IconBath,
   kitchen: IconChefHat,
   floors: IconStairs,
   total_area: IconRulerMeasure,
@@ -203,11 +196,11 @@ export const PropertyDetailIcons = {
 } as const;
 
 export const AmenityIcons = {
-  pool: SwimmingPool,
+  pool: IconPool,
   parking: IconCar,
   garage: IconParkingCircle,
-  gym: Barbell,
-  wifi: WifiHigh,
+  gym: IconBarbell,
+  wifi: IconWifi,
   air_conditioning: IconAirConditioning,
   heating: IconFlame,
   elevator: IconElevator,
@@ -217,8 +210,8 @@ export const AmenityIcons = {
   terrace: IconWindow,
   kitchen: IconToolsKitchen2,
   furnished: IconArmchair2,
-  laundry: WashingMachine,
-  pet_friendly: PawPrint,
+  laundry: IconWash,
+  pet_friendly: IconPaw,
   backup_power: IconBatteryCharging,
   solar: IconSolarPanel,
   water_tank: IconBucket,
@@ -228,10 +221,10 @@ export const AmenityIcons = {
   garden_lawn: IconTrees,
   boundary_wall: IconShield,
   gated_community: IconShieldCheck,
-  cooking: CookingPot,
-  couch: Couch,
-  plant: Plant,
-  camera: SecurityCamera,
+  cooking: IconCooker,
+  couch: IconSofa,
+  plant: IconPlant,
+  camera: IconCamera,
 } as const;
 
 export const StatusIcons = {
