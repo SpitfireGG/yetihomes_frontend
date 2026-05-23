@@ -1,3 +1,4 @@
+"use client"
 import {
   IconHome2,
   IconBuildingSkyscraper,

@@ -1,4 +1,5 @@
 import { Icons } from "@/components/ui/icons";
+import { IconSquareCheck } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ElementType } from "react";
@@ -94,7 +95,7 @@ function CustomRequirementCTA() {
 
         <div className="relative z-10 w-full flex-1 text-center lg:text-left">
           <div className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-surface-container-lowest px-3 py-1 text-xs font-bold text-on-surface shadow-sm">
-            <Icons.checkSquare size={14} className="text-tertiary" />
+            <IconSquareCheck size={14} className="text-tertiary" />
             <span>Custom Search</span>
           </div>
 
