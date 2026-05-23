@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: yetihomes-frontend
+    runtime: node
+    repo: https://github.com/SpitfireGG/yetihomes_frontend
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: node .next/standalone/server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: HOSTNAME
+        value: 0.0.0.0
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false

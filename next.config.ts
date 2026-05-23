@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
   },
+  poweredByHeader: false,
   images: {
     dangerouslyAllowLocalIP: true,
     remotePatterns: [
@@ -44,6 +46,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "upload.wikimedia.org",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**",
+        pathname: "/uploads/**",
       },
     ],
   },
