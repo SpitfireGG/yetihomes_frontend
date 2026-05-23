@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:wght@400..800&display=swap");
+@import "tailwindcss";
+
+:root {
+  /* Brand palette extracted from the logo */
+  --brand: #7f1416;
+  --brand-50: #fbf3f3;
+  --brand-100: #f6e5e6;
+  --brand-200: #ecc8ca;
+  --brand-300: #dda0a4;
+  --brand-400: #c87076;
+  --brand-500: #a9454c;
+  --brand-600: #901f24;
+  --brand-700: #7f1416;
+  --brand-800: #651013;
+  --brand-900: #430b0d;
+
+  --brand-navy: #1c3664;
+  --brand-navy-50: #f1f5fb;
+  --brand-navy-100: #e2ebf8;
+  --brand-navy-200: #c5d6ef;
+  --brand-navy-300: #9db8e0;
+  --brand-navy-400: #6f93cf;
+  --brand-navy-500: #4d71b6;
+  --brand-navy-600: #32518c;
+  --brand-navy-700: #1c3664;
+  --brand-navy-800: #172b4f;
+  --brand-navy-900: #0f1d35;
+
+  --brand-accent: #f15822;
+  --brand-accent-50: #fff4ee;
+  --brand-accent-100: #ffe6d9;
+  --brand-accent-200: #ffc8b0;
+  --brand-accent-300: #ffa47a;
+  --brand-accent-400: #fb7b49;
+  --brand-accent-500: #f15822;
+  --brand-accent-600: #cc4015;
+  --brand-accent-700: #a33212;
+
+  --brand-silver-50: #f7f7f7;
+  --brand-silver-100: #efefef;
+  --brand-silver-200: #dfdfdf;
+  --brand-silver-300: #c8c8c8;
+  --brand-silver-400: #a5a6a9;
+  --brand-silver-500: #8b8d91;
+  --brand-silver-600: #606161;
+
+  /* Backgrounds & surfaces */
+  --background: #fcfaf9;
+  --foreground: #23252b;
+  --surface: #fcfaf9;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f7f2f2;
+  --surface-container: #f1ebeb;
+  --surface-container-high: #e9e2e3;
+  --surface-container-highest: #dfd8d9;
+  --surface-variant: #f4eded;
+
+  /* Semantic brand roles */
+  --primary: var(--brand-700);
+  --primary-container: var(--brand-100);
+  --on-primary: #ffffff;
+  --secondary: var(--brand-navy-700);
+  --secondary-container: var(--brand-navy-100);
+  --tertiary: var(--brand-accent-500);
+  --tertiary-container: var(--brand-accent-100);
+
+  /* Outlines & text */
+  --outline: #95898b;
+  --outline-variant: #e6d8da;
+  --on-background: #23252b;
+  --on-surface: #23252b;
+  --on-surface-variant: #655d60;
+
+  /* Typography */
+  --font-body-family: "Manrope", sans-serif;
+  --font-headline-family: "Manrope", sans-serif;
+  --font-label-family: "Plus Jakarta Sans", sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-50: var(--brand-navy-50);
+  --color-brand-navy-100: var(--brand-navy-100);
+  --color-brand-navy-200: var(--brand-navy-200);
+  --color-brand-navy-300: var(--brand-navy-300);
+  --color-brand-navy-400: var(--brand-navy-400);
+  --color-brand-navy-500: var(--brand-navy-500);
+  --color-brand-navy-600: var(--brand-navy-600);
+  --color-brand-navy-700: var(--brand-navy-700);
+  --color-brand-navy-800: var(--brand-navy-800);
+  --color-brand-navy-900: var(--brand-navy-900);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-50: var(--brand-accent-50);
+  --color-brand-accent-100: var(--brand-accent-100);
+  --color-brand-accent-200: var(--brand-accent-200);
+  --color-brand-accent-300: var(--brand-accent-300);
+  --color-brand-accent-400: var(--brand-accent-400);
+  --color-brand-accent-500: var(--brand-accent-500);
+  --color-brand-accent-600: var(--brand-accent-600);
+  --color-brand-accent-700: var(--brand-accent-700);
+  --color-brand-silver-50: var(--brand-silver-50);
+  --color-brand-silver-100: var(--brand-silver-100);
+  --color-brand-silver-200: var(--brand-silver-200);
+  --color-brand-silver-300: var(--brand-silver-300);
+  --color-brand-silver-400: var(--brand-silver-400);
+  --color-brand-silver-500: var(--brand-silver-500);
+  --color-brand-silver-600: var(--brand-silver-600);
+  --color-surface: var(--surface);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-variant: var(--surface-variant);
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-on-background: var(--on-background);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-on-primary: var(--on-primary);
+  --font-sans: var(--font-body-family);
+  --font-body: var(--font-body-family);
+  --font-headline: var(--font-headline-family);
+  --font-label: var(--font-label-family);
+}
+
+* {
+  border-color: rgb(149 137 139 / 0.28);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgb(127 20 22 / 0.1), transparent 32%),
+    radial-gradient(circle at top right, rgb(28 54 100 / 0.1), transparent 26%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body-family);
+}
+
+::selection {
+  background: rgb(127 20 22 / 0.18);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.glass-nav {
+  background: rgb(252 250 249 / 0.78);
+  backdrop-filter: blur(24px);
+}
+
+.editorial-shadow {
+  box-shadow: 0 20px 70px -28px rgb(28 54 100 / 0.18);
+}
