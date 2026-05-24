@@ -49,6 +49,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "yetihomes-api.onrender.com",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
         hostname: "**",
         pathname: "/uploads/**",
       },
