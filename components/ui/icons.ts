@@ -1,4 +1,3 @@
-"use client"
 import {
   IconHome2,
   IconBuildingSkyscraper,
@@ -146,7 +145,8 @@ import {
   IconBarbell,
   IconWash,
   IconPlant,
-} from '@tabler/icons-react';
+  IconResize,
+} from "@tabler/icons-react";
 
 export const PropertyTypeIcons = {
   house: IconHome2,
@@ -291,9 +291,9 @@ export const UIIcons = {
   user: IconUser,
   star: IconStar,
   quote: IconQuote,
-  maximize: IconMaximize,
-  layers: IconLayersSelected,
-  navigation: IconNavigation,
+  maximize: IconResize,
+  layers: IconNavigation,
+  navigation: IconRoad,
   armchair: IconArmchair,
   compass: IconCompass,
   building: IconBuilding,
