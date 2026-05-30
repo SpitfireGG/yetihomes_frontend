@@ -1,13 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
   },
   poweredByHeader: false,
   images: {
-    dangerouslyAllowLocalIP: true,
+    dangerouslyAllowLocalIP: true, // only matters for local dev; inert in production
     remotePatterns: [
       {
         protocol: "http",
@@ -21,42 +20,17 @@ const nextConfig: NextConfig = {
         port: "4000",
         pathname: "/uploads/**",
       },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "3000",
-        pathname: "/*/**",
-      },
+
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "avatar.vercel.sh",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "i.ytimg.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "upload.wikimedia.org",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "yetihomes-api.onrender.com",
+        hostname: "api.yetihomesestate.com.np",
         pathname: "/uploads/**",
       },
-      {
-        protocol: "https",
-        hostname: "**",
-        pathname: "/uploads/**",
-      },
+
+      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
+      { protocol: "https", hostname: "avatar.vercel.sh", pathname: "/**" },
+      { protocol: "https", hostname: "i.ytimg.com", pathname: "/**" },
+      { protocol: "https", hostname: "upload.wikimedia.org", pathname: "/**" },
     ],
   },
 };
