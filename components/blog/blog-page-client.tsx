@@ -22,6 +22,7 @@ function BlogHero({ article }: { article: BlogArticle }) {
           alt={article.title}
           fill
           priority
+          sizes="100vw"
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-900 via-brand-navy-900/60 to-transparent" />
@@ -63,6 +64,7 @@ function BlogHero({ article }: { article: BlogArticle }) {
                   src={article.authorImage}
                   alt={article.author}
                   fill
+                  sizes="40px"
                   className="object-cover"
                 />
               </div>
@@ -124,6 +126,7 @@ function EmptyBlogHero() {
           alt="YetiHomes journal"
           fill
           priority
+          sizes="100vw"
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-900 via-brand-navy-900/70 to-brand-navy-900/15" />
@@ -271,6 +274,7 @@ function ArticleCard({
               src={article.authorImage}
               alt={article.author}
               fill
+              sizes="32px"
               className="object-cover"
             />
           </div>

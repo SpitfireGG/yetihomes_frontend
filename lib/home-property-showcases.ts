@@ -21,7 +21,6 @@ type ShowcaseSectionKind =
   | "value_home"
   | "similar";
 
-const HOME_SHOWCASE_PAGE_SIZE = 50;
 const FEATURED_LISTING_COUNT = 6;
 const FEATURED_LAND_COUNT = 4;
 const VALUE_LAND_COUNT = 4;
@@ -223,6 +222,13 @@ function buildResidentialStats(property: SearchProperty) {
   const areaValue = formatNumericValue(property.areaValue);
   const areaUnit = formatEnumLabel(property.areaUnit);
 
+  const parking = 
+    property.houseDetails?.parkingSpaces ?? (property.apartmentDetails?.hasParking ? 1 : null);
+  const floors = 
+    property.houseDetails?.floors ?? property.apartmentDetails?.floorNumber;
+  const furnishing = 
+    property.houseDetails?.furnishingStatus ?? property.apartmentDetails?.furnishingStatus;
+
   if (bedroomCount !== null && bedroomCount !== undefined) {
     stats.push({
       kind: "bed",
@@ -247,7 +253,30 @@ function buildResidentialStats(property: SearchProperty) {
     });
   }
 
-  return stats.slice(0, 3);
+  if (parking !== null && parking !== undefined && parking > 0) {
+    stats.push({
+      kind: "parking",
+      value: parking,
+      label: parking === 1 ? "Parking" : "Parkings",
+    });
+  } else if (floors !== null && floors !== undefined) {
+    stats.push({
+      kind: "floor",
+      value: floors,
+      label: floors === 1 ? "Floor" : "Floors",
+    });
+  } else if (furnishing) {
+    const formattedFurnishing = formatEnumLabel(furnishing);
+    if (formattedFurnishing) {
+      stats.push({
+        kind: "furnishing",
+        value: "",
+        label: formattedFurnishing,
+      });
+    }
+  }
+
+  return stats.slice(0, 4);
 }
 
 function buildLandStats(property: SearchProperty) {
@@ -281,7 +310,7 @@ function buildLandStats(property: SearchProperty) {
     });
   }
 
-  return stats.slice(0, 3);
+  return stats.slice(0, 4);
 }
 
 function toShowcaseListing(

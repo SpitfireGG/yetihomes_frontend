@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
   { label: "Housing", path: "/houses" },
@@ -20,10 +21,14 @@ export default function Navbar() {
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const [activeDropdown, setActiveDropdown] = useState<"language" | "currency" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<
+    "language" | "currency" | null
+  >(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const router = useRouter();
   const [currency, setCurrency] = useState<"NPR" | "USD">("NPR");
   const [language, setLanguage] = useState<"EN" | "NE">("EN");
 
@@ -44,7 +49,11 @@ export default function Navbar() {
     open: {
       opacity: 1,
       y: 0,
-      transition: { type: "tween" as const, duration: 0.5, ease: [0.25, 1, 0.5, 1] },
+      transition: {
+        type: "tween" as const,
+        duration: 0.5,
+        ease: [0.25, 1, 0.5, 1],
+      },
     },
   };
 
@@ -53,7 +62,11 @@ export default function Navbar() {
     open: (idx: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: 0.1 * idx + 0.2, duration: 0.5, ease: "easeOut" as const },
+      transition: {
+        delay: 0.1 * idx + 0.2,
+        duration: 0.5,
+        ease: "easeOut" as const,
+      },
     }),
   };
 
@@ -82,6 +95,7 @@ export default function Navbar() {
                 src="/Yeti-Logo-01.svg"
                 alt="YetiHomes Icon"
                 fill
+                sizes="44px"
                 className="object-contain"
               />
             </Link>
@@ -160,7 +174,28 @@ export default function Navbar() {
                       </h3>
                       <ul className="space-y-4">
                         <li>
-                          <a href="#" className="flex items-start gap-3 group">
+                          <a
+                            href="/about"
+                            className="flex items-start gap-3 group"
+                          >
+                            <div className="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-container group-hover:text-primary transition-colors">
+                              <Icons.building size={18} strokeWidth={2} />
+                            </div>
+                            <div>
+                              <p className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                                About Company
+                              </p>
+                              <p className="text-[11px] font-medium text-on-surface-variant mt-0.5 leading-snug">
+                                Learn about YetiHomes.
+                              </p>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/teams"
+                            className="flex items-start gap-3 group"
+                          >
                             <div className="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-container group-hover:text-primary transition-colors">
                               <Icons.users size={18} strokeWidth={2} />
                             </div>
@@ -198,16 +233,73 @@ export default function Navbar() {
                       </h3>
                       <ul className="space-y-4">
                         <li>
-                          <a href="#" className="flex items-start gap-3 group">
+                          <a
+                            href="/legal/cookies"
+                            className="flex items-start gap-3 group"
+                          >
                             <div className="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-secondary-container group-hover:text-secondary transition-colors">
                               <Icons.shield size={18} strokeWidth={2} />
                             </div>
                             <div>
                               <p className="text-sm font-bold text-on-surface group-hover:text-secondary transition-colors">
-                                Verification Process
+                                Cookies Policy
                               </p>
                               <p className="text-[11px] font-medium text-on-surface-variant mt-0.5 leading-snug">
-                                How we clear Lal Purjas.
+                                How we use cookies.
+                              </p>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/legal/terms-conditions"
+                            className="flex items-start gap-3 group"
+                          >
+                            <div className="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-secondary-container group-hover:text-secondary transition-colors">
+                              <Icons.shield size={18} strokeWidth={2} />
+                            </div>
+                            <div>
+                              <p className="text-sm font-bold text-on-surface group-hover:text-secondary transition-colors">
+                                Terms and Conditions
+                              </p>
+                              <p className="text-[11px] font-medium text-on-surface-variant mt-0.5 leading-snug">
+                                Agreement on Our Terms & Conditions
+                              </p>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/legal/disclaimer"
+                            className="flex items-start gap-3 group"
+                          >
+                            <div className="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-secondary-container group-hover:text-secondary transition-colors">
+                              <Icons.shield size={18} strokeWidth={2} />
+                            </div>
+                            <div>
+                              <p className="text-sm font-bold text-on-surface group-hover:text-secondary transition-colors">
+                                Desclaimer and Advisory
+                              </p>
+                              <p className="text-[11px] font-medium text-on-surface-variant mt-0.5 leading-snug">
+                                Desclaimer and Advisory
+                              </p>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/legal/privacy"
+                            className="flex items-start gap-3 group"
+                          >
+                            <div className="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-secondary-container group-hover:text-secondary transition-colors">
+                              <Icons.shield size={18} strokeWidth={2} />
+                            </div>
+                            <div>
+                              <p className="text-sm font-bold text-on-surface group-hover:text-secondary transition-colors">
+                                Privacy Policy
+                              </p>
+                              <p className="text-[11px] font-medium text-on-surface-variant mt-0.5 leading-snug">
+                                Your data and privacy.
                               </p>
                             </div>
                           </a>
@@ -239,6 +331,7 @@ export default function Navbar() {
                       src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80"
                       alt="Corporate"
                       fill
+                      sizes="280px"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
 
@@ -249,10 +342,10 @@ export default function Navbar() {
                         Our Mission
                       </span>
                       <h4 className="text-white font-bold text-lg leading-tight mb-2">
-                        Transforming Nepal's Real Estate Market.
+                        Transforming Nepal&apos;s Real Estate Market.
                       </h4>
                       <a
-                        href="#"
+                        href="/blog"
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-accent-200 hover:text-white transition-colors mt-2"
                       >
                         Read our story <Icons.arrowRight size={14} />
@@ -528,7 +621,16 @@ export default function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Search Input Area */}
-              <div className="flex items-center border-b border-outline-variant/30 px-6 py-5">
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (searchQuery.trim()) {
+                    setIsSearchOpen(false);
+                    router.push(`/houses?q=${encodeURIComponent(searchQuery.trim())}`);
+                  }
+                }}
+                className="flex items-center border-b border-outline-variant/30 px-6 py-5"
+              >
                 <Icons.search
                   size={24}
                   className="text-on-surface-variant mr-4 shrink-0"
@@ -536,16 +638,19 @@ export default function Navbar() {
                 <input
                   autoFocus
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search by location, property type, or ID..."
                   className="w-full bg-transparent text-on-surface text-lg focus:outline-none placeholder:text-on-surface-variant/50 font-light"
                 />
                 <button
+                  type="button"
                   onClick={() => setIsSearchOpen(false)}
                   className="p-2 hover:bg-surface-container rounded-full transition-colors ml-4 shrink-0"
                 >
                   <Icons.close size={20} className="text-on-surface" />
                 </button>
-              </div>
+              </form>
 
               {/* Quick Links / Suggestions */}
               <div className="p-6 md:p-8 bg-surface-container-low/50">
@@ -561,6 +666,11 @@ export default function Navbar() {
                   ].map((term) => (
                     <button
                       key={term}
+                      onClick={() => {
+                        setSearchQuery(term);
+                        setIsSearchOpen(false);
+                        router.push(`/houses?q=${encodeURIComponent(term)}`);
+                      }}
                       className="px-4 py-2 rounded-full border border-outline-variant text-xs font-medium text-on-surface-variant hover:text-primary hover:border-primary hover:bg-primary/5 transition-all"
                     >
                       {term}
@@ -645,6 +755,7 @@ export default function Navbar() {
                           src={`${agent.img}?auto=format&fit=crop&w=150&q=80`}
                           alt={agent.name}
                           fill
+                          sizes="48px"
                           className="object-cover"
                         />
                         <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#25D366] border-2 border-white rounded-full"></span>
@@ -705,7 +816,7 @@ export default function Navbar() {
                       How can we help?
                     </h3>
                     <p className="text-on-surface-variant text-sm font-light leading-relaxed mb-8">
-                      Whether you're curious about a property verification,
+                      Whether you&apos;re curious about a property verification,
                       experiencing technical issues, or want to understand our
                       clear Lal Purja process—our dedicated support crew is on
                       standby.

@@ -19,6 +19,7 @@ export default async function PropertyBrowserRoute({
     city?: string;
     minPrice?: number;
     maxPrice?: number;
+    q?: string;
   } = {
     limit: 20,
     propertyType: propertyTypeToApiPropertyType[propertyType],
@@ -29,6 +30,13 @@ export default async function PropertyBrowserRoute({
     typeof resolvedSearchParams.city === "string"
   ) {
     filters.city = resolvedSearchParams.city;
+  }
+
+  if (
+    resolvedSearchParams.q &&
+    typeof resolvedSearchParams.q === "string"
+  ) {
+    filters.q = resolvedSearchParams.q;
   }
 
   if (

@@ -166,7 +166,7 @@ export default function VerificationProcess() {
               <p className="text-on-surface-variant text-lg leading-relaxed mb-6 font-light">
                 Acquiring prime real estate requires more than aesthetic
                 appreciation; it demands rigorous financial foresight. Our
-                analytics team has evaluated this estate's trajectory within the
+                analytics team has evaluated this estate&apos;s trajectory within the
                 current market landscape.
               </p>
               <div className="space-y-6 mt-8">

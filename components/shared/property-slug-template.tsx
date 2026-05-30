@@ -461,6 +461,7 @@ export default function PropertySlugTemplate({
             alt={`${property.title} hero view`}
             fill
             priority
+            sizes="(max-width: 1440px) 100vw, 1440px"
             className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
           />
         </div>
@@ -543,6 +544,7 @@ export default function PropertySlugTemplate({
                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80"
                 alt="Listing Agent"
                 fill
+                sizes="96px"
                 className="object-cover"
               />
             </div>
@@ -714,6 +716,7 @@ export default function PropertySlugTemplate({
                 src={selectedImage}
                 alt={`${property.title} expanded view`}
                 fill
+                sizes="90vw"
                 className="object-contain"
               />
             </motion.div>

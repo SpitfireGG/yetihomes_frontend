@@ -120,38 +120,8 @@ function CustomRequirementCTA() {
           </div>
 
           <div className="mt-2 flex items-center gap-3">
-            <div className="flex -space-x-3">
-              <Image
-                className="h-8 w-8 rounded-full border-2 border-brand-accent-400 object-cover"
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
-                alt="Customer"
-                width={32}
-                height={32}
-              />
-              <Image
-                className="h-8 w-8 rounded-full border-2 border-brand-accent-400 object-cover"
-                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80"
-                alt="Customer"
-                width={32}
-                height={32}
-              />
-              <Image
-                className="h-8 w-8 rounded-full border-2 border-brand-accent-400 object-cover"
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80"
-                alt="Customer"
-                width={32}
-                height={32}
-              />
-              <Image
-                className="h-8 w-8 rounded-full border-2 border-brand-accent-400 object-cover"
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80"
-                alt="Customer"
-                width={32}
-                height={32}
-              />
-            </div>
             <span className="text-xs font-medium text-white/90">
-              5.0/5 (1,200+ matched)
+              Over 1,200 properties matched
             </span>
           </div>
         </div>

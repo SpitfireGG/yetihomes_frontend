@@ -2,7 +2,7 @@ import { Icons } from "@/components/ui/icons";
 import Image from "next/image";
 import Link from "next/link";
 import type { ComponentType } from "react";
-import { HeartIcon, RulerIcon } from "./icons";
+import { IconHeart, IconRulerMeasure } from "@tabler/icons-react";
 import type {
   PropertyShowcaseListing,
   PropertyShowcaseStatKind,
@@ -12,9 +12,9 @@ const statIcons: Record<
   PropertyShowcaseStatKind,
   ComponentType<{ className?: string }>
 > = {
-  bed: RulerIcon,
-  bath: RulerIcon,
-  area: RulerIcon,
+  bed: IconRulerMeasure,
+  bath: IconRulerMeasure,
+  area: IconRulerMeasure,
   road: Icons.navigation,
   facing: Icons.compass,
 };
@@ -60,7 +60,7 @@ export function LandListingCard({
           aria-label={`Save ${listing.title}`}
           className="absolute bottom-4 right-4 z-20 inline-flex size-12 items-center justify-center rounded-full bg-white/18 text-white backdrop-blur-md transition-all hover:bg-white hover:text-on-surface"
         >
-          <HeartIcon className="size-5" />
+          <IconHeart className="size-5" />
         </button>
 
         <Link href={listing.href} className="absolute inset-0 z-10">

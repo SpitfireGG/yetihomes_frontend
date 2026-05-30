@@ -41,19 +41,7 @@ function PropertyFooterStat({ property }: { property: SearchProperty }) {
     );
   }
 
-  const reviewSummary = { averageRating: 0, totalReviews: 0 };
-
-  return (
-    <div className="flex items-center gap-2 rounded-full border border-outline-variant/50 bg-surface-container-low px-3 py-1.5">
-      <Icons.star size={14} className="fill-tertiary text-tertiary" />
-      <span className="text-sm font-bold text-on-surface">
-        {reviewSummary.averageRating.toFixed(1)}
-      </span>
-      <span className="text-xs font-medium text-on-surface-variant">
-        {reviewSummary.totalReviews} reviews
-      </span>
-    </div>
-  );
+  return null;
 }
 
 type CardMetaItem = {
@@ -63,8 +51,6 @@ type CardMetaItem = {
 };
 
 function getCardMeta(property: SearchProperty): CardMetaItem[] {
-  const reviewSummary = { averageRating: 0, totalReviews: 0 };
-
   if (property.propertyType === "HOUSE" && property.houseDetails) {
     const meta: CardMetaItem[] = [];
     if (property.houseDetails.floors)
@@ -271,14 +257,14 @@ export default function PropertyListings({
                     />
                     <div className="absolute left-4 top-4 rounded-lg border border-outline-variant/50 bg-surface-container-lowest/95 px-3 py-1.5 shadow-sm backdrop-blur-sm">
                       <span
-                        className={`text-xs font-bold tracking-wide capitalize ${typeColor}`}
+                        className={`text-sm font-bold tracking-wide capitalize ${typeColor}`}
                       >
                         {typeLabel}
                       </span>
                     </div>
                     {property.isFeatured && (
                       <div className="absolute right-4 top-4 rounded-lg bg-primary px-2.5 py-1 shadow-sm">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-white">
+                        <span className="text-xs font-bold uppercase tracking-wider text-white">
                           Featured
                         </span>
                       </div>
@@ -294,19 +280,19 @@ export default function PropertyListings({
                       </div>
                       <button
                         type="button"
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-container text-primary transition-colors duration-200 hover:bg-primary hover:text-on-primary"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-container text-primary transition-colors duration-200 hover:bg-primary hover:text-on-primary"
                       >
-                        <Icons.bookmark size={16} strokeWidth={2.5} />
+                        <Icons.bookmark size={18} strokeWidth={2.5} />
                       </button>
                     </div>
 
                     <div className="mb-5 flex items-center gap-1.5 text-on-surface-variant">
                       <Icons.mapPin
-                        size={14}
+                        size={16}
                         strokeWidth={2.5}
                         className="text-outline"
                       />
-                      <span className="text-xs font-medium truncate">
+                      <span className="text-sm font-medium truncate">
                         {property.locationText}
                       </span>
                     </div>
@@ -321,8 +307,8 @@ export default function PropertyListings({
                             {index > 0 ? (
                               <span className="h-1 w-1 rounded-full bg-outline-variant" />
                             ) : null}
-                            <item.icon size={14} className={item.iconClass ?? "text-outline"} />
-                            <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                            <item.icon size={16} className={item.iconClass ?? "text-outline"} />
+                            <span className="text-sm font-bold uppercase tracking-wider text-on-surface-variant">
                               {item.value}
                             </span>
                           </div>
@@ -343,7 +329,7 @@ export default function PropertyListings({
                         <span className="font-headline text-lg font-semibold text-on-surface">
                           {formatNprPrice(property.priceAmount)}
                         </span>
-                        <span className="text-xs font-medium text-on-surface-variant">
+                        <span className="text-sm font-medium text-on-surface-variant">
                           {pricePeriod}
                         </span>
                       </div>

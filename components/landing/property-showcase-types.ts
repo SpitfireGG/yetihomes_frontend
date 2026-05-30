@@ -5,7 +5,10 @@ export type PropertyShowcaseStatKind =
   | "bath"
   | "area"
   | "road"
-  | "facing";
+  | "facing"
+  | "parking"
+  | "floor"
+  | "furnishing";
 
 export type PropertyShowcaseListing = {
   id: string;

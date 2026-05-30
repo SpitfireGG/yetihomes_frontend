@@ -16,6 +16,7 @@ export default function HeroSection() {
           src="/home.jpg"
           alt="Modern Architecture"
           fill
+          sizes="100vw"
           className="object-contain object-center-bottom"
           priority
         />

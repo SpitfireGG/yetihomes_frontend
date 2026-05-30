@@ -53,7 +53,7 @@ export default function ToolsPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-16 gap-y-12">
-              {toolStats.map((stat, idx) => (
+              {toolStats.map((stat) => (
                 <div
                   key={stat.label}
                   className="flex flex-col relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-[2px] before:bg-outline-variant hover:before:bg-primary transition-all duration-300 group"

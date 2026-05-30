@@ -37,6 +37,7 @@ export default function BlogArticlePage({
             alt={article.title}
             fill
             priority
+            sizes="100vw"
             className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent lg:via-background/60" />
@@ -72,6 +73,7 @@ export default function BlogArticlePage({
                     src={article.authorImage}
                     alt={article.author}
                     fill
+                    sizes="48px"
                     className="object-cover"
                   />
                 </div>
@@ -166,6 +168,7 @@ export default function BlogArticlePage({
                 src={article.authorImage}
                 alt={article.author}
                 fill
+                sizes="96px"
                 className="object-cover"
               />
             </div>

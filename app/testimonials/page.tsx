@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import ClientReviews from "@/components/shared/reviews";
 import { getCachedReviews } from "@/lib/review-server-cache";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Testimonials | YetiHomes",
+  description:
+    "Hear from our clients. YetiHomes has helped hundreds of buyers and sellers across Nepal find their ideal property.",
+};
 
 const Page = async () => {
   const reviews = await getCachedReviews();

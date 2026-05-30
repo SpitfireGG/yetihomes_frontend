@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import PropertySlugTemplate from "@/components/shared/property-slug-template";
 import { getPropertyBySlug, type SearchProperty } from "@/lib/api";
 import {
@@ -9,6 +9,20 @@ import {
   writePropertyDetailCache,
 } from "@/lib/property-detail-cache";
 
+function initPropertyState(slug: string, initialProperty?: SearchProperty | null) {
+  if (initialProperty) {
+    return primePropertyDetailCache(initialProperty);
+  }
+  const cachedState = readPropertyDetailCache(slug);
+  return cachedState?.property ?? null;
+}
+
+function initLoadingState(slug: string, initialProperty?: SearchProperty | null) {
+  if (initialProperty) return false;
+  const cachedState = readPropertyDetailCache(slug);
+  return !cachedState;
+}
+
 export default function PropertySlugPage({
   slug,
   initialProperty,
@@ -16,99 +30,71 @@ export default function PropertySlugPage({
   slug: string;
   initialProperty?: SearchProperty | null;
 }) {
-  const initialCachedState = initialProperty ? null : readPropertyDetailCache(slug);
-  const [property, setProperty] = useState<SearchProperty | null>(
-    initialProperty ?? initialCachedState?.property ?? null,
+  const [property, setProperty] = useState<SearchProperty | null>(() =>
+    initPropertyState(slug, initialProperty),
   );
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(!initialProperty && !initialCachedState);
-  const [, setIsRefreshing] = useState(
-    Boolean(!initialProperty && initialCachedState?.status === "stale"),
+  const [isLoading, setIsLoading] = useState(() =>
+    initLoadingState(slug, initialProperty),
   );
   const [requestKey, setRequestKey] = useState(0);
+  const isActiveRef = useRef(true);
 
-  useEffect(() => {
-    if (!initialProperty) {
-      return;
-    }
+  const fetchProperty = useCallback(async () => {
+    const abortController = new AbortController();
 
-    const cachedProperty = primePropertyDetailCache(initialProperty);
-    setProperty(cachedProperty);
-    setError(null);
-    setIsLoading(false);
-    setIsRefreshing(false);
-  }, [initialProperty]);
+    try {
+      const result = await getPropertyBySlug(slug, abortController.signal);
 
-  useEffect(() => {
-    if (initialProperty) {
-      return;
-    }
+      if (!isActiveRef.current) return;
 
-    const cachedState = readPropertyDetailCache(slug);
-
-    if (cachedState) {
-      setProperty(cachedState.property);
-      setError(null);
-
-      if (cachedState.status === "fresh" && requestKey === 0) {
-        setIsLoading(false);
-        setIsRefreshing(false);
+      if (!result) {
+        setProperty(null);
+        setError("Property not found.");
         return;
       }
 
-      setIsLoading(false);
-      setIsRefreshing(true);
-    } else {
-      setIsLoading(true);
-      setIsRefreshing(false);
-    }
+      writePropertyDetailCache(result);
+      setProperty(result);
+      setError(null);
+    } catch (fetchError) {
+      if (
+        !isActiveRef.current ||
+        (fetchError instanceof Error && fetchError.name === "AbortError")
+      ) {
+        return;
+      }
 
-    const abortController = new AbortController();
-    let isActive = true;
-
-    async function fetchProperty() {
-      try {
-        const result = await getPropertyBySlug(slug, abortController.signal);
-
-        if (!isActive) {
-          return;
-        }
-
-        if (!result) {
-          setProperty(null);
-          setError("Property not found.");
-          return;
-        }
-
-        writePropertyDetailCache(result);
-        setProperty(result);
-        setError(null);
-      } catch (fetchError) {
-        if (
-          !isActive ||
-          (fetchError instanceof Error && fetchError.name === "AbortError")
-        ) {
-          return;
-        }
-
-        setError(
-          fetchError instanceof Error ? fetchError.message : "Unable to load this property.",
-        );
-      } finally {
-        if (isActive) {
-          setIsLoading(false);
-          setIsRefreshing(false);
-        }
+      setError(
+        fetchError instanceof Error ? fetchError.message : "Unable to load this property.",
+      );
+    } finally {
+      if (isActiveRef.current) {
+        setIsLoading(false);
       }
     }
 
-    void fetchProperty();
-
     return () => {
-      isActive = false;
       abortController.abort();
     };
-  }, [initialProperty, requestKey, slug]);
+  }, [slug]);
+
+  useEffect(() => {
+    if (initialProperty) return;
+
+    const cachedState = readPropertyDetailCache(slug);
+
+    if (cachedState && cachedState.status === "fresh" && requestKey === 0) {
+      setIsLoading(false);
+      return;
+    }
+
+    if (!cachedState) {
+      setIsLoading(true);
+    }
+
+    void fetchProperty();
+  }, [initialProperty, requestKey, slug, fetchProperty]);
 
   if (isLoading && !property) {
     return (
@@ -132,7 +118,6 @@ export default function PropertySlugPage({
             type="button"
             onClick={() => {
               setIsLoading(true);
-              setIsRefreshing(false);
               setError(null);
               setProperty(
                 (previous) =>

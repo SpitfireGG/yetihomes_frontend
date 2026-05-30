@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const tabs = ["Overview", "Reviews", "About"];
+const tabs = ["Overview", "About"];
 
 export default function PropertyDetailsPanel({
   property,
@@ -39,6 +39,7 @@ export default function PropertyDetailsPanel({
             src={img1}
             alt={property.title}
             fill
+            sizes="(max-width: 768px) 100vw, 520px"
             className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           />
         </div>
@@ -47,6 +48,7 @@ export default function PropertyDetailsPanel({
             src={img2}
             alt="View 2"
             fill
+            sizes="(max-width: 768px) 50vw, 260px"
             className="object-cover scale-110"
           />
         </div>
@@ -55,6 +57,7 @@ export default function PropertyDetailsPanel({
             src={img3}
             alt="View 3"
             fill
+            sizes="(max-width: 768px) 50vw, 260px"
             className="object-cover scale-125"
           />
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center hover:bg-black/50 transition-colors cursor-pointer">

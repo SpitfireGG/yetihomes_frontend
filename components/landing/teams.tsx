@@ -94,8 +94,8 @@ export default function MeetOurTeamSection({
   };
 
   return (
-    <section className="font-sans antialiased text-on-surface bg-surface-container-low p-4 lg:p-10">
-      <div className="w-full max-w-[1600px] mx-auto    overflow-hidden flex flex-col pt-16 pb-24 relative group">
+    <div className="font-sans antialiased text-on-surface">
+      <div className="w-full max-w-[1600px] mx-auto overflow-hidden flex flex-col pt-0 pb-0 relative group">
         <button
           onClick={() => scroll("left")}
           className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
@@ -165,6 +165,6 @@ export default function MeetOurTeamSection({
       `,
         }}
       />
-    </section>
+    </div>
   );
 }

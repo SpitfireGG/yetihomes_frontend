@@ -39,9 +39,6 @@ type OverviewChip = {
   value: string;
 };
 
-const QUICK_REVIEW_CARD_MIN_HEIGHT_CLASS = "min-h-[10.5rem]";
-const QUICK_REVIEW_TEXT_CLAMP_CLASS = "line-clamp-4";
-
 export default function PropertyDetailsPanel({
   property,
   detailsHref,
@@ -90,11 +87,6 @@ export default function PropertyDetailsPanel({
   const primaryImage = getPrimaryImageUrl(property.images);
   const image2 = property.images[1] ? getPrimaryImageUrl([property.images[1]]) : primaryImage;
   const image3 = property.images[2] ? getPrimaryImageUrl([property.images[2]]) : primaryImage;
-  const reviewBundle: { averageRating: number; totalReviews: number; reviews: { id: string; name: string; role: string; rating: number; text: string }[] } = {
-    averageRating: 0,
-    totalReviews: 0,
-    reviews: [],
-  };
   const overviewChips: OverviewChip[] = [];
 
   if (property.houseDetails?.bedrooms) {
@@ -166,29 +158,32 @@ export default function PropertyDetailsPanel({
 
       <div className="mt-10 mb-6 flex h-40 shrink-0 gap-2.5 sm:mt-2 sm:h-52 sm:gap-3 lg:h-56">
         <div className="relative w-[65%] h-full rounded-2xl overflow-hidden shadow-sm">
-          <Image
-            src={primaryImage}
-            alt={property.title}
-            fill
-            className="object-cover"
-          />
+<Image
+  src={primaryImage}
+  alt={property.title}
+  fill
+  sizes="(max-width: 768px) 100vw, 520px"
+  className="object-cover"
+/>
         </div>
         <div className="flex flex-col gap-3 w-[35%] h-full">
           <div className="relative flex-1 rounded-2xl overflow-hidden shadow-sm">
-            <Image
-              src={image2}
-              fill
-              className="object-cover scale-110"
-              alt={`${property.title} view 2`}
-            />
+<Image
+  src={image2}
+  fill
+  sizes="(max-width: 768px) 50vw, 260px"
+  className="object-cover scale-110"
+  alt={`${property.title} view 2`}
+/>
           </div>
           <div className="relative flex-1 rounded-2xl overflow-hidden shadow-sm">
-            <Image
-              src={image3}
-              fill
-              className="object-cover scale-125 origin-top-left"
-              alt={`${property.title} view 3`}
-            />
+<Image
+  src={image3}
+  fill
+  sizes="(max-width: 768px) 50vw, 260px"
+  className="object-cover scale-125 origin-top-left"
+  alt={`${property.title} view 3`}
+/>
           </div>
         </div>
       </div>
@@ -218,7 +213,7 @@ export default function PropertyDetailsPanel({
       </div>
 
       <div className="relative mb-6 flex shrink-0 border-b border-outline-variant/60">
-        {["Overview", "Reviews", "About"].map((tab) => (
+        {["Overview", "About"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -389,87 +384,6 @@ export default function PropertyDetailsPanel({
                   </div>
                 </motion.div>
               </div>
-            </motion.div>
-          )}
-
-          {activeTab === "Reviews" && (
-            <motion.div
-              key="reviews"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              className="flex flex-col gap-4 pb-4"
-            >
-              <div className="rounded-[28px] border border-outline-variant/60 bg-surface p-5 shadow-sm">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
-                  Client feedback
-                </p>
-                <div className="mt-3 flex items-end justify-between gap-4">
-                  <div>
-                    <div className="flex items-end gap-3">
-                      <span className="font-headline text-4xl font-semibold leading-none text-on-surface">
-                        {reviewBundle.averageRating.toFixed(1)}
-                      </span>
-                      <div className="pb-1">
-                        <div className="flex items-center gap-1">
-                          {Array.from({ length: 5 }).map((_, index) => (
-                            <Icons.star
-                              key={index}
-                              size={14}
-                              className={
-                                index < Math.round(reviewBundle.averageRating)
-                                  ? "fill-tertiary text-tertiary"
-                                  : "text-outline-variant"
-                              }
-                            />
-                          ))}
-                        </div>
-                        <p className="mt-1 text-sm font-medium text-on-surface-variant">
-                          Based on {reviewBundle.totalReviews} recent enquiries
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {reviewBundle.reviews.map((review) => (
-                <div
-                  key={review.id}
-                  className={`relative flex ${QUICK_REVIEW_CARD_MIN_HEIGHT_CLASS} flex-col overflow-hidden rounded-[24px] border border-outline-variant/50 bg-surface px-5 py-4 shadow-sm`}
-                >
-                  <Icons.quote
-                    size={48}
-                    className="absolute right-4 top-4 text-outline-variant/40"
-                  />
-                  <div className="relative">
-                    <div className="mb-3 flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-semibold text-on-surface">
-                          {review.name}
-                        </p>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant">
-                          {review.role}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1 rounded-full bg-primary-container/60 px-2.5 py-1">
-                        <Icons.star
-                          size={13}
-                          className="fill-tertiary text-tertiary"
-                        />
-                        <span className="text-xs font-semibold text-on-surface">
-                          {review.rating.toFixed(1)}
-                        </span>
-                      </div>
-                    </div>
-                    <p
-                      className={`break-words text-sm leading-relaxed text-on-surface-variant ${QUICK_REVIEW_TEXT_CLAMP_CLASS}`}
-                    >
-                      {review.text}
-                    </p>
-                  </div>
-                </div>
-              ))}
             </motion.div>
           )}
 

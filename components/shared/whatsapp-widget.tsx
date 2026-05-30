@@ -53,18 +53,18 @@ export default function WhatsAppWidget() {
   // Authentic Agent Data
   const agents = [
     {
-      name: "Aarav Sharma",
-      role: "Sales Director",
-      phone: "9779800000001", // Replace with actual WhatsApp numbers
-      img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80",
+      name: "Kritika",
+      role: "Property Advisor",
+      phone: "9779768998508",
+      img: "/teams/kritikaFace.jpg",
       status: "online",
       message: "Hi there! Looking for a property in Kathmandu?",
     },
     {
-      name: "Priya Thapa",
-      role: "Property Advisor",
-      phone: "9779800000002",
-      img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
+      name: "Ngima",
+      role: "Sales Director",
+      phone: "9779768998508",
+      img: "/teams/ngimaFace.jpeg",
       status: "online",
       message: "Hello! How can I help you find your dream home?",
     },
@@ -134,6 +134,7 @@ export default function WhatsAppWidget() {
                         src={agent.img}
                         alt={agent.name}
                         fill
+                        sizes="40px"
                         className="object-cover"
                       />
                       <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#25D366] border-2 border-white rounded-full"></div>

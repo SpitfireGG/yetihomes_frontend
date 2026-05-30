@@ -1,14 +1,5 @@
 import LegalLayout from "@/components/shared/legal-layouts";
 
-async function getLegalData() {
-  try {
-    const { getLegalDocuments } = await import("@/lib/api");
-    return await getLegalDocuments();
-  } catch {
-    return [];
-  }
-}
-
 export const metadata = {
   title: "Privacy Policy | YetiHomes",
   description: "YetiHomes Privacy Policy - How we handle and protect your personal data.",

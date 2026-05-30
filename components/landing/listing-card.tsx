@@ -6,14 +6,17 @@ import type {
   PropertyShowcaseStatKind,
 } from "./property-showcase-types";
 
-import { BathIcon, BedIcon, HeartIcon, RulerIcon } from "./icons";
+import { IconBath, IconBed, IconHeart, IconRulerMeasure, IconSofa, IconLayersSelected, IconCar } from "@tabler/icons-react";
 
-const statIcons: Record<PropertyShowcaseStatKind, typeof BedIcon> = {
-  bed: BedIcon,
-  bath: BathIcon,
-  area: RulerIcon,
-  road: RulerIcon,
-  facing: RulerIcon,
+const statIcons: Record<PropertyShowcaseStatKind, typeof IconBed> = {
+  bed: IconBed,
+  bath: IconBath,
+  area: IconRulerMeasure,
+  road: IconRulerMeasure,
+  facing: IconRulerMeasure,
+  parking: IconCar,
+  floor: IconLayersSelected,
+  furnishing: IconSofa,
 };
 
 export function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
@@ -53,7 +56,7 @@ export function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
           aria-label={`Save ${listing.title}`}
           className="absolute bottom-4 right-4 inline-flex size-12 items-center justify-center rounded-full bg-white/18 text-white backdrop-blur-md transition-all hover:bg-white hover:text-on-surface z-20"
         >
-          <HeartIcon className="size-5" />
+          <IconHeart className="size-5" />
         </button>
 
         <Link href={listing.href} className="absolute inset-0 z-10">

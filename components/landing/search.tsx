@@ -2,7 +2,7 @@
 
 import { Icons } from "@/components/ui/icons";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   motion,

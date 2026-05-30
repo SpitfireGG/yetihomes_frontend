@@ -163,7 +163,7 @@ export function ExpertModal({
                       Our Experts
                     </h3>
                     <p className="mb-6 text-sm text-white/80">
-                      Select an expert or submit your details and we'll connect you
+                      Select an expert or submit your details and we&apos;ll connect you
                       with the right person.
                     </p>
                     <div className="space-y-3">
@@ -184,6 +184,7 @@ export function ExpertModal({
                               src={expert.image}
                               alt={expert.name}
                               fill
+                              sizes="48px"
                               className="object-cover"
                             />
                           </div>
@@ -207,6 +208,7 @@ export function ExpertModal({
                               src={selectedExpert.image}
                               alt={selectedExpert.name}
                               fill
+                              sizes="64px"
                               className="object-cover"
                             />
                           </div>
@@ -354,7 +356,7 @@ export function ExpertModal({
                     Request Received!
                   </h3>
                   <p className="text-on-surface-variant">
-                    We'll connect you with an expert shortly.
+                    We&apos;ll connect you with an expert shortly.
                   </p>
                 </div>
               )}

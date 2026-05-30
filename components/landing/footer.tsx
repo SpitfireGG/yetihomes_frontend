@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { getLandingPageData, type LandingCity, type LandingCategory } from "@/lib/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -11,13 +12,26 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
+  const [cities, setCities] = useState<LandingCity[]>([]);
+  const [categories, setCategories] = useState<LandingCategory[]>([]);
+
+  useEffect(() => {
+    getLandingPageData()
+      .then((data) => {
+        setCities(data.cities.slice(0, 4));
+        setCategories(data.categories.slice(0, 4));
+      })
+      .catch((err) => console.error("Failed to load footer data", err));
+  }, []);
+
   return (
-    <footer className="relative min-h-[75vh] flex flex-col justify-end pt-24 pb-8 mt-12 text-brand-silver-300 font-sans overflow-hidden bg-brand-navy-900">
+    <footer className="relative min-h-[75vh] flex flex-col justify-end pt-24 pb-8 text-brand-silver-300 font-sans overflow-hidden bg-brand-navy-900">
       <Image
         src="/dev.jpg"
         alt="YetiHomes Footer Background"
         fill
         priority
+        sizes="100vw"
         className="object-cover object-center z-0"
       />
 
@@ -71,6 +85,7 @@ export default function Footer() {
                   src="/Yeti-Logo-02.svg"
                   alt="YetiHomes Logo"
                   fill
+                  sizes="80px"
                   className="object-contain"
                 />
               </div>
@@ -89,26 +104,38 @@ export default function Footer() {
             <div>
               <h4 className="text-brand-silver-400 font-medium mb-6">Locations</h4>
               <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Kathmandu
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Lalitpur
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Bhaktapur
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Pokhara
-                  </a>
-                </li>
+                {cities.length > 0 ? (
+                  cities.map((c) => (
+                    <li key={c.city}>
+                      <a href={`/houses?city=${encodeURIComponent(c.city)}`} className="hover:text-white transition-colors">
+                        {c.city}
+                      </a>
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Kathmandu
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Lalitpur
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Bhaktapur
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Pokhara
+                      </a>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 
@@ -116,26 +143,43 @@ export default function Footer() {
             <div>
               <h4 className="text-brand-silver-400 font-medium mb-6">Property Types</h4>
               <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Residential Plots
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Commercial Land
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Luxury Villas
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Apartments
-                  </a>
-                </li>
+                {categories.length > 0 ? (
+                  categories.map((cat) => {
+                    let path = "/houses";
+                    if (cat.key === "apartments") path = "/apartments";
+                    if (cat.key === "land-plot" || cat.key === "commercial") path = "/lands";
+                    return (
+                      <li key={cat.key}>
+                        <a href={path} className="hover:text-white transition-colors capitalize">
+                          {cat.label}
+                        </a>
+                      </li>
+                    );
+                  })
+                ) : (
+                  <>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Residential Plots
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Commercial Land
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Luxury Villas
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" className="hover:text-white transition-colors">
+                        Apartments
+                      </a>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 
@@ -273,9 +317,9 @@ export default function Footer() {
               Visit Our Base
             </h4>
             <p className="text-sm text-brand-silver-300 leading-relaxed">
-              Baneshwor-10, Mid Baneshwor,
+              Chuchepati, Chabahil,
               <br />
-              Kathmandu, Nepal
+              Kathmandu, Nepal, 44600
             </p>
           </div>
 
@@ -285,10 +329,16 @@ export default function Footer() {
               Direct Lines
             </h4>
             <p className="text-sm text-white font-medium mb-1">
-              +977 9851418099
+              +977 9768998508
+            </p>
+            <p className="text-sm text-white font-medium mb-1">
+              +977 9851446901
+            </p>
+            <p className="text-sm text-white font-medium mb-1">
+              +977 9851361431
             </p>
             <p className="text-sm text-brand-silver-400 hover:text-white transition-colors cursor-pointer">
-              info@yetihomes.com
+              Estateyetihomes@gmail.com
             </p>
           </div>
         </div>

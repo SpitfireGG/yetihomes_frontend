@@ -3,7 +3,6 @@
 import { Icons } from "@/components/ui/icons";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import SectionHeading from "./sectionHeading";
 import type { Review } from "@/lib/api";
 
@@ -36,36 +35,14 @@ export default function ClientReviews({ reviews }: { reviews: Review[] }) {
   );
 
   return (
-    <section className="relative py-24 px-6 lg:px-12 bg-surface-container-low overflow-hidden min-h-screen">
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div
-          className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-accent-300/35 mix-blend-multiply filter blur-[120px] opacity-70 animate-pulse"
-          style={{ animationDuration: "8s" }}
-        ></div>
-        <div
-          className="absolute top-[20%] right-[-5%] w-[600px] h-[600px] rounded-full bg-brand-navy-300/30 mix-blend-multiply filter blur-[150px] opacity-60 animate-pulse"
-          style={{ animationDuration: "12s" }}
-        ></div>
-        <div
-          className="absolute bottom-[-10%] left-[20%] w-[500px] h-[500px] rounded-full bg-brand-300/25 mix-blend-multiply filter blur-[120px] opacity-50 animate-pulse"
-          style={{ animationDuration: "10s" }}
-        ></div>
-      </div>
-
+    <div className="relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16 lg:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            <SectionHeading
-              title="Don't just take our words"
-              description="            Discover why thousands of investors and families trust YetiHomes to navigate Nepal's complex real estate market."
-              align="center"
-            />
-          </motion.div>
+          <SectionHeading
+            title="Don't just take our words"
+            description="Discover why thousands of investors and families trust YetiHomes to navigate Nepal's complex real estate market."
+            align="center"
+          />
         </div>
 
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
@@ -78,19 +55,16 @@ export default function ClientReviews({ reviews }: { reviews: Review[] }) {
               ];
 
             return (
-              <motion.div
+              <div
                 key={review.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="break-inside-avoid"
+                className="break-inside-avoid animate-fade-in [animation-delay:var(--delay)] [animation-fill-mode:backwards]"
+                style={{ "--delay": `${index * 80}ms` } as React.CSSProperties}
               >
                 <div
-                  className={`relative flex h-full flex-col overflow-hidden rounded-[32px] p-8 transition-all duration-300 hover:-translate-y-1 ${
+                  className={`relative flex h-full flex-col overflow-hidden rounded-[32px] p-8 transition-transform duration-300 hover:-translate-y-1 ${
                     isGradientCard
                       ? `${FEATURED_REVIEW_CARD_MIN_HEIGHT_CLASS} lg:-translate-y-1.5 bg-gradient-to-br from-primary via-secondary to-brand-accent-500 text-white shadow-xl shadow-brand-navy-900/15 border-none`
-                      : `${styleVariant.minHeightClass} ${styleVariant.offsetClass} border border-white/80 bg-surface-container-lowest/70 text-on-surface shadow-lg shadow-brand-navy-900/8 backdrop-blur-xl hover:bg-surface-container-lowest/90`
+                      : `${styleVariant.minHeightClass} ${styleVariant.offsetClass} border border-white/80 bg-surface-container-lowest/80 text-on-surface shadow-lg shadow-brand-navy-900/8 hover:bg-surface-container-lowest`
                   }`}
                 >
                   <Icons.quote
@@ -134,6 +108,7 @@ export default function ClientReviews({ reviews }: { reviews: Review[] }) {
                         src={review.image}
                         alt={review.name}
                         fill
+                        sizes="96px"
                         className="object-cover"
                       />
                     </div>
@@ -153,11 +128,11 @@ export default function ClientReviews({ reviews }: { reviews: Review[] }) {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

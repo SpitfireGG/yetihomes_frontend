@@ -130,6 +130,7 @@ export default function CompanyTeamPageClient({
                   src={member.thumbnail}
                   alt={member.name}
                   fill
+                  sizes="112px"
                   className={`scale-[1.35] skew-x-[15deg] object-cover transition-all duration-500 ${
                     isActive ? "grayscale-0" : "grayscale"
                   }`}
@@ -210,6 +211,7 @@ export default function CompanyTeamPageClient({
               alt={activeMember.name}
               fill
               priority
+              sizes="(max-width: 1024px) 100vw, 600px"
               className="object-cover object-top grayscale opacity-90 mix-blend-luminosity"
             />
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent lg:hidden" />

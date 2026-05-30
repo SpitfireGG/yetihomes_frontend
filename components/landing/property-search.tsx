@@ -1,6 +1,6 @@
 import { priceRanges, propertyTypes } from "@/data/landing-content";
 
-import { ChevronDownIcon, SearchIcon } from "./icons";
+import { IconChevronDown, IconSearch } from "@tabler/icons-react";
 
 function SelectField({
   label,
@@ -23,7 +23,7 @@ function SelectField({
             <option key={option}>{option}</option>
           ))}
         </select>
-        <ChevronDownIcon className="pointer-events-none absolute right-0 top-1/2 size-4 -translate-y-1/2 text-outline" />
+        <IconChevronDown className="pointer-events-none absolute right-0 top-1/2 size-4 -translate-y-1/2 text-outline" />
       </div>
     </label>
   );
@@ -55,7 +55,7 @@ export function PropertySearch() {
         type="button"
         className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-on-surface px-6 py-4 font-headline text-sm font-bold tracking-[0.18em] uppercase text-surface-container-lowest transition-colors hover:bg-primary"
       >
-        <SearchIcon className="size-4" />
+        <IconSearch className="size-4" />
         Explore
       </button>
     </form>

@@ -373,6 +373,7 @@ export default function ContactPage() {
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80"
               alt="Headquarters Office"
               fill
+              sizes="100vw"
               className="object-cover"
             />
             <div className="absolute inset-0 bg-black/20" />

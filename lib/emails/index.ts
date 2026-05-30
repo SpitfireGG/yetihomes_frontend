@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY || "re_iucdbF6f_N8jukjAptTndwCEb7y3P3CTU");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const FROM_EMAIL = "Yetihomes <concierge@yetihomes.com>";
 const ADMIN_EMAIL = "spitfiregg02@gmail.com";

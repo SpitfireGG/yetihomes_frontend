@@ -1,13 +1,9 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
-
-import React from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "./sectionHeading";
 
-// --- Mock Data for the Marquee ---
-// Replace these with actual logos of Nepalese 'A' Class Banks (Nabil, Global IME, etc.) and Law Firms
 const partnerLogos = [
   {
     src: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
@@ -33,23 +29,23 @@ const partnerLogos = [
 
 export default function TrustHub() {
   return (
-    <section className="py-24 px-6 lg:px-12 bg-surface-container-low relative overflow-hidden">
+    <div className="relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary/8 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <SectionHeading title="Buy with Absolute Confidence" />
-          <p className="text-on-surface-variant text-lg leading-relaxed">
-            Navigating Nepal's real estate market can be complex. Every property
-            on YetiHomes goes through a rigorous multi-point legal and physical
-            verification process before it reaches your screen.
+        <div className="text-center mb-16 max-w-4xl mx-auto">
+          <SectionHeading title="Buy with Absolute Confidence" align="center" />
+          <p className="text-on-surface-variant text-lg leading-relaxed mt-4">
+            Navigating Nepal&apos;s real estate market can be complex. Every
+            property on YetiHomes goes through a rigorous multi-point legal and
+            physical verification process before it reaches your screen.
           </p>
         </div>
 
         {/* 3-Pillar Trust Grid - Localized for Nepal */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-20 lg:mb-24">
           {[
             {
               icon: Icons.fileSignature,
@@ -64,7 +60,7 @@ export default function TrustHub() {
             {
               icon: Icons.landmark,
               title: "Class 'A' Bank Approved",
-              desc: "Listings are pre-vetted for valuation criteria, ensuring smooth, rapid EMI processing and Home Loan approvals with Nepal's leading commercial banks.",
+              desc: "Listings are pre-vetted for valuation criteria, ensuring smooth, rapid EMI processing and Home Loan approvals with Nepal&apos;s leading commercial banks.",
             },
           ].map((pillar, index) => (
             <motion.div
@@ -131,6 +127,6 @@ export default function TrustHub() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

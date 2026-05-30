@@ -64,45 +64,34 @@ export function usePropertySearch(
     initialResponse,
     debounceMs = 300,
   } = options;
-  const initialBaseFiltersRef = useRef<PropertySearchFilters | null>(null);
 
-  if (initialBaseFiltersRef.current === null) {
-    initialBaseFiltersRef.current = buildBaseFilters(propertyType, initialFilters);
-  }
+  const [baseFilters] = useState<PropertySearchFilters>(() =>
+    buildBaseFilters(propertyType, initialFilters),
+  );
 
-  const initialBaseFilters = initialBaseFiltersRef.current;
-  const initialCachedResponseRef = useRef<SearchResponse | null>(null);
-
-  if (initialCachedResponseRef.current === null) {
-    initialCachedResponseRef.current =
-      initialResponse ??
-      readPropertySearchCache(initialBaseFilters!)?.response ??
-      null;
-  }
-
-  const initialCachedResponse = initialCachedResponseRef.current;
+  const [cachedResponse] = useState<SearchResponse | null>(() =>
+    initialResponse ?? readPropertySearchCache(baseFilters)?.response ?? null,
+  );
 
   const [filters, setFiltersState] = useState<PropertySearchFilters>(
-    initialBaseFilters,
+    () => baseFilters,
   );
   const [debouncedFilters, setDebouncedFilters] = useState<PropertySearchFilters>(
-    initialBaseFilters,
+    () => baseFilters,
   );
   const [properties, setProperties] = useState<SearchProperty[]>(
-    initialCachedResponse?.data ?? [],
+    () => cachedResponse?.data ?? [],
   );
   const [meta, setMeta] = useState<SearchMeta | null>(
-    initialCachedResponse?.meta ?? null,
+    () => cachedResponse?.meta ?? null,
   );
-  const [isLoading, setIsLoading] = useState(!initialCachedResponse);
+  const [isLoading, setIsLoading] = useState(() => !cachedResponse);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const visiblePropertiesRef = useRef<SearchProperty[]>(
-    initialCachedResponse?.data ?? [],
-  );
-  const activeSearchKeyRef = useRef(
-    buildPropertySearchCacheKey(initialBaseFilters),
+  const visiblePropertiesRef = useRef<SearchProperty[]>(properties);
+  const activeSearchKeyRef = useRef<string>(
+    buildPropertySearchCacheKey(baseFilters),
   );
 
   useEffect(() => {
@@ -114,8 +103,8 @@ export function usePropertySearch(
       return;
     }
 
-    primePropertySearchCache(initialBaseFilters, initialResponse);
-  }, [initialBaseFilters, initialResponse]);
+    primePropertySearchCache(baseFilters, initialResponse);
+  }, [baseFilters, initialResponse]);
 
   useEffect(() => {
     const delay = filters.q !== undefined ? debounceMs : 0;
@@ -218,9 +207,9 @@ export function usePropertySearch(
   }, []);
 
   const resetFilters = useCallback(() => {
-    setFiltersState(initialBaseFilters);
-    setDebouncedFilters(initialBaseFilters);
-  }, [initialBaseFilters]);
+    setFiltersState(baseFilters);
+    setDebouncedFilters(baseFilters);
+  }, [baseFilters]);
 
   const loadMore = useCallback(() => {
     if (!meta?.hasMore || !meta.nextCursor || isLoadingMore) {

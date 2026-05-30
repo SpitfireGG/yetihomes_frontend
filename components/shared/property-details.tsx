@@ -28,7 +28,7 @@ const propertyData = {
   ],
 };
 
-const tabs = ["Overview", "Reviews", "About"];
+const tabs = ["Overview", "About"];
 
 function ImageGallery() {
   return (
@@ -38,6 +38,7 @@ function ImageGallery() {
           src={propertyData.images[0]}
           alt="Main View"
           fill
+          sizes="(max-width: 768px) 100vw, 520px"
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
@@ -48,6 +49,7 @@ function ImageGallery() {
           src={propertyData.images[1]}
           alt="Bedroom"
           fill
+          sizes="(max-width: 768px) 50vw, 260px"
           className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
       </div>
@@ -57,6 +59,7 @@ function ImageGallery() {
           src={propertyData.images[2]}
           alt="Living Area"
           fill
+          sizes="(max-width: 768px) 50vw, 260px"
           className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
 
@@ -177,6 +180,7 @@ export default function PropertyDetailsPanel() {
               src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80"
               alt="Map Location"
               fill
+              sizes="100vw"
               className="object-cover opacity-80 mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out"
             />
 
@@ -195,12 +199,13 @@ export default function PropertyDetailsPanel() {
 
             <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-surface-container-lowest/95 backdrop-blur px-3 py-2 rounded-xl shadow-md border border-outline-variant flex items-center gap-3">
               <div className="w-8 h-8 relative rounded-md overflow-hidden shrink-0">
-                <Image
-                  src={propertyData.images[0]}
-                  alt="thumb"
-                  fill
-                  className="object-cover"
-                />
+              <Image
+                src={propertyData.images[0]}
+                alt="thumb"
+                fill
+                sizes="64px"
+                className="object-cover"
+              />
               </div>
               <div className="pr-2">
                 <p className="text-[10px] font-bold text-on-surface leading-none mb-1">

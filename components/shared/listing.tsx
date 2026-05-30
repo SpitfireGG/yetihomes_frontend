@@ -5,7 +5,6 @@ import { Icons } from "@/components/ui/icons";
 import React from "react";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
-import Link from "next/link";
 
 export const houseProperties = [
   {

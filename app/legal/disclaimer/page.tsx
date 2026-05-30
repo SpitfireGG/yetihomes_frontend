@@ -1,14 +1,5 @@
 import LegalLayout from "@/components/shared/legal-layouts";
 
-async function getLegalData() {
-  try {
-    const { getLegalDocuments } = await import("@/lib/api");
-    return await getLegalDocuments();
-  } catch {
-    return [];
-  }
-}
-
 export const metadata = {
   title: "Disclaimer | YetiHomes",
   description: "YetiHomes disclaimer regarding property listings and website information.",
@@ -36,8 +27,8 @@ export default async function DisclaimerPage() {
       </p>
       <ul>
         <li>
-          <strong>Calculators and Estimates:</strong> Tools such as our "Upfront
-          Cash Calculator" or "Mortgage Calculator" are provided for
+          <strong>Calculators and Estimates:</strong> Tools such as our &quot;Upfront
+          Cash Calculator&quot; or &quot;Mortgage Calculator&quot; are provided for
           illustrative purposes only. Actual costs, including agency fees,
           government registration taxes, and banking interest rates, will vary.
         </li>
@@ -61,9 +52,9 @@ export default async function DisclaimerPage() {
         websites.
       </p>
 
-      <h2>4. "As Is" Disclaimer</h2>
+      <h2>4. &quot;As Is&quot; Disclaimer</h2>
       <p>
-        All information on the platform is provided "as is", with no guarantee
+        All information on the platform is provided &quot;as is&quot;, with no guarantee
         of completeness, accuracy, timeliness or of the results obtained from
         the use of this information, and without warranty of any kind, express
         or implied, including, but not limited to warranties of performance,

@@ -1,14 +1,5 @@
 import LegalLayout from "@/components/shared/legal-layouts";
 
-async function getLegalData() {
-  try {
-    const { getLegalDocuments } = await import("@/lib/api");
-    return await getLegalDocuments();
-  } catch {
-    return [];
-  }
-}
-
 export const metadata = {
   title: "Cookie Policy | YetiHomes",
   description: "YetiHomes Cookie Policy - How we use cookies and tracking technologies.",

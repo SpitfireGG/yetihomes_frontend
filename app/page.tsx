@@ -15,7 +15,7 @@ import { getCachedLandingPageData } from "@/lib/landing-server-cache";
 import { getCachedTeamMembers } from "@/lib/team-server-cache";
 import { getCachedReviews } from "@/lib/review-server-cache";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const [teamMembers, reviews, propertyShowcases, landingPageData] =
@@ -112,7 +112,7 @@ export default async function Home() {
         </section>
 
         <section className="border-t border-outline-variant/50 bg-surface-container-low py-24 lg:py-28">
-          <div className="space-y-24 lg:space-y-28">
+          <div className="space-y-20 lg:space-y-24">
             <div className={shellClassName}>
               <TrustHub />
             </div>
@@ -122,21 +122,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="border-t border-outline-variant/50 relative overflow-hidden py-24 lg:py-28">
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-            <div
-              className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-accent-300/35 mix-blend-multiply filter blur-[120px] opacity-70 animate-pulse"
-              style={{ animationDuration: "8s" }}
-            ></div>
-            <div
-              className="absolute top-[20%] right-[-5%] w-[600px] h-[600px] rounded-full bg-brand-navy-300/30 mix-blend-multiply filter blur-[150px] opacity-60 animate-pulse"
-              style={{ animationDuration: "12s" }}
-            ></div>
-            <div
-              className="absolute bottom-[-10%] left-[20%] w-[500px] h-[500px] rounded-full bg-brand-300/25 mix-blend-multiply filter blur-[120px] opacity-50 animate-pulse"
-              style={{ animationDuration: "10s" }}
-            ></div>
-          </div>
+        <section className="border-t border-outline-variant/50 bg-surface-container-low py-24 lg:py-28">
           <div className={shellClassName}>
             <ClientReviews reviews={reviews} />
           </div>

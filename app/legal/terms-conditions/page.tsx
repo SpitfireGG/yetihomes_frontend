@@ -1,14 +1,5 @@
 import LegalLayout from "@/components/shared/legal-layouts";
 
-async function getLegalData() {
-  try {
-    const { getLegalDocuments } = await import("@/lib/api");
-    return await getLegalDocuments();
-  } catch {
-    return [];
-  }
-}
-
 export const metadata = {
   title: "Terms of Service | YetiHomes",
   description: "YetiHomes Terms of Service - Platform usage terms and conditions.",
@@ -47,7 +38,7 @@ export default async function TermsOfServicePage() {
         <li>
           You agree not to use the platform in any way that could disable,
           overburden, damage, or impair the site or interfere with any other
-          party's use of the platform.
+          party&apos;s use of the platform.
         </li>
       </ul>
 

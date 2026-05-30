@@ -83,6 +83,7 @@ export default function TeamMemberProfilePage({
                 alt={member.name}
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover object-top grayscale mix-blend-luminosity"
               />
             </motion.div>
