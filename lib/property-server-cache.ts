@@ -13,7 +13,10 @@ import {
 } from "@/lib/property-cache-config";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+// Ensure the URL ends with /api (NestJS global prefix)
+const resolvedBaseUrl = API_BASE_URL.endsWith("/api") ? API_BASE_URL : `${API_BASE_URL}/api`;
 
 type ServerApiResponse<T> = {
   data: T;
@@ -32,7 +35,7 @@ async function serverApiGet<T, M = never>(
   revalidate: number,
   tags: string[],
 ): Promise<ServerApiResponseWithMeta<T, M>> {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const response = await fetch(`${resolvedBaseUrl}${path}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
