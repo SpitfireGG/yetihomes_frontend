@@ -9,7 +9,10 @@ import {
 } from "@/lib/api";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+// Ensure the URL ends with /api (NestJS global prefix)
+const resolvedBaseUrl = API_BASE_URL.endsWith("/api") ? API_BASE_URL : `${API_BASE_URL}/api`;
 
 const LANDING_CITY_IMAGE_FALLBACK =
   "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80";
@@ -29,7 +32,7 @@ export type LandingPageServerData = {
 };
 
 async function fetchLandingPageApi(): Promise<LandingPageApiResponse> {
-  const response = await fetch(`${API_BASE_URL}/properties/search/landing`, {
+  const response = await fetch(`${resolvedBaseUrl}/properties/search/landing`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

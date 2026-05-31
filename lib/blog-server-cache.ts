@@ -9,13 +9,16 @@ import {
 } from "@/lib/api";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+// Ensure the URL ends with /api (NestJS global prefix)
+const resolvedBaseUrl = API_BASE_URL.endsWith("/api") ? API_BASE_URL : `${API_BASE_URL}/api`;
 
 export const BLOG_LIST_REVALIDATE_SECONDS = 0;
 export const BLOG_DETAIL_REVALIDATE_SECONDS = 0;
 
 async function fetchBlogsApi(path: string) {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const response = await fetch(`${resolvedBaseUrl}${path}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

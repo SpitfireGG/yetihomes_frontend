@@ -9,12 +9,15 @@ import {
 } from "@/lib/api";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+// Ensure the URL ends with /api (NestJS global prefix)
+const resolvedBaseUrl = API_BASE_URL.endsWith("/api") ? API_BASE_URL : `${API_BASE_URL}/api`;
 
 export const REVIEW_CACHE_REVALIDATE_SECONDS = 60;
 
 async function fetchReviewsApi(): Promise<ReviewsApiResponse> {
-  const response = await fetch(`${API_BASE_URL}/reviews`, {
+  const response = await fetch(`${resolvedBaseUrl}/reviews`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
