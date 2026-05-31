@@ -9,16 +9,20 @@ import {
 } from "@/lib/api";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+// Ensure the URL ends with /api (NestJS global prefix)
+const resolvedBaseUrl = API_BASE_URL.endsWith("/api") ? API_BASE_URL : `${API_BASE_URL}/api`;
 
 export const TEAM_CACHE_REVALIDATE_SECONDS = 60;
 
 async function fetchTeamsApi(): Promise<TeamsApiResponse> {
-  const response = await fetch(`${API_BASE_URL}/teams`, {
+  const response = await fetch(`${resolvedBaseUrl}/teams`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   });
 
   const payload = await response.json().catch(() => null);
