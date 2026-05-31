@@ -86,7 +86,7 @@ export default function WhatsAppWidget() {
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(4px)" }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="mb-4 w-[340px] sm:w-[380px] bg-white rounded-3xl shadow-[0_20px_40px_rgb(0,0,0,0.15)] border border-gray-100 overflow-hidden flex flex-col font-sans"
+            className="mb-4 w-[calc(100vw-32px)] sm:w-[380px] bg-white rounded-3xl shadow-[0_20px_40px_rgb(0,0,0,0.15)] border border-gray-100 overflow-hidden flex flex-col font-sans"
           >
             {/* Header */}
             <div className="bg-gradient-to-br from-[#128C7E] to-[#25D366] p-6 text-white relative">
@@ -178,7 +178,7 @@ export default function WhatsAppWidget() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="relative group flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-[#25D366] rounded-full shadow-[0_8px_25px_rgba(37,211,102,0.4)] hover:shadow-[0_12px_35px_rgba(37,211,102,0.5)] transition-shadow duration-300"
+        className="relative group flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-[#25D366] rounded-full shadow-[0_8px_25px_rgba(37,211,102,0.4)] hover:shadow-[0_12px_35px_rgba(37,211,102,0.5)] transition-shadow duration-300"
       >
         {/* Subtle Ping Animation to draw attention */}
         <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>
@@ -192,7 +192,7 @@ export default function WhatsAppWidget() {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <Icons.close size={28} className="text-white" />
+              <Icons.close size={24} className="text-white" />
             </motion.div>
           ) : (
             <motion.div
@@ -202,7 +202,7 @@ export default function WhatsAppWidget() {
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <WhatsAppIcon className="w-8 h-8 md:w-9 md:h-9 text-white" />
+              <WhatsAppIcon className="w-6 h-6 md:w-9 md:h-9 text-white" />
             </motion.div>
           )}
         </AnimatePresence>

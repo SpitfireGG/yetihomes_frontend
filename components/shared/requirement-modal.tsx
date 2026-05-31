@@ -99,29 +99,29 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 p-4"
+            className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-16px)] sm:w-full max-w-lg -translate-x-1/2 -translate-y-1/2 sm:p-4"
           >
-            <div className="relative overflow-hidden rounded-3xl bg-surface-container-lowest p-8 shadow-2xl">
+            <div className="relative max-h-[90dvh] overflow-y-auto rounded-2xl sm:rounded-3xl bg-surface-container-lowest p-5 sm:p-6 md:p-8 shadow-2xl">
               <button
                 onClick={onClose}
-                className="absolute right-4 top-4 flex size-10 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors"
+                className="absolute right-3 top-3 sm:right-4 sm:top-4 flex size-8 sm:size-10 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors"
               >
-                <Icons.close size={20} />
+                <Icons.close size={18} />
               </button>
 
-              <div className="mb-8">
-                <h2 className="mb-2 font-headline text-2xl font-bold text-on-surface">
+              <div className="mb-5 sm:mb-6 md:mb-8">
+                <h2 className="mb-1.5 font-headline text-xl sm:text-2xl font-bold text-on-surface">
                   Tell Us Your Requirement
                 </h2>
-                <p className="text-on-surface-variant">
+                <p className="text-sm sm:text-base text-on-surface-variant">
                   Our experts will find your perfect property.
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                    <label className="mb-1 block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                       Your Name *
                     </label>
                     <input
@@ -130,12 +130,12 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-on-surface outline-none transition-colors focus:border-primary"
+                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-on-surface outline-none transition-colors focus:border-primary"
                       placeholder="Full name"
                     />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                    <label className="mb-1 block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                       Email *
                     </label>
                     <input
@@ -144,15 +144,15 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-on-surface outline-none transition-colors focus:border-primary"
+                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-on-surface outline-none transition-colors focus:border-primary"
                       placeholder="email@example.com"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                    <label className="mb-1 block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                       Phone
                     </label>
                     <input
@@ -160,19 +160,19 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-on-surface outline-none transition-colors focus:border-primary"
+                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-on-surface outline-none transition-colors focus:border-primary"
                       placeholder="+977 98XXXX XXXX"
                     />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                    <label className="mb-1 block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                       Budget Range
                     </label>
                     <select
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
-                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-on-surface outline-none transition-colors focus:border-primary"
+                      className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-on-surface outline-none transition-colors focus:border-primary"
                     >
                       <option value="">Select budget</option>
                       <option value="Under 50 Lakhs">Under 50 Lakhs</option>
@@ -185,7 +185,7 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                  <label className="mb-1 block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                     Preferred Location
                   </label>
                   <input
@@ -193,13 +193,13 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                     name="location"
                     value={formData.location}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-on-surface outline-none transition-colors focus:border-primary"
+                    className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-on-surface outline-none transition-colors focus:border-primary"
                     placeholder="e.g., Kathmandu, Lalitpur"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                  <label className="mb-1 block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                     Describe Your Requirement *
                   </label>
                   <textarea
@@ -208,42 +208,42 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                     rows={3}
                     value={formData.requirement}
                     onChange={handleChange}
-                    className="w-full resize-none rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-on-surface outline-none transition-colors focus:border-primary"
+                    className="w-full resize-none rounded-xl border border-outline-variant bg-surface-container-low px-3.5 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-on-surface outline-none transition-colors focus:border-primary"
                     placeholder="Describe the property you're looking for..."
                   />
                 </div>
 
                 {status !== "idle" && (
                   <div
-                    className={`flex items-center gap-2 rounded-xl p-4 ${
+                    className={`flex items-center gap-2 rounded-xl p-3 sm:p-4 ${
                       status === "success"
                         ? "bg-green-500/10 text-green-600"
                         : "bg-red-500/10 text-red-600"
                     }`}
                   >
                     {status === "success" ? (
-                      <Icons.checkCircle size={18} />
+                      <Icons.checkCircle size={16} />
                     ) : (
-                      <Icons.alertCircle size={18} />
+                      <Icons.alertCircle size={16} />
                     )}
-                    <span className="text-sm font-medium">{message}</span>
+                    <span className="text-xs sm:text-sm font-medium">{message}</span>
                   </div>
                 )}
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-primary-on-primary transition-colors hover:bg-primary/90 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 sm:py-4 text-sm sm:text-base text-primary-on-primary transition-colors hover:bg-primary/90 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
-                      <Icons.loader size={18} className="animate-spin" />
+                      <Icons.loader size={16} className="animate-spin" />
                       Submitting...
                     </>
                   ) : (
                     <>
                       Submit Requirement
-                      <Icons.arrowRight size={18} />
+                      <Icons.arrowRight size={16} />
                     </>
                   )}
                 </button>

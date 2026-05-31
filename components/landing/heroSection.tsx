@@ -7,7 +7,7 @@ export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section className="relative w-full h-[65svh] md:h-[100svh] min-h-[450px] md:min-h-[800px] overflow-hidden flex flex-col justify-between p-6 md:p-12 lg:p-16">
+    <section className="relative w-full h-[80svh] md:h-[100svh] min-h-[500px] md:min-h-[800px] overflow-hidden flex flex-col justify-between p-6 md:p-12 lg:p-16">
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0 bg-black">
         <picture className="absolute inset-0">
