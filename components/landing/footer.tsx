@@ -29,7 +29,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative min-h-[75vh] flex flex-col justify-end pt-24 pb-8 text-brand-silver-300 font-sans overflow-hidden bg-brand-navy-900">
+    <footer className="relative min-h-[75vh] flex flex-col justify-end pt-16 sm:pt-24 pb-6 sm:pb-8 text-brand-silver-300 font-sans overflow-hidden bg-brand-navy-900">
       <Image
         src="/dev.jpg"
         alt="YetiHomes Footer Background"
@@ -41,13 +41,13 @@ export default function Footer() {
 
       <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-900 via-brand-navy-900/80 to-brand-navy-900/40 backdrop-blur-[2px] z-10"></div>
 
-      <div className="relative z-20 w-full max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col justify-between h-full">
-        <div className="flex flex-col lg:flex-row items-center justify-between bg-white/10 backdrop-blur-md border border-white/10 p-8 lg:p-12 rounded-[28px] mb-16 lg:mb-24 shadow-2xl">
-          <div className="max-w-xl mb-8 lg:mb-0">
+      <div className="relative z-20 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col justify-between h-full">
+        <div className="flex flex-col lg:flex-row items-center justify-between bg-white/10 backdrop-blur-md border border-white/10 p-6 sm:p-8 lg:p-12 rounded-[28px] mb-12 sm:mb-16 lg:mb-24 shadow-2xl gap-6 lg:gap-0">
+          <div className="max-w-xl w-full lg:w-auto mb-4 lg:mb-0 text-center lg:text-left">
             <span className="text-brand-accent-200 font-bold text-xs tracking-widest uppercase mb-3 block">
               Join The Inner Circle
             </span>
-            <h3 className="text-3xl md:text-4xl font-serif font-medium text-white mb-4 leading-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-white mb-4 leading-tight">
               Unlock Exclusive Off-Market Deals
             </h3>
             <p className="text-brand-silver-300 text-sm md:text-base leading-relaxed">
@@ -59,23 +59,23 @@ export default function Footer() {
 
           <div className="w-full lg:w-auto flex-1 max-w-lg lg:ml-auto">
             <form
-              className="relative flex items-center w-full"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center w-full gap-3 sm:gap-0"
               onSubmit={(e) => e.preventDefault()}
             >
               <input
                 type="email"
                 placeholder="Enter your email address"
-                className="w-full bg-white/5 border border-white/20 text-white placeholder-brand-silver-400 px-6 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary backdrop-blur-sm transition-all"
+                className="w-full bg-white/5 border border-white/20 text-white placeholder-brand-silver-400 px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary backdrop-blur-sm transition-all text-sm sm:text-base"
                 required
               />
               <button
                 type="submit"
-                className="absolute right-2 bg-primary hover:bg-brand-800 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors shadow-md"
+                className="bg-primary hover:bg-brand-800 text-white px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-l-none font-semibold text-sm transition-colors shadow-md whitespace-nowrap"
               >
                 Subscribe
               </button>
             </form>
-            <p className="text-xs text-brand-silver-400 mt-3 lg:text-right">
+            <p className="text-xs text-brand-silver-400 mt-3 text-center sm:text-right">
               We respect your privacy. No spam, just premium real estate.
             </p>
           </div>
@@ -104,7 +104,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="xl:w-2/3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-sm">
+          <div className="xl:w-2/3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 text-sm">
             <div>
               <h4 className="text-brand-silver-400 font-medium mb-6">
                 Locations
@@ -327,7 +327,7 @@ export default function Footer() {
         </div>
 
         {/* Middle Section: Contact & Base Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 border-t border-white/10 pt-10 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 border-t border-white/10 pt-8 sm:pt-10 mb-8 sm:mb-10">
           {/* Socials */}
           <div>
             <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-silver-500 mb-4">
@@ -397,7 +397,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10 text-xs text-brand-silver-500">
           <p>© 2026 YetiHomes Real Estate. All rights reserved.</p>
 
-          <div className="flex flex-wrap items-center gap-4 md:gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6">
             <a
               href="/legal/terms-conditions"
               className="hover:text-white transition-colors"
