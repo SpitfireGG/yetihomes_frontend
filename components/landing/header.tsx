@@ -85,7 +85,7 @@ export default function Navbar() {
     <>
       <header className="flex items-center justify-between px-6 lg:px-12 py-2.5 border-b border-outline-variant bg-surface/80 backdrop-blur-md sticky top-0 z-[60] transition-all font-sans relative">
         <div className="flex items-center gap-3 cursor-pointer group z-50 relative">
-          <div className="relative w-10 h-10 lg:w-11 lg:h-11 group-hover:scale-105 transition-transform duration-300">
+          <div className="relative w-18 h-18 lg:w-11 lg:h-11 group-hover:scale-105 transition-transform duration-300">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}

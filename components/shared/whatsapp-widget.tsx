@@ -56,7 +56,7 @@ export default function WhatsAppWidget() {
       name: "Yasub Sunuwar",
       role: "Managing Director",
       phone: "9779851446902",
-      img: "/teams/ngimaFace.jpeg",
+      img: "/teams/yasub.png",
       status: "online",
       message: "Hello! How can I help you find your dream home?",
     },
@@ -181,7 +181,6 @@ export default function WhatsAppWidget() {
         )}
       </AnimatePresence>
 
-      {/* --- Floating Button --- */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
