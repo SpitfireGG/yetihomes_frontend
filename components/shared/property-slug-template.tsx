@@ -10,7 +10,13 @@ import Footer from "@/components/landing/footer";
 import NeighborhoodExplorer from "@/components/shared/explorer";
 import type { PropertyType } from "@/data/property-catalog";
 import type { SearchProperty } from "@/lib/api";
-import { formatNprPrice, getPrimaryImageUrl } from "@/lib/api";
+import { formatNprPrice, getPrimaryImageUrl, submitInquiry } from "@/lib/api";
+
+const AGENTS = [
+  { name: "Kritika", image: "/teams/kritikaFace.jpg", phone: "9779768998508" },
+  { name: "Ngima", image: "/teams/ngimaFace.jpeg", phone: "9779851446901" },
+  { name: "Suresh", image: "/teams/team1.jpeg", phone: "9779851361431" },
+];
 
 type SpecItem = {
   icon: React.ComponentType<{
@@ -74,7 +80,7 @@ function getGalleryImages(property: SearchProperty) {
   return candidates.slice(0, 5);
 }
 
-function getPageContent(property: SearchProperty): PageContent {
+function getPageContent(property: SearchProperty, agentName: string): PageContent {
   switch (property.propertyType) {
     case "HOUSE":
       return {
@@ -86,37 +92,37 @@ function getPageContent(property: SearchProperty): PageContent {
         quickSpecs: [
           ...(property.areaValue
             ? [
-                {
-                  icon: Icons.maximize,
-                  label: "Built-up Area",
-                  value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
-                },
-              ]
+              {
+                icon: Icons.maximize,
+                label: "Built-up Area",
+                value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
+              },
+            ]
             : []),
           ...(property.houseDetails?.bedrooms
             ? [
-                {
-                  icon: Icons.bedDouble,
-                  label: "Bedrooms",
-                  value: `${property.houseDetails.bedrooms} Beds`,
-                },
-              ]
+              {
+                icon: Icons.bedDouble,
+                label: "Bedrooms",
+                value: `${property.houseDetails.bedrooms} Beds`,
+              },
+            ]
             : []),
           ...(property.houseDetails?.bathrooms
             ? [
-                {
-                  icon: Icons.bathroom,
-                  label: "Bathrooms",
-                  value: `${property.houseDetails.bathrooms} Baths`,
-                },
-              ]
+              {
+                icon: Icons.bathroom,
+                label: "Bathrooms",
+                value: `${property.houseDetails.bathrooms} Baths`,
+              },
+            ]
             : []),
         ],
         detailSpecs: [
           {
             icon: Icons.maximize,
             label: "Area",
-            value: `${property.areaValue || "N/A"} ${property.areaUnit?.replace("_", " ") || ""}`,
+            value: property.areaValue ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}` : "N/A",
           },
           {
             icon: Icons.layers,
@@ -170,9 +176,9 @@ function getPageContent(property: SearchProperty): PageContent {
           { icon: Icons.building, label: "Type", value: property.houseDetails?.subType?.replace("_", " ") || "House" },
           { icon: Icons.file, label: "Title Status", value: property.titleStatus?.replace("_", " ") || "N/A" },
         ],
-        agentRole: "Residential Advisor",
+        agentRole: "Residential Advisory Team",
         agentDescription:
-          "I help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.",
+          `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -187,37 +193,37 @@ function getPageContent(property: SearchProperty): PageContent {
         quickSpecs: [
           ...(property.areaValue
             ? [
-                {
-                  icon: Icons.maximize,
-                  label: "Land Area",
-                  value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
-                },
-              ]
+              {
+                icon: Icons.maximize,
+                label: "Land Area",
+                value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
+              },
+            ]
             : []),
           ...(property.landDetails?.roadAccessFeet
             ? [
-                {
-                  icon: Icons.navigation,
-                  label: "Access",
-                  value: `${property.landDetails.roadAccessFeet}ft Road`,
-                },
-              ]
+              {
+                icon: Icons.navigation,
+                label: "Access",
+                value: `${property.landDetails.roadAccessFeet}ft Road`,
+              },
+            ]
             : []),
           ...(property.landDetails?.facingDirection
             ? [
-                {
-                  icon: Icons.compass,
-                  label: "Facing",
-                  value: property.landDetails.facingDirection.replace("_", " "),
-                },
-              ]
+              {
+                icon: Icons.compass,
+                label: "Facing",
+                value: property.landDetails.facingDirection.replace("_", " "),
+              },
+            ]
             : []),
         ],
         detailSpecs: [
           {
             icon: Icons.maximize,
             label: "Land Area",
-            value: `${property.areaValue || "N/A"} ${property.areaUnit?.replace("_", " ") || ""}`,
+            value: property.areaValue ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}` : "N/A",
           },
           {
             icon: Icons.navigation,
@@ -251,9 +257,9 @@ function getPageContent(property: SearchProperty): PageContent {
           { icon: Icons.file, label: "Title Status", value: property.titleStatus?.replace("_", " ") || "N/A" },
           { icon: Icons.navigation, label: "Corner Plot", value: property.landDetails?.isCornerPlot ? "Yes" : "No" },
         ],
-        agentRole: "Land Advisory Desk",
+        agentRole: "Land Advisory Team",
         agentDescription:
-          "I facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.",
+          `Hi, I'm ${agentName} from YetiHomes Estate. We facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -268,37 +274,37 @@ function getPageContent(property: SearchProperty): PageContent {
         quickSpecs: [
           ...(property.areaValue
             ? [
-                {
-                  icon: Icons.maximize,
-                  label: "Built-up Area",
-                  value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
-                },
-              ]
+              {
+                icon: Icons.maximize,
+                label: "Built-up Area",
+                value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
+              },
+            ]
             : []),
           ...(property.apartmentDetails?.floorNumber
             ? [
-                {
-                  icon: Icons.layers,
-                  label: "Floor",
-                  value: String(property.apartmentDetails.floorNumber),
-                },
-              ]
+              {
+                icon: Icons.layers,
+                label: "Floor",
+                value: String(property.apartmentDetails.floorNumber),
+              },
+            ]
             : []),
           ...(property.apartmentDetails?.bedrooms
             ? [
-                {
-                  icon: Icons.bedDouble,
-                  label: "Bedrooms",
-                  value: `${property.apartmentDetails.bedrooms} Beds`,
-                },
-              ]
+              {
+                icon: Icons.bedDouble,
+                label: "Bedrooms",
+                value: `${property.apartmentDetails.bedrooms} Beds`,
+              },
+            ]
             : []),
         ],
         detailSpecs: [
           {
             icon: Icons.maximize,
             label: "Built-up Area",
-            value: `${property.areaValue || "N/A"} ${property.areaUnit?.replace("_", " ") || ""}`,
+            value: property.areaValue ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}` : "N/A",
           },
           {
             icon: Icons.layers,
@@ -347,9 +353,9 @@ function getPageContent(property: SearchProperty): PageContent {
               "Apartment",
           },
         ],
-        agentRole: "Apartment Sales Desk",
+        agentRole: "Apartment Sales Team",
         agentDescription:
-          "I help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.",
+          `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -365,8 +371,8 @@ function getPageContent(property: SearchProperty): PageContent {
         quickSpecs: [],
         detailSpecs: [],
         otherDetails: [],
-        agentRole: "Agent",
-        agentDescription: "I can help with this property.",
+        agentRole: "YetiHomes Team",
+        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We can help you with this property.`,
         primaryAction: "Contact",
         secondaryAction: "Details",
       };
@@ -391,6 +397,11 @@ export default function PropertySlugTemplate({
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [hasLiked, setHasLiked] = useState(false);
 
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [inquiryForm, setInquiryForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
   useEffect(() => {
     document.body.style.overflow = selectedImage ? "hidden" : "unset";
 
@@ -400,7 +411,11 @@ export default function PropertySlugTemplate({
   }, [selectedImage]);
 
   const galleryImages = getGalleryImages(property);
-  const content = getPageContent(property);
+  const assignedAgent = AGENTS[(property.id.charCodeAt(0) || 0) % AGENTS.length];
+  const content = getPageContent(property, assignedAgent.name);
+
+  // Generate deterministic view count
+  const viewCount = 100 + ((property.id.charCodeAt(property.id.length - 1) || 0) * 7);
 
   return (
     <main className="min-h-screen bg-white font-sans text-[#111111] pb-24">
@@ -415,12 +430,39 @@ export default function PropertySlugTemplate({
 
       <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-8 flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div>
-          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-light tracking-tight text-black mb-3 leading-[1.1]">
+          <div className="flex flex-wrap gap-2 mb-4">
+            {property.isVerified && (
+              <span className="px-3 py-1 bg-green-100 text-green-700 text-[12px] uppercase font-bold tracking-widest rounded-full flex items-center gap-1">
+                <Icons.check size={14} strokeWidth={3} /> Verified
+              </span>
+            )}
+            {property.isOwnerApproved && (
+              <span className="text-blue-600 text-[11px] uppercase font-bold tracking-widest flex items-center gap-1.5 mt-0.5">
+                <div className="bg-blue-600 text-white rounded-sm w-4 h-4 flex items-center justify-center">
+                  <Icons.check size={12} strokeWidth={4} />
+                </div>
+                Owner Approved
+              </span>
+            )}
+            {property.badgeLabel && (
+              <span className="px-3 py-1 bg-purple-100 text-purple-700 text-[10px] uppercase font-bold tracking-widest rounded-full">
+                {property.badgeLabel}
+              </span>
+            )}
+          </div>
+
+          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-light tracking-tight text-black mb-4 leading-[1.1]">
             {property.title}
           </h1>
-          <div className="flex items-center gap-2 text-gray-500 text-lg">
-            <Icons.mapPin size={18} strokeWidth={1.5} />
-            <span className="font-medium">{property.locationText}</span>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div className="flex items-center gap-2 text-gray-500 text-lg">
+              <Icons.mapPin size={18} strokeWidth={1.5} />
+              <span className="font-medium">{property.locationText}</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-500 text-[15px] font-medium border-l border-gray-200 pl-6">
+              <Icons.eye size={18} strokeWidth={1.5} />
+              <span>{viewCount} people viewed this property</span>
+            </div>
           </div>
         </div>
 
@@ -436,11 +478,10 @@ export default function PropertySlugTemplate({
           </a>
           <button
             onClick={() => setHasLiked((previous) => !previous)}
-            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors ${
-              hasLiked
-                ? "bg-black text-white border-black"
-                : "border-gray-200 hover:border-black text-gray-700 hover:text-black"
-            }`}
+            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors ${hasLiked
+              ? "bg-black text-white border-black"
+              : "border-gray-200 hover:border-black text-gray-700 hover:text-black"
+              }`}
           >
             <Icons.favorite
               size={16}
@@ -473,6 +514,11 @@ export default function PropertySlugTemplate({
             <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-black">
               {formatNprPrice(property.priceAmount)}
             </h2>
+            {property.propertyType === "LAND" && (
+              <span className="text-sm text-gray-500 font-medium tracking-wider mt-1 block">
+                PER ANA
+              </span>
+            )}
           </div>
           <div className="flex flex-wrap items-center gap-8 md:gap-16">
             {content.quickSpecs.map((spec) => (
@@ -539,19 +585,19 @@ export default function PropertySlugTemplate({
 
         <div className="w-full xl:w-[380px] xl:self-start shrink-0">
           <div className="sticky top-32 h-fit rounded-[32px] border border-outline-variant/40 bg-surface-container-lowest p-8 lg:p-10 flex flex-col items-center editorial-shadow">
-            <div className="w-24 h-24 rounded-full overflow-hidden mb-6 relative border-4 border-surface shadow-sm">
+            <div className="w-24 h-24 rounded-full overflow-hidden mb-6 relative border-4 border-surface shadow-sm bg-gray-100">
               <Image
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80"
-                alt="Listing Agent"
+                src={assignedAgent.image}
+                alt={`${assignedAgent.name} from YetiHomes Estate`}
                 fill
                 sizes="96px"
                 className="object-cover"
               />
             </div>
             <h4 className="text-2xl font-medium tracking-tight text-black mb-1">
-              Aarav Sharma
+              {assignedAgent.name} <span className="text-sm text-gray-500 block text-center mt-1">YetiHomes Estate</span>
             </h4>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-8">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-8 mt-2">
               {content.agentRole}
             </p>
             <p className="text-sm text-gray-600 mb-8 leading-relaxed text-center font-light">
@@ -559,23 +605,36 @@ export default function PropertySlugTemplate({
             </p>
 
             <div className="flex flex-col gap-4 w-full">
-              <button className="w-full rounded-xl border border-outline-variant/40 bg-black py-4 text-white text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors flex items-center justify-center gap-3">
+              <a
+                href={`https://wa.me/${assignedAgent.phone}?text=${encodeURIComponent(`Hello ${assignedAgent.name}, I would like to schedule a tour for ${property.title}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full rounded-xl border border-outline-variant/40 bg-black py-4 text-white text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors flex items-center justify-center gap-3"
+              >
                 <Icons.calendar size={14} strokeWidth={2} />
                 {content.primaryAction}
-              </button>
-              <button className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-lowest py-4 text-black text-[11px] font-bold tracking-[0.2em] uppercase hover:border-black transition-colors flex items-center justify-center gap-3">
+              </a>
+              <button
+                onClick={() => setIsRequestModalOpen(true)}
+                className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-lowest py-4 text-black text-[11px] font-bold tracking-[0.2em] uppercase hover:border-black transition-colors flex items-center justify-center gap-3"
+              >
                 <Icons.mail size={14} strokeWidth={2} />
                 {content.secondaryAction}
               </button>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-outline-variant/30 w-full text-center">
-              <a
-                href="tel:+9779812345678"
-                className="inline-flex items-center justify-center gap-2 text-gray-600 hover:text-black transition-colors text-[11px] font-bold tracking-[0.2em] uppercase"
-              >
-                <Icons.phoneCall size={14} strokeWidth={1.5} />
-                +977 98123 45678
+            <div className="mt-8 pt-6 border-t border-outline-variant/30 w-full text-center flex flex-col gap-3">
+              <a href="tel:+9779768998508" className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider">
+                <Icons.phoneCall size={16} strokeWidth={2} />
+                +977 9768998508
+              </a>
+              <a href="tel:+9779851446901" className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider">
+                <Icons.phoneCall size={16} strokeWidth={2} />
+                +977 9851446901
+              </a>
+              <a href="tel:+9779851361431" className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider">
+                <Icons.phoneCall size={16} strokeWidth={2} />
+                +977 9851361431
               </a>
             </div>
           </div>
@@ -719,6 +778,127 @@ export default function PropertySlugTemplate({
                 sizes="90vw"
                 className="object-contain"
               />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Request Details Modal */}
+      <AnimatePresence>
+        {isRequestModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="bg-white rounded-[2rem] p-8 max-w-md w-full relative editorial-shadow"
+            >
+              <button
+                onClick={() => {
+                  setIsRequestModalOpen(false);
+                  setTimeout(() => setShowSuccess(false), 300);
+                }}
+                className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
+              >
+                <Icons.close size={24} />
+              </button>
+
+              {showSuccess ? (
+                <div className="text-center py-8">
+                  <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Icons.check size={40} strokeWidth={3} />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 tracking-tight text-black">Request Sent!</h3>
+                  <p className="text-gray-600 leading-relaxed font-medium">
+                    You will receive a call from our representative shortly to discuss your requirement.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <h3 className="text-2xl font-medium tracking-tight mb-2 text-black">Request Details</h3>
+                  <p className="text-gray-500 mb-8 text-sm leading-relaxed">
+                    Leave your details and we will get back to you with more information about this property.
+                  </p>
+
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      setIsSubmitting(true);
+                      try {
+                        await submitInquiry({
+                          ...inquiryForm,
+                          inquiryType: "Property Details Request",
+                          propertyId: property.id,
+                          propertySlug: property.slug,
+                        });
+                        setShowSuccess(true);
+                      } catch (error) {
+                        console.error(error);
+                        alert("Failed to send request. Please try again.");
+                      } finally {
+                        setIsSubmitting(false);
+                      }
+                    }}
+                    className="flex flex-col gap-5"
+                  >
+                    <div>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Name</label>
+                      <input
+                        required
+                        type="text"
+                        value={inquiryForm.name}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, name: e.target.value })}
+                        className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50"
+                        placeholder="Your full name"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Email</label>
+                      <input
+                        required
+                        type="email"
+                        value={inquiryForm.email}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
+                        className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Phone</label>
+                      <input
+                        required
+                        type="tel"
+                        value={inquiryForm.phone}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
+                        className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50"
+                        placeholder="Your phone number"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Message (Optional)</label>
+                      <textarea
+                        value={inquiryForm.message}
+                        onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
+                        className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50 min-h-[100px] resize-y"
+                        placeholder="Any specific questions?"
+                      />
+                    </div>
+
+                    <button
+                      disabled={isSubmitting}
+                      type="submit"
+                      className="w-full bg-black text-white font-bold tracking-widest uppercase text-[11px] rounded-xl py-4 mt-2 hover:bg-gray-800 transition-colors disabled:opacity-50 flex items-center justify-center"
+                    >
+                      {isSubmitting ? "Sending..." : "Submit Request"}
+                    </button>
+                  </form>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}

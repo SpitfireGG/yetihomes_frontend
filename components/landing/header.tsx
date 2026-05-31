@@ -621,12 +621,14 @@ export default function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Search Input Area */}
-              <form 
+              <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (searchQuery.trim()) {
                     setIsSearchOpen(false);
-                    router.push(`/houses?q=${encodeURIComponent(searchQuery.trim())}`);
+                    router.push(
+                      `/houses?q=${encodeURIComponent(searchQuery.trim())}`,
+                    );
                   }
                 }}
                 className="flex items-center border-b border-outline-variant/30 px-6 py-5"
@@ -640,7 +642,7 @@ export default function Navbar() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by location, property type, or ID..."
+                  placeholder="Search by location, property type..."
                   className="w-full bg-transparent text-on-surface text-lg focus:outline-none placeholder:text-on-surface-variant/50 font-light"
                 />
                 <button

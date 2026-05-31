@@ -258,7 +258,7 @@ const { scrollYProgress } = useScroll({
         >
           <div
             ref={searchRef}
-            className={`w-full bg-white/10 backdrop-blur-3xl p-3 md:p-3 shadow-[0_30px_60px_rgb(0,0,0,0.5)] border border-white/20 flex flex-col transition-all duration-500 pointer-events-auto rounded-3xl xl:rounded-full ${isExpanded ? "xl:rounded-[2rem]" : ""}`}
+            className={`w-full bg-white/10 backdrop-blur-3xl p-3 md:p-4 shadow-[0_30px_60px_rgb(0,0,0,0.5)] border border-white/20 flex flex-col transition-all duration-500 pointer-events-auto rounded-3xl ${isExpanded ? "xl:rounded-[2.5rem]" : "xl:rounded-full"}`}
           >
             <div className="flex flex-col xl:flex-row items-center gap-3 w-full">
               {/* FIXED: Removed overflow-x-auto. Stack inputs gracefully on mobile, inline on desktop */}
@@ -568,7 +568,7 @@ const { scrollYProgress } = useScroll({
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="overflow-hidden"
                 >
-                  <div className="pt-6 pb-2 px-2 xl:px-6 border-t border-white/10 mt-4">
+                  <div className="pt-6 pb-4 px-4 xl:px-8 border-t border-white/10 mt-5">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                       <div className="space-y-3">
                         <label className="text-xs font-bold uppercase tracking-widest text-white/50">

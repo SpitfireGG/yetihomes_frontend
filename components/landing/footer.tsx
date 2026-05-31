@@ -2,7 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { getLandingPageData, type LandingCity, type LandingCategory } from "@/lib/api";
+import {
+  getLandingPageData,
+  type LandingCity,
+  type LandingCategory,
+} from "@/lib/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -80,12 +84,12 @@ export default function Footer() {
         <div className="flex flex-col xl:flex-row gap-12 xl:gap-20 mb-16">
           <div className="xl:w-1/3 flex flex-col gap-6">
             <div className="flex items-center gap-3">
-              <div className="relative w-8 h-8">
+              <div className="relative w-16 h-16">
                 <Image
                   src="/Yeti-Logo-02.svg"
                   alt="YetiHomes Logo"
                   fill
-                  sizes="80px"
+                  sizes="120px"
                   className="object-contain"
                 />
               </div>
@@ -100,14 +104,19 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="xl:w-2/3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm">
+          <div className="xl:w-2/3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-sm">
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">Locations</h4>
+              <h4 className="text-brand-silver-400 font-medium mb-6">
+                Locations
+              </h4>
               <ul className="space-y-3">
                 {cities.length > 0 ? (
                   cities.map((c) => (
                     <li key={c.city}>
-                      <a href={`/houses?city=${encodeURIComponent(c.city)}`} className="hover:text-white transition-colors">
+                      <a
+                        href={`/houses?city=${encodeURIComponent(c.city)}`}
+                        className="hover:text-white transition-colors"
+                      >
                         {c.city}
                       </a>
                     </li>
@@ -115,22 +124,34 @@ export default function Footer() {
                 ) : (
                   <>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Kathmandu
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Lalitpur
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Bhaktapur
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Pokhara
                       </a>
                     </li>
@@ -141,16 +162,22 @@ export default function Footer() {
 
             {/* Column 2 */}
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">Property Types</h4>
+              <h4 className="text-brand-silver-400 font-medium mb-6">
+                Property Types
+              </h4>
               <ul className="space-y-3">
                 {categories.length > 0 ? (
                   categories.map((cat) => {
                     let path = "/houses";
                     if (cat.key === "apartments") path = "/apartments";
-                    if (cat.key === "land-plot" || cat.key === "commercial") path = "/lands";
+                    if (cat.key === "land-plot" || cat.key === "commercial")
+                      path = "/lands";
                     return (
                       <li key={cat.key}>
-                        <a href={path} className="hover:text-white transition-colors capitalize">
+                        <a
+                          href={path}
+                          className="hover:text-white transition-colors capitalize"
+                        >
                           {cat.label}
                         </a>
                       </li>
@@ -159,22 +186,34 @@ export default function Footer() {
                 ) : (
                   <>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Residential Plots
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Commercial Land
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Luxury Villas
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-white transition-colors">
+                      <a
+                        href="#"
+                        className="hover:text-white transition-colors"
+                      >
                         Apartments
                       </a>
                     </li>
@@ -185,7 +224,9 @@ export default function Footer() {
 
             {/* Column 3 */}
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">Services</h4>
+              <h4 className="text-brand-silver-400 font-medium mb-6">
+                Services
+              </h4>
               <ul className="space-y-3">
                 <li>
                   <a href="#" className="hover:text-white transition-colors">
@@ -212,63 +253,72 @@ export default function Footer() {
 
             {/* Column 4 */}
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">Top Picks</h4>
+              <h4 className="text-brand-silver-400 font-medium mb-6">
+                Company
+              </h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Bhaisepati Estates
+                  <a
+                    href="/about"
+                    className="hover:text-white transition-colors"
+                  >
+                    About Company
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Sanepa Heritage
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Budhanilkantha Plots
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Jhamsikhel Commercial
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 5 */}
-            <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">Company</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Contact Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a
+                    href="/teams"
+                    className="hover:text-white transition-colors"
+                  >
                     Meet Our Team
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Affiliations
+                  <a
+                    href="#"
+                    className="hover:text-white transition-colors"
+                  >
+                    Careers
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Legal Documents
+                  <a
+                    href="/legal/cookies"
+                    className="hover:text-white transition-colors"
+                  >
+                    Cookies Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Customer Reviews
+                  <a
+                    href="/legal/terms-conditions"
+                    className="hover:text-white transition-colors"
+                  >
+                    Terms and Conditions
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/legal/disclaimer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Disclaimer and Advisory
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/legal/privacy"
+                    className="hover:text-white transition-colors"
+                  >
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/testimonials"
+                    className="hover:text-white transition-colors"
+                  >
+                    Testimonials
                   </a>
                 </li>
               </ul>
@@ -348,19 +398,31 @@ export default function Footer() {
           <p>© 2026 YetiHomes Real Estate. All rights reserved.</p>
 
           <div className="flex flex-wrap items-center gap-4 md:gap-6">
-            <a href="#" className="hover:text-white transition-colors">
+            <a
+              href="/legal/terms-conditions"
+              className="hover:text-white transition-colors"
+            >
               Terms & Conditions
             </a>
-            <a href="#" className="hover:text-white transition-colors">
+            <a
+              href="/legal/privacy"
+              className="hover:text-white transition-colors"
+            >
               Privacy Policy
             </a>
-            <a href="#" className="hover:text-white transition-colors">
+            <a
+              href="/legal/cookies"
+              className="hover:text-white transition-colors"
+            >
               Cookie Policy
             </a>
             <a href="#" className="hover:text-white transition-colors">
               Sustainability Policy
             </a>
-            <a href="#" className="hover:text-white transition-colors">
+            <a
+              href="/legal/disclaimer"
+              className="hover:text-white transition-colors"
+            >
               Legal Info
             </a>
           </div>

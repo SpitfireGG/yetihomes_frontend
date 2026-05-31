@@ -6,6 +6,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { PropertyType } from "@/data/property-catalog";
 import type { SearchFilters } from "@/lib/api";
+import { getLandingPageData } from "@/lib/api";
 
 const formatPrice = (lakhs: number) => {
   if (lakhs >= 100) {
@@ -37,7 +38,6 @@ const FACING_MAP: Record<string, string> = {
 };
 
 type FilterConfig = {
-  locations: { label: string; city: string }[];
   priceOptions: string[];
   priceRanges: Record<string, { min?: number; max?: number }>;
   areaLabel: string;
@@ -60,11 +60,6 @@ type FilterConfig = {
 
 const filterConfigs: Record<PropertyType, FilterConfig> = {
   house: {
-    locations: [
-      { label: "Bhaisepati, Lalitpur", city: "Lalitpur" },
-      { label: "Baluwatar, Kathmandu", city: "Kathmandu" },
-      { label: "Budhanilkantha, Kathmandu", city: "Kathmandu" },
-    ],
     priceOptions: [
       "Under 2 Cr",
       "2 Cr - 3.5 Cr",
@@ -111,11 +106,6 @@ const filterConfigs: Record<PropertyType, FilterConfig> = {
     },
   },
   land: {
-    locations: [
-      { label: "Bhaisepati, Lalitpur", city: "Lalitpur" },
-      { label: "Satdobato, Lalitpur", city: "Lalitpur" },
-      { label: "Godawari, Lalitpur", city: "Lalitpur" },
-    ],
     priceOptions: [
       "Under 50 Lakh/aana",
       "50 Lakh - 1 Cr/aana",
@@ -162,11 +152,6 @@ const filterConfigs: Record<PropertyType, FilterConfig> = {
     },
   },
   apartment: {
-    locations: [
-      { label: "Patan Dhoka, Lalitpur", city: "Lalitpur" },
-      { label: "Baluwatar, Kathmandu", city: "Kathmandu" },
-      { label: "Jhamsikhel, Lalitpur", city: "Lalitpur" },
-    ],
     priceOptions: [
       "Under 1 Cr",
       "1 Cr - 2 Cr",
@@ -332,6 +317,24 @@ export default function CustomFilter({
   const [minPrice, setMinPrice] = useState<number>(config.defaults.minPrice);
   const [maxPrice, setMaxPrice] = useState<number>(config.defaults.maxPrice);
 
+  // Dynamic locations from API
+  const [apiLocations, setApiLocations] = useState<{ label: string; city: string }[]>([]);
+  const [locationsLoading, setLocationsLoading] = useState(true);
+
+  useEffect(() => {
+    setLocationsLoading(true);
+    getLandingPageData()
+      .then((data) => {
+        const mapped = data.cities.map((c) => ({
+          label: c.city,
+          city: c.city,
+        }));
+        setApiLocations(mapped);
+      })
+      .catch(() => setApiLocations([]))
+      .finally(() => setLocationsLoading(false));
+  }, []);
+
   // Emit filter changes to parent
   const emitFilters = useCallback(() => {
     if (!onFilterChange) return;
@@ -350,7 +353,7 @@ export default function CustomFilter({
 
     // Location — use city from selected locations
     if (selectedLocations.length > 0) {
-      const location = config.locations.find(
+      const location = apiLocations.find(
         (l) => l.label === selectedLocations[0],
       );
       if (location) {
@@ -488,31 +491,44 @@ export default function CustomFilter({
           </div>
 
           <div className="space-y-3 px-1">
-            {config.locations.map((location) => (
-              <label
-                key={location.label}
-                className="flex items-center gap-3 cursor-pointer group"
-                onClick={(event) => {
-                  event.preventDefault();
-                  toggleValue(location.label, setSelectedLocations);
-                }}
-              >
-                <div
-                  className={`w-5 h-5 rounded-[6px] border flex items-center justify-center transition-all ${
-                    selectedLocations.includes(location.label)
-                      ? "bg-primary border-primary"
-                      : "bg-surface-container-lowest border-outline group-hover:border-primary/40"
-                  }`}
+            {locationsLoading ? (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-[6px] bg-surface-container-high animate-pulse" />
+                    <div className="h-4 w-28 rounded bg-surface-container-high animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            ) : apiLocations.length > 0 ? (
+              apiLocations.map((location) => (
+                <label
+                  key={location.label}
+                  className="flex items-center gap-3 cursor-pointer group"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    toggleValue(location.label, setSelectedLocations);
+                  }}
                 >
-                  {selectedLocations.includes(location.label) && (
-                    <Icons.check size={14} strokeWidth={3} className="text-white" />
-                  )}
-                </div>
-                <span className="text-sm font-medium text-on-surface-variant group-hover:text-on-surface transition-colors select-none">
-                  {location.label}
-                </span>
-              </label>
-            ))}
+                  <div
+                    className={`w-5 h-5 rounded-[6px] border flex items-center justify-center transition-all ${
+                      selectedLocations.includes(location.label)
+                        ? "bg-primary border-primary"
+                        : "bg-surface-container-lowest border-outline group-hover:border-primary/40"
+                    }`}
+                  >
+                    {selectedLocations.includes(location.label) && (
+                      <Icons.check size={14} strokeWidth={3} className="text-white" />
+                    )}
+                  </div>
+                  <span className="text-sm font-medium text-on-surface-variant group-hover:text-on-surface transition-colors select-none">
+                    {location.label}
+                  </span>
+                </label>
+              ))
+            ) : (
+              <p className="text-xs text-on-surface-variant">No locations available</p>
+            )}
           </div>
         </section>
 

@@ -34,9 +34,11 @@ function PropertyFooterStat({ property }: { property: SearchProperty }) {
         <span className="text-sm font-bold text-on-surface">
           {property.areaValue ?? "—"}
         </span>
-        <span className="text-xs font-medium text-outline">
-          {property.areaUnit?.replace("_", " ") ?? ""}
-        </span>
+        {property.areaValue && (
+          <span className="text-xs font-medium text-outline">
+            {property.areaUnit?.replace("_", " ") ?? ""}
+          </span>
+        )}
       </div>
     );
   }
@@ -75,6 +77,8 @@ function getCardMeta(property: SearchProperty): CardMetaItem[] {
 
   if (property.propertyType === "LAND" && property.landDetails) {
     const meta: CardMetaItem[] = [];
+    if (property.areaValue && property.areaUnit)
+      meta.push({ icon: Icons.maximize, iconClass: "text-secondary", value: `${property.areaValue} ${property.areaUnit.replace("_", " ")}` });
     if (property.landDetails.roadAccessFeet)
       meta.push({ icon: Icons.navigation, iconClass: "text-primary", value: `${property.landDetails.roadAccessFeet} ft Road` });
     if (property.landDetails.facingDirection)

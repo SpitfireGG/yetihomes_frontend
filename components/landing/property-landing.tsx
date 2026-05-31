@@ -1,11 +1,15 @@
+"use client";
+
 import { Icons } from "@/components/ui/icons";
 import { IconSquareCheck } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { ElementType } from "react";
+import { useState, type ElementType } from "react";
 import SectionHeading from "../shared/sectionHeading";
 import type { LandingCategory, LandingCategoryKey } from "@/lib/api";
 import type { LandingCityCard } from "@/lib/landing-server-cache";
+import { RequirementModal, useRequirementModal } from "@/components/shared/requirement-modal";
+import { ExpertModal, useExpertModal } from "@/components/shared/expert-modal";
 
 const CATEGORY_TO_ROUTE: Record<string, string> = {
   residential: "/houses",
@@ -16,61 +20,6 @@ const CATEGORY_TO_ROUTE: Record<string, string> = {
   "land-plot": "/lands",
 };
 
-type FallbackCategory = LandingCategory;
-
-const fallbackCategories: FallbackCategory[] = [
-  { key: "residential", label: "Residential", count: 0 },
-  { key: "commercial", label: "Commercial", count: 0 },
-  { key: "semi-commercial", label: "Semi-Commercial", count: 0 },
-  { key: "villa", label: "Villa", count: 0 },
-  { key: "apartments", label: "Apartments", count: 0 },
-  { key: "land-plot", label: "Land Plot", count: 0 },
-];
-
-const fallbackCities: LandingCityCard[] = [
-  {
-    city: "Kavrepalanchok",
-    count: 15,
-    imageUrl:
-      "https://images.unsplash.com/photo-1599387113175-9c84918f6233?auto=format&fit=crop&w=600&q=80",
-    dominantPropertyType: "LAND",
-  },
-  {
-    city: "Lalitpur",
-    count: 90,
-    imageUrl:
-      "https://images.unsplash.com/photo-1629813959196-8ac01f11cb20?auto=format&fit=crop&w=600&q=80",
-    dominantPropertyType: "HOUSE",
-  },
-  {
-    city: "Kathmandu",
-    count: 160,
-    imageUrl:
-      "https://images.unsplash.com/photo-1598263156828-9842c36a4491?auto=format&fit=crop&w=600&q=80",
-    dominantPropertyType: "HOUSE",
-  },
-  {
-    city: "Budhanilkantha",
-    count: 50,
-    imageUrl:
-      "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=600&q=80",
-    dominantPropertyType: "HOUSE",
-  },
-  {
-    city: "Madhyapur Thimi",
-    count: 35,
-    imageUrl:
-      "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=600&q=80",
-    dominantPropertyType: "HOUSE",
-  },
-  {
-    city: "Bhaktapur",
-    count: 65,
-    imageUrl:
-      "https://images.unsplash.com/photo-1576941089067-2de3c901e126?auto=format&fit=crop&w=600&q=80",
-    dominantPropertyType: "HOUSE",
-  },
-];
 
 const categoryIconMap: Record<LandingCategoryKey, ElementType> = {
   residential: Icons.home,
@@ -85,7 +34,13 @@ function formatListingCount(count: number) {
   return `${count} ${count === 1 ? "listing" : "listings"}`;
 }
 
-function CustomRequirementCTA() {
+function CustomRequirementCTA({
+  onSendRequirement,
+  onTalkToExpert,
+}: {
+  onSendRequirement: () => void;
+  onTalkToExpert: () => void;
+}) {
   return (
     <section className="bg-surface-container-lowest px-6 pb-12 pt-8 lg:px-12">
       <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 overflow-hidden rounded-[20px] bg-gradient-to-r from-primary via-primary to-secondary p-8 text-white shadow-lg lg:flex-row lg:p-12">
@@ -110,11 +65,17 @@ function CustomRequirementCTA() {
 
         <div className="relative z-10 flex w-full shrink-0 flex-col items-center gap-4 lg:w-auto lg:items-end">
           <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
-            <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-surface-container-lowest px-6 py-3 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary-container sm:w-auto">
+            <button
+              onClick={onSendRequirement}
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-surface-container-lowest px-6 py-3 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary-container sm:w-auto"
+            >
               Send us your Requirement
               <Icons.arrowRight size={16} />
             </button>
-            <button className="flex w-full items-center justify-center rounded-lg border border-white/50 bg-transparent px-6 py-3 text-sm font-bold text-white transition-all hover:border-white hover:bg-white/10 sm:w-auto">
+            <button
+              onClick={onTalkToExpert}
+              className="flex w-full items-center justify-center rounded-lg border border-white/50 bg-transparent px-6 py-3 text-sm font-bold text-white transition-all hover:border-white hover:bg-white/10 sm:w-auto"
+            >
               Talk to an Expert
             </button>
           </div>
@@ -223,15 +184,23 @@ export default function PropertyLanding({
   categories?: LandingCategory[];
   cities?: LandingCityCard[];
 }) {
-  const categoriesToRender =
-    categories && categories.length > 0 ? categories : fallbackCategories;
-  const citiesToRender = cities && cities.length > 0 ? cities : fallbackCities;
+  const hasCategories = categories && categories.length > 0;
+  const hasCities = cities && cities.length > 0;
+
+  const requirementModal = useRequirementModal();
+  const expertModal = useExpertModal();
 
   return (
     <main className="min-h-screen bg-background font-sans text-on-surface antialiased">
-      <CustomRequirementCTA />
-      <FeaturedCategories categories={categoriesToRender} />
-      <CityGrid cities={citiesToRender} />
+      <CustomRequirementCTA
+        onSendRequirement={requirementModal.open}
+        onTalkToExpert={expertModal.open}
+      />
+      {hasCategories ? <FeaturedCategories categories={categories} /> : null}
+      {hasCities ? <CityGrid cities={cities} /> : null}
+
+      <RequirementModal isOpen={requirementModal.isOpen} onClose={requirementModal.close} />
+      <ExpertModal isOpen={expertModal.isOpen} onClose={expertModal.close} />
     </main>
   );
 }
