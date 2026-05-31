@@ -274,10 +274,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="hover:text-white transition-colors"
-                  >
+                  <a href="#" className="hover:text-white transition-colors">
                     Careers
                   </a>
                 </li>
@@ -379,10 +376,10 @@ export default function Footer() {
               Direct Lines
             </h4>
             <p className="text-sm text-white font-medium mb-1">
-              +977 9768998508
+              +977 9851446901
             </p>
             <p className="text-sm text-white font-medium mb-1">
-              +977 9851446901
+              +977 9851446902
             </p>
             <p className="text-sm text-white font-medium mb-1">
               +977 9851361431

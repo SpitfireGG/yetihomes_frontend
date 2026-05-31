@@ -53,20 +53,28 @@ export default function WhatsAppWidget() {
   // Authentic Agent Data
   const agents = [
     {
-      name: "Kritika",
-      role: "Property Advisor",
-      phone: "9779768998508",
-      img: "/teams/kritikaFace.jpg",
-      status: "online",
-      message: "Hi there! Looking for a property in Kathmandu?",
-    },
-    {
-      name: "Ngima",
-      role: "Sales Director",
-      phone: "9779768998508",
+      name: "Yasub Sunuwar",
+      role: "Managing Director",
+      phone: "9779851446902",
       img: "/teams/ngimaFace.jpeg",
       status: "online",
       message: "Hello! How can I help you find your dream home?",
+    },
+    {
+      name: "Kritika Karmacharya",
+      role: "Property Advisor",
+      phone: "9779851446901",
+      img: "/teams/kritikaFace.jpg",
+      status: "online",
+      message: "Hi there! Are you looking to buy sell or rent properties?",
+    },
+    {
+      name: "Ngima Sherpa",
+      role: "Founder & CEO",
+      phone: "9779",
+      img: "/teams/ngimaFace.jpeg",
+      status: "online",
+      message: "Hi there! Are you looking to buy sell or rent properties?",
     },
   ];
 
