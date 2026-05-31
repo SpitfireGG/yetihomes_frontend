@@ -36,6 +36,11 @@ export const metadata: Metadata = {
     description:
       "Discover curated homes, apartments, and land for sale in Nepal.",
   },
+  icons: {
+    icon: "/Yeti-Logo-01.svg",
+    shortcut: "/Yeti-Logo-01.svg",
+    apple: "/Yeti-Logo-01.svg",
+  },
   robots: {
     index: true,
     follow: true,
