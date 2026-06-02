@@ -168,7 +168,7 @@ export default function CompanyTeamPageClient({
           </AnimatePresence>
         </div>
 
-        <div className="absolute right-0 bottom-12 z-40 flex items-center gap-3">
+        <div className="absolute right-4 bottom-12 z-40 flex items-center gap-3 sm:right-0">
           <button
             onClick={() => paginate(-1)}
             className="flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white transition-colors hover:bg-gray-50"

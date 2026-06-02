@@ -63,6 +63,9 @@ export type HouseDetails = {
   parkingSpaces: number | null;
   furnishingStatus: string | null;
   buildYear: number | null;
+  facingDirection: string | null;
+  roadType: string | null;
+  roadSize: number | null;
 };
 
 export type ApartmentDetails = {
@@ -75,6 +78,9 @@ export type ApartmentDetails = {
   hasLift: boolean;
   hasParking: boolean;
   furnishingStatus: string | null;
+  facingDirection: string | null;
+  roadType: string | null;
+  roadSize: number | null;
 };
 
 export type LandDetails = {
@@ -83,13 +89,21 @@ export type LandDetails = {
   frontageFeet: string | null;
   facingDirection: string | null;
   plotShape: string | null;
+  zoningType: string | null;
   isCornerPlot: boolean;
+};
+
+export type ServiceNearby = {
+  id: string;
+  serviceType: string;
+  name: string;
 };
 
 export type SearchProperty = {
   id: string;
   title: string;
   slug: string;
+  propertyCode: string | null;
   summary: string | null;
   description: string | null;
   propertyType: "HOUSE" | "APARTMENT" | "LAND";
@@ -122,6 +136,7 @@ export type SearchProperty = {
   apartmentDetails: ApartmentDetails | null;
   landDetails: LandDetails | null;
   images: PropertyImage[];
+  servicesNearby?: ServiceNearby[];
 };
 
 export type SearchMeta = {
@@ -687,4 +702,11 @@ export async function getLandingPageData(
     { method: "GET", signal },
   );
   return response.data;
+}
+
+export async function getNewListings(): Promise<SearchProperty[]> {
+  const url = `${API_BASE_URL}/properties/search/new-listings`;
+  const res = await fetch(url, { cache: "no-store" });
+  const json = await res.json();
+  return json.data || [];
 }

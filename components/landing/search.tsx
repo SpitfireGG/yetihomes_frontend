@@ -27,11 +27,11 @@ const PRICE_RANGE_MAP: Record<
   string,
   { minPrice?: number; maxPrice?: number }
 > = {
-  "Under 1 Crore": { maxPrice: 10000000 },
-  "1Cr \u2013 3Cr": { minPrice: 10000000, maxPrice: 30000000 },
-  "3Cr \u2013 5Cr": { minPrice: 30000000, maxPrice: 50000000 },
-  "5Cr \u2013 10Cr": { minPrice: 50000000, maxPrice: 100000000 },
-  "10 Crore +": { minPrice: 100000000 },
+  "2Cr – 3Cr": { minPrice: 20000000, maxPrice: 30000000 },
+  "3Cr – 5Cr": { minPrice: 30000000, maxPrice: 50000000 },
+  "5Cr – 8Cr": { minPrice: 50000000, maxPrice: 80000000 },
+  "8Cr – 15Cr": { minPrice: 80000000, maxPrice: 150000000 },
+  "18 Crore +": { minPrice: 180000000 },
 };
 
 const FACING_TO_ENUM: Record<string, string> = {
@@ -47,7 +47,7 @@ export default function AnimatedHeroSearch() {
   const prefersReducedMotion = useReducedMotion();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-const { scrollYProgress } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
@@ -77,9 +77,9 @@ const { scrollYProgress } = useScroll({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [selections, setSelections] = useState({
-    location: "Baluwatar, Ktm",
+    location: "",
     property: "Houses & Villas",
-    price: "1Cr – 5Cr",
+    price: "3Cr – 5Cr",
     area: "3–5 Aana",
   });
 
@@ -117,13 +117,7 @@ const { scrollYProgress } = useScroll({
       "Residential Lands",
       "Office Spaces",
     ],
-    price: [
-      "Under 1 Crore",
-      "1Cr – 3Cr",
-      "3Cr – 5Cr",
-      "5Cr – 10Cr",
-      "10 Crore +",
-    ],
+    price: ["2Cr – 3Cr", "3Cr – 5Cr", "5Cr – 8Cr", "8Cr – 15Cr", "18 Crore +"],
     area: ["1–3 Aana", "3–5 Aana", "5–10 Aana", "10–20 Aana", "1 Ropani +"],
   };
 
@@ -161,9 +155,9 @@ const { scrollYProgress } = useScroll({
             style={{ opacity: prefersReducedMotion ? 1 : bgOpacity }}
           >
             <picture className="absolute inset-0 z-0 h-full w-full">
-              <source media="(min-width: 768px)" srcSet="/HERO.jpg" />
+              <source media="(min-width: 768px)" srcSet="/HERO.jpeg" />
               <img
-                src="/MobileHero.jpg"
+                src="/MobileHero.jpeg"
                 alt="Yeti Homes Hero Background"
                 className="object-cover w-full h-full object-top md:object-center"
               />
@@ -180,12 +174,12 @@ const { scrollYProgress } = useScroll({
             y: prefersReducedMotion ? 0 : heroTextY,
           }}
         >
-          <div className="hidden md:flex justify-between items-start mt-10 lg:mt-12 pointer-events-auto">
-            <p className="text-white/90 text-sm md:text-base font-light max-w-[200px] leading-relaxed">
-              Redefining high-altitude luxury and exceptional living.
+          <div className="hidden md:flex justify-between items-start mt-10 lg:mt-88 pointer-events-auto">
+            <p className="text-white/90 text-2xl md:text-lg font-light max-w-[200px] leading-relaxed">
+              Premium homes, startegic investments and unmatched service.
             </p>
             <p className="text-white/90 text-sm md:text-base font-light max-w-[200px] text-right leading-relaxed">
-              Discover peak property investments.
+              Discover thoughtfully designed homes in exceptional locations.
             </p>
           </div>
 
@@ -196,7 +190,7 @@ const { scrollYProgress } = useScroll({
               <h1 className="text-white text-3xl sm:text-5xl lg:text-6xl font-medium leading-tight tracking-tight drop-shadow-lg">
                 Yeti Homes Estate.
                 <br />
-                The most trusted name in property
+                The most trusted name in Real Estate.
               </h1>
             </div>
 
@@ -237,7 +231,7 @@ const { scrollYProgress } = useScroll({
               </div>
               <div className="flex-1 lg:flex-none bg-white/10 backdrop-blur-md border border-white/20 p-4 sm:p-6 rounded-2xl md:rounded-3xl w-full max-w-none lg:max-w-[280px] text-white shadow-xl flex flex-col justify-center">
                 <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-1 tracking-tighter">
-                  98%
+                  99.9%
                 </h3>
                 <p className="text-[9px] sm:text-xs md:text-sm font-light opacity-80 uppercase tracking-widest">
                   Client <span className="hidden sm:inline">Satisfaction</span>
@@ -263,7 +257,7 @@ const { scrollYProgress } = useScroll({
             <div className="flex flex-col xl:flex-row items-center gap-3 w-full">
               {/* FIXED: Removed overflow-x-auto. Stack inputs gracefully on mobile, inline on desktop */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row w-full gap-3">
-                {/* Location (Dynamic Z-index so active dropdown sits over others) */}
+                {/* Location (Typeable Input) */}
                 <div
                   className={`relative flex-1 ${activeDropdown === "location" ? "z-50" : "z-10"}`}
                 >
@@ -273,22 +267,37 @@ const { scrollYProgress } = useScroll({
                         activeDropdown === "location" ? null : "location",
                       )
                     }
-                    className={`flex items-center gap-3 px-5 py-3.5 rounded-full border transition-all cursor-pointer h-full ${activeDropdown === "location" ? "border-primary bg-primary/20 ring-1 ring-primary/50" : "border-white/10 hover:border-white/30 hover:bg-white/5"}`}
+                    className={`flex items-center gap-3 px-5 py-3.5 rounded-full border transition-all cursor-text h-full ${activeDropdown === "location" ? "border-primary bg-primary/20 ring-1 ring-primary/50" : "border-white/10 hover:border-white/30 hover:bg-white/5"}`}
                   >
                     <Icons.mapPin
                       className={`${activeDropdown === "location" ? "text-primary" : "text-white/80"} shrink-0 transition-colors`}
                       size={20}
                       strokeWidth={1.5}
                     />
-                    <div className="flex flex-col truncate flex-1 text-white">
-                      <span className="text-[11px] text-white/60 font-medium leading-tight">
-                        Location
-                      </span>
-                      <span className="text-sm font-bold leading-snug truncate">
-                        {selections.location}
-                      </span>
-                    </div>
-                    <Icons.chevronDown size={14} className="text-white/40 shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="Search by name or ID..."
+                      value={selections.location}
+                      onChange={(e) => {
+                        setSelections((s) => ({
+                          ...s,
+                          location: e.target.value,
+                        }));
+                      }}
+                      onFocus={() => setActiveDropdown("location")}
+                      className="flex-1 bg-transparent text-sm font-bold text-white placeholder-white/40 outline-none w-full"
+                    />
+                    {selections.location && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelections((s) => ({ ...s, location: "" }));
+                        }}
+                        className="text-white/40 hover:text-white transition-colors shrink-0"
+                      >
+                        <Icons.close size={14} />
+                      </button>
+                    )}
                   </div>
 
                   <AnimatePresence>
@@ -298,26 +307,34 @@ const { scrollYProgress } = useScroll({
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        // Added max-h-[250px] and overflow-y-auto to keep long lists contained
                         className="absolute top-full mt-2 left-0 w-full min-w-[240px] max-h-[250px] overflow-y-auto bg-black/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                       >
-                        {options.location.map((opt) => (
-                          <div
-                            key={opt}
-                            onClick={() => {
-                              setSelections((s) => ({ ...s, location: opt }));
-                              setActiveDropdown(null);
-                            }}
-                            className="px-5 py-3 hover:bg-white/10 cursor-pointer flex items-center justify-between group transition-colors text-white"
-                          >
-                            <span className="text-sm font-medium group-hover:text-primary">
-                              {opt}
-                            </span>
-                            {selections.location === opt && (
-                              <Icons.check size={16} className="text-primary" />
-                            )}
-                          </div>
-                        ))}
+                        {options.location
+                          .filter((opt) =>
+                            opt
+                              .toLowerCase()
+                              .includes(selections.location.toLowerCase()),
+                          )
+                          .map((opt) => (
+                            <div
+                              key={opt}
+                              onClick={() => {
+                                setSelections((s) => ({ ...s, location: opt }));
+                                setActiveDropdown(null);
+                              }}
+                              className="px-5 py-3 hover:bg-white/10 cursor-pointer flex items-center justify-between group transition-colors text-white"
+                            >
+                              <span className="text-sm font-medium group-hover:text-primary">
+                                {opt}
+                              </span>
+                              {selections.location === opt && (
+                                <Icons.check
+                                  size={16}
+                                  className="text-primary"
+                                />
+                              )}
+                            </div>
+                          ))}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -348,7 +365,10 @@ const { scrollYProgress } = useScroll({
                         {selections.property}
                       </span>
                     </div>
-                    <Icons.chevronDown size={14} className="text-white/40 shrink-0" />
+                    <Icons.chevronDown
+                      size={14}
+                      className="text-white/40 shrink-0"
+                    />
                   </div>
 
                   <AnimatePresence>
@@ -407,7 +427,10 @@ const { scrollYProgress } = useScroll({
                         {selections.price}
                       </span>
                     </div>
-                    <Icons.chevronDown size={14} className="text-white/40 shrink-0" />
+                    <Icons.chevronDown
+                      size={14}
+                      className="text-white/40 shrink-0"
+                    />
                   </div>
 
                   <AnimatePresence>
@@ -466,7 +489,10 @@ const { scrollYProgress } = useScroll({
                         {selections.area}
                       </span>
                     </div>
-                    <Icons.chevronDown size={14} className="text-white/40 shrink-0" />
+                    <Icons.chevronDown
+                      size={14}
+                      className="text-white/40 shrink-0"
+                    />
                   </div>
 
                   <AnimatePresence>
@@ -525,10 +551,9 @@ const { scrollYProgress } = useScroll({
                       PROPERTY_TYPE_ROUTE[selections.property] || "/houses";
                     const params = new URLSearchParams();
 
-                    // Location -> city extraction
+                    // Location -> search query (supports name and ID)
                     if (selections.location) {
-                      const city = selections.location.split(",").pop()?.trim();
-                      if (city) params.set("city", city);
+                      params.set("q", selections.location.trim());
                     }
 
                     // Price

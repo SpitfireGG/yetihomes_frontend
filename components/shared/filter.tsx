@@ -76,16 +76,20 @@ const filterConfigs: Record<PropertyType, FilterConfig> = {
     areaUnitMap: { "sq ft": "SQ_FT" },
     typeLabel: "Type Of House",
     typeOptions: [
-      "Detached Home",
+      "Bungalow",
+      "Semi-Bungalow",
       "Villa",
       "Townhouse",
-      "Duplex Home",
+      "Duplex",
+      "Colony House",
     ],
     typeSubTypeMap: {
-      "Detached Home": "DETACHED_HOME",
+      "Bungalow": "BUNGALOW",
+      "Semi-Bungalow": "SEMI_BUNGALOW",
       "Villa": "VILLA",
       "Townhouse": "TOWNHOUSE",
-      "Duplex Home": "DUPLEX_HOME",
+      "Duplex": "DUPLEX",
+      "Colony House": "COLONY_HOUSE",
     },
     featureLabel: "Home Features",
     featureOptions: [
@@ -124,14 +128,16 @@ const filterConfigs: Record<PropertyType, FilterConfig> = {
     typeOptions: [
       "Residential Plot",
       "Commercial Land",
-      "Premium Plot",
       "Agricultural Land",
+      "Colony Land",
+      "Guthi Land",
     ],
     typeSubTypeMap: {
       "Residential Plot": "RESIDENTIAL_PLOT",
       "Commercial Land": "COMMERCIAL_LAND",
-      "Premium Plot": "PREMIUM_PLOT",
       "Agricultural Land": "AGRICULTURAL_LAND",
+      "Colony Land": "COLONY_LAND",
+      "Guthi Land": "GUTHI_LAND",
     },
     featureLabel: "Land Features",
     featureOptions: [
@@ -167,12 +173,13 @@ const filterConfigs: Record<PropertyType, FilterConfig> = {
     areaUnits: ["sq ft"],
     areaUnitMap: { "sq ft": "SQ_FT" },
     typeLabel: "Type Of Unit",
-    typeOptions: ["Apartment", "Penthouse", "Studio", "Condo"],
+    typeOptions: ["Apartment", "Penthouse", "Studio", "Condo", "Luxury"],
     typeSubTypeMap: {
       "Apartment": "APARTMENT",
       "Penthouse": "PENTHOUSE",
       "Studio": "STUDIO",
       "Condo": "CONDO",
+      "Luxury": "LUXURY",
     },
     featureLabel: "Apartment Features",
     featureOptions: [
@@ -449,8 +456,8 @@ export default function CustomFilter({
     setSelectedAreaUnit(config.defaults.areaUnit);
     setMinArea("");
     setMaxArea("");
-    setMinPrice(0);
-    setMaxPrice(1000);
+    setMinPrice(config.defaults.minPrice);
+    setMaxPrice(config.defaults.maxPrice);
     onReset?.();
   };
 
@@ -485,9 +492,11 @@ export default function CustomFilter({
               <Icons.mapPin size={18} strokeWidth={2} className="text-outline" />
               <span className="text-sm font-semibold">Location</span>
             </div>
-            <button className="text-outline hover:text-on-surface transition-colors">
-              <Icons.close size={16} strokeWidth={2.5} />
-            </button>
+            {selectedLocations.length > 0 && (
+              <button onClick={() => setSelectedLocations([])} className="text-outline hover:text-on-surface transition-colors">
+                <Icons.close size={16} strokeWidth={2.5} />
+              </button>
+            )}
           </div>
 
           <div className="space-y-3 px-1">
@@ -540,9 +549,11 @@ export default function CustomFilter({
               <Icons.banknote size={18} strokeWidth={2} className="text-outline" />
               <span className="text-sm font-semibold">Price Range</span>
             </div>
-            <button className="text-outline hover:text-on-surface transition-colors">
-              <Icons.close size={16} strokeWidth={2.5} />
-            </button>
+            {priceRange && (
+              <button onClick={() => setPriceRange("")} className="text-outline hover:text-on-surface transition-colors">
+                <Icons.close size={16} strokeWidth={2.5} />
+              </button>
+            )}
           </div>
 
           <div className="space-y-3 px-1">
@@ -603,9 +614,11 @@ export default function CustomFilter({
               <Icons.layoutGrid size={18} strokeWidth={2} className="text-outline" />
               <span className="text-sm font-semibold">{config.areaLabel}</span>
             </div>
-            <button className="text-outline hover:text-on-surface transition-colors">
-              <Icons.close size={16} strokeWidth={2.5} />
-            </button>
+            {(minArea || maxArea) && (
+              <button onClick={() => { setMinArea(""); setMaxArea(""); }} className="text-outline hover:text-on-surface transition-colors">
+                <Icons.close size={16} strokeWidth={2.5} />
+              </button>
+            )}
           </div>
 
           {config.areaUnits.length > 1 && (
@@ -662,9 +675,11 @@ export default function CustomFilter({
               <Icons.home size={18} strokeWidth={2} className="text-outline" />
               <span className="text-sm font-semibold">{config.typeLabel}</span>
             </div>
-            <button className="text-outline hover:text-on-surface transition-colors">
-              <Icons.close size={16} strokeWidth={2.5} />
-            </button>
+            {selectedTypes.length > 0 && (
+              <button onClick={() => setSelectedTypes([])} className="text-outline hover:text-on-surface transition-colors">
+                <Icons.close size={16} strokeWidth={2.5} />
+              </button>
+            )}
           </div>
 
           <div className="space-y-3 px-1">
@@ -704,9 +719,11 @@ export default function CustomFilter({
               <Icons.layers size={18} strokeWidth={2} className="text-outline" />
               <span className="text-sm font-semibold">{config.featureLabel}</span>
             </div>
-            <button className="text-outline hover:text-on-surface transition-colors">
-              <Icons.close size={16} strokeWidth={2.5} />
-            </button>
+            {selectedFeatures.length > 0 && (
+              <button onClick={() => setSelectedFeatures([])} className="text-outline hover:text-on-surface transition-colors">
+                <Icons.close size={16} strokeWidth={2.5} />
+              </button>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-2.5 px-1">

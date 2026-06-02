@@ -6,7 +6,16 @@ const DynamicMap = dynamic(() => import("./mapBox"), { ssr: false });
 
 const PROPERTY_CENTER: [number, number] = [27.671, 85.312];
 
-export default function NeighborhoodExplorer() {
+export default function NeighborhoodExplorer({
+  latitude,
+  longitude,
+}: {
+  latitude?: number;
+  longitude?: number;
+}) {
+  const center: [number, number] =
+    latitude && longitude ? [latitude, longitude] : PROPERTY_CENTER;
+
   return (
     <section className="py-24 px-6 lg:px-12 bg-white overflow-hidden">
       <div className="max-w-[1440px] mx-auto w-full">
@@ -19,7 +28,7 @@ export default function NeighborhoodExplorer() {
         {/* Full-width Map extending to max-7xl */}
         <div className="w-full relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden  z-10">
           <DynamicMap
-            center={PROPERTY_CENTER}
+            center={center}
             points={[]}
             color="bg-primary"
           />

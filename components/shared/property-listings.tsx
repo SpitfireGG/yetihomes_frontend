@@ -2,7 +2,7 @@
 
 import { Icons } from "@/components/ui/icons";
 
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import type { SearchProperty, SearchFilters } from "@/lib/api";
@@ -61,6 +61,12 @@ function getCardMeta(property: SearchProperty): CardMetaItem[] {
       meta.push({ icon: Icons.maximize, iconClass: "text-secondary", value: `${property.areaValue} ${property.areaUnit.replace("_", " ")}` });
     if (property.houseDetails.bathrooms)
       meta.push({ icon: Icons.bathroom, iconClass: "text-tertiary", value: `${property.houseDetails.bathrooms} Baths` });
+    if (property.houseDetails.facingDirection)
+      meta.push({ icon: Icons.compass, iconClass: "text-primary", value: property.houseDetails.facingDirection.replace("_", " ") });
+    if (property.houseDetails.roadType)
+      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: property.houseDetails.roadType.replace("_", " ") });
+    if (property.houseDetails.roadSize)
+      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: `${property.houseDetails.roadSize}ft Road` });
     return meta;
   }
 
@@ -72,6 +78,12 @@ function getCardMeta(property: SearchProperty): CardMetaItem[] {
       meta.push({ icon: Icons.maximize, iconClass: "text-secondary", value: `${property.areaValue} ${property.areaUnit.replace("_", " ")}` });
     if (property.apartmentDetails.bathrooms)
       meta.push({ icon: Icons.bathroom, iconClass: "text-tertiary", value: `${property.apartmentDetails.bathrooms} Baths` });
+    if (property.apartmentDetails.facingDirection)
+      meta.push({ icon: Icons.compass, iconClass: "text-primary", value: property.apartmentDetails.facingDirection.replace("_", " ") });
+    if (property.apartmentDetails.roadType)
+      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: property.apartmentDetails.roadType.replace("_", " ") });
+    if (property.apartmentDetails.roadSize)
+      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: `${property.apartmentDetails.roadSize}ft Road` });
     return meta;
   }
 
@@ -132,6 +144,106 @@ function SkeletonCard() {
   );
 }
 
+function getPageNumbers(currentPage: number, totalPages: number): (number | "...")[] {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  const pages: (number | "...")[] = [1];
+
+  if (currentPage > 3) {
+    pages.push("...");
+  }
+
+  const rangeStart = Math.max(2, currentPage - 1);
+  const rangeEnd = Math.min(totalPages - 1, currentPage + 1);
+
+  for (let i = rangeStart; i <= rangeEnd; i++) {
+    pages.push(i);
+  }
+
+  if (currentPage < totalPages - 2) {
+    pages.push("...");
+  }
+
+  pages.push(totalPages);
+
+  return pages;
+}
+
+function PaginationControls({
+  currentPage,
+  totalPages,
+  totalResults,
+  pageSize,
+  isLoadingMore,
+  onPageChange,
+}: {
+  currentPage: number;
+  totalPages: number;
+  totalResults: number;
+  pageSize: number;
+  isLoadingMore: boolean;
+  onPageChange: (page: number) => void;
+}) {
+  if (totalPages <= 1) return null;
+
+  const pageNumbers = getPageNumbers(currentPage, totalPages);
+
+  return (
+    <div className="mt-8 flex flex-col items-center gap-4">
+      <div className="flex items-center gap-1.5">
+        <button
+          type="button"
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage <= 1 || isLoadingMore}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface transition-colors hover:border-primary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-outline-variant disabled:hover:text-on-surface"
+        >
+          <Icons.chevronLeft size={18} />
+        </button>
+
+        {pageNumbers.map((page, index) =>
+          page === "..." ? (
+            <span
+              key={`ellipsis-${index}`}
+              className="inline-flex h-9 w-9 items-center justify-center text-sm font-medium text-outline"
+            >
+              ...
+            </span>
+          ) : (
+            <button
+              key={page}
+              type="button"
+              onClick={() => onPageChange(page)}
+              disabled={isLoadingMore}
+              className={`inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-full px-2 text-sm font-semibold transition-all disabled:cursor-not-allowed ${
+                page === currentPage
+                  ? "bg-primary text-on-primary shadow-sm shadow-primary/20"
+                  : "border border-outline-variant bg-surface-container-lowest text-on-surface hover:border-primary hover:text-primary"
+              }`}
+            >
+              {page}
+            </button>
+          ),
+        )}
+
+        <button
+          type="button"
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage >= totalPages || isLoadingMore}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface transition-colors hover:border-primary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-outline-variant disabled:hover:text-on-surface"
+        >
+          <Icons.chevronRight size={18} />
+        </button>
+      </div>
+
+      <p className="text-xs font-medium text-on-surface-variant">
+        Page {currentPage} of {totalPages} ({totalResults.toLocaleString()} results)
+      </p>
+    </div>
+  );
+}
+
 export default function PropertyListings({
   properties,
   total,
@@ -142,10 +254,14 @@ export default function PropertyListings({
   error,
   propertyType,
   sortBy,
+  currentPage: controlledPage,
+  totalPages: controlledTotalPages,
+  pageSize: controlledPageSize,
   onPropertySelect,
   selectedPropertyId,
   onLoadMore,
   onSortChange,
+  onPageChange,
 }: {
   properties: SearchProperty[];
   total: number;
@@ -156,12 +272,27 @@ export default function PropertyListings({
   error: string | null;
   propertyType: PropertyType;
   sortBy?: SearchFilters["sortBy"];
+  currentPage?: number;
+  totalPages?: number;
+  pageSize?: number;
   onPropertySelect?: (property: SearchProperty) => void;
   selectedPropertyId?: string;
   onLoadMore?: () => void;
   onSortChange?: (sort: SearchFilters["sortBy"]) => void;
+  onPageChange?: (page: number) => void;
 }) {
   const collectionLabel = propertyCollectionLabels[propertyType];
+  const PAGE_SIZE = controlledPageSize ?? 20;
+  const currentPage = controlledPage ?? 1;
+  const totalPages = controlledTotalPages ?? Math.ceil(total / PAGE_SIZE);
+
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const displayedProperties = useMemo(
+    () => properties.slice(startIndex, startIndex + PAGE_SIZE),
+    [properties, startIndex, PAGE_SIZE],
+  );
+
+  const usePagination = onPageChange !== undefined && totalPages > 0;
 
   return (
     <div className="h-full flex-1 overflow-y-auto bg-surface px-4 py-5 custom-scrollbar sm:px-6 lg:p-8">
@@ -232,7 +363,7 @@ export default function PropertyListings({
             animate="show"
             className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3"
           >
-            {properties.map((property) => {
+            {(usePagination ? displayedProperties : properties).map((property) => {
               const imageUrl = getPrimaryImageUrl(property.images);
               const cardMeta = getCardMeta(property);
               const typeLabel = getTypeLabel(property);
@@ -278,6 +409,11 @@ export default function PropertyListings({
                   <div className="flex flex-1 flex-col p-5">
                     <div className="mb-2 flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
+                        {property.propertyCode && (
+                          <span className="inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-primary/10 text-primary rounded-md mb-1">
+                            {property.propertyCode}
+                          </span>
+                        )}
                         <h3 className="truncate font-headline text-lg font-semibold leading-tight text-on-surface transition-colors group-hover:text-primary">
                           {property.title}
                         </h3>
@@ -346,7 +482,16 @@ export default function PropertyListings({
             })}
           </motion.div>
 
-          {hasMore && (
+          {usePagination ? (
+            <PaginationControls
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalResults={total}
+              pageSize={PAGE_SIZE}
+              isLoadingMore={isLoadingMore}
+              onPageChange={onPageChange!}
+            />
+          ) : hasMore ? (
             <div className="mt-8 flex justify-center">
               <button
                 onClick={onLoadMore}
@@ -363,7 +508,7 @@ export default function PropertyListings({
                 )}
               </button>
             </div>
-          )}
+          ) : null}
         </>
       )}
     </div>

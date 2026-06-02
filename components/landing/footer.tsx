@@ -1,7 +1,7 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   getLandingPageData,
   type LandingCity,
@@ -29,35 +29,42 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative min-h-[75vh] flex flex-col justify-end pt-16 sm:pt-24 pb-6 sm:pb-8 text-brand-silver-300 font-sans overflow-hidden bg-brand-navy-900">
-      <Image
-        src="/dev.jpg"
-        alt="YetiHomes Footer Background"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center z-0"
-      />
+    <footer className="relative pt-24 pb-8 font-sans overflow-hidden bg-brand-900 selection:bg-brand-300 selection:text-brand-900">
+      {/* Authentic Premium Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-900 via-brand-900 to-brand-800 z-0"></div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-900 via-brand-navy-900/80 to-brand-navy-900/40 backdrop-blur-[2px] z-10"></div>
+      {/* Subtle brand glow effects */}
+      <div className="absolute top-0 left-1/4 w-[50vw] h-[50vw] bg-brand-700/20 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none z-0"></div>
+      <div className="absolute bottom-0 right-0 w-[40vw] h-[40vw] bg-brand-800/40 rounded-full blur-[100px] translate-y-1/3 translate-x-1/3 pointer-events-none z-0"></div>
 
-      <div className="relative z-20 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col justify-between h-full">
-        <div className="flex flex-col lg:flex-row items-center justify-between bg-white/10 backdrop-blur-md border border-white/10 p-6 sm:p-8 lg:p-12 rounded-[28px] mb-12 sm:mb-16 lg:mb-24 shadow-2xl gap-6 lg:gap-0">
-          <div className="max-w-xl w-full lg:w-auto mb-4 lg:mb-0 text-center lg:text-left">
-            <span className="text-brand-accent-200 font-bold text-xs tracking-widest uppercase mb-3 block">
-              Join The Inner Circle
-            </span>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-white mb-4 leading-tight">
-              Unlock Exclusive Off-Market Deals
+      {/* Large faint watermark for aesthetic depth */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[18vw] font-serif font-bold text-white/[0.015] pointer-events-none select-none whitespace-nowrap z-0">
+        YETI HOMES
+      </div>
+
+      <div className="relative z-20 w-full max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col justify-between h-full">
+        {/* Inner Circle Newsletter - Redesigned for a premium feel */}
+        <div className="relative flex flex-col lg:flex-row items-center justify-between bg-brand-800/40 backdrop-blur-xl border border-brand-400/20 p-8 sm:p-10 lg:p-14 rounded-[2rem] mb-20 shadow-2xl gap-8 lg:gap-12 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-700/10 to-transparent pointer-events-none"></div>
+
+          <div className="max-w-xl w-full lg:w-auto relative z-10 text-center lg:text-left">
+            <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
+              <span className="w-8 h-[1px] bg-brand-accent-300"></span>
+              <span className="text-brand-accent-300 font-bold text-xs tracking-[0.2em] uppercase">
+                Join The Inner Circle
+              </span>
+            </div>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-white mb-5 leading-tight">
+              Unlock Exclusive <br className="hidden md:block" /> Off-Market
+              Deals
             </h3>
-            <p className="text-brand-silver-300 text-sm md:text-base leading-relaxed">
-              Get ahead of the market. Join 10,000+ investors and homebuyers
-              receiving the latest property alerts, market insights, and prime
+            <p className="text-brand-200 text-sm md:text-base leading-relaxed max-w-md mx-auto lg:mx-0">
+              Get ahead of the market. Join 10,000+ investors receiving prime
               real estate opportunities in Nepal straight to their inbox.
             </p>
           </div>
 
-          <div className="w-full lg:w-auto flex-1 max-w-lg lg:ml-auto">
+          <div className="w-full lg:w-auto flex-1 max-w-lg lg:ml-auto relative z-10">
             <form
               className="flex flex-col sm:flex-row items-stretch sm:items-center w-full gap-3 sm:gap-0"
               onSubmit={(e) => e.preventDefault()}
@@ -65,95 +72,95 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email address"
-                className="w-full bg-white/5 border border-white/20 text-white placeholder-brand-silver-400 px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary backdrop-blur-sm transition-all text-sm sm:text-base"
+                className="w-full bg-brand-900/50 border border-brand-400/30 text-white placeholder-brand-300/50 px-6 py-4 rounded-xl sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-brand-accent-500/50 focus:border-brand-accent-500 transition-all text-sm sm:text-base"
                 required
               />
               <button
                 type="submit"
-                className="bg-primary hover:bg-brand-800 text-white px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-l-none font-semibold text-sm transition-colors shadow-md whitespace-nowrap"
+                className="bg-gradient-to-b from-slate-100 via-slate-200 to-slate-300 hover:from-white hover:via-slate-100 hover:to-slate-200 text-brand-900 px-8 py-4 rounded-xl sm:rounded-l-none font-extrabold tracking-wide text-sm transition-all duration-300 shadow-[0_0_20px_rgba(203,213,225,0.25)] whitespace-nowrap"
               >
                 Subscribe
               </button>
             </form>
-            <p className="text-xs text-brand-silver-400 mt-3 text-center sm:text-right">
+            <p className="text-xs text-brand-300/70 mt-4 text-center sm:text-right">
               We respect your privacy. No spam, just premium real estate.
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col xl:flex-row gap-12 xl:gap-20 mb-16">
-          <div className="xl:w-1/3 flex flex-col gap-6">
-            <div className="flex items-center gap-3">
-              <div className="relative w-16 h-16">
+        {/* Main Footer Links */}
+        <div className="flex flex-col xl:flex-row gap-16 xl:gap-24 mb-20">
+          <div className="xl:w-1/3 flex flex-col gap-8">
+            <Link href="/" className="flex items-center gap-4 group w-fit">
+              <div className="relative w-16 h-16 group-hover:scale-105 transition-transform duration-500">
                 <Image
                   src="/Yeti-Logo-02.svg"
                   alt="YetiHomes Logo"
                   fill
-                  sizes="120px"
-                  className="object-contain"
+                  sizes="64px"
+                  className="object-contain drop-shadow-lg"
                 />
               </div>
-              <span className="font-serif font-bold text-2xl tracking-tight text-white">
-                YetiHomes
+              <span className="font-serif font-bold text-3xl tracking-tight text-white">
+                YetihomesEstate Pvt. Ltd
               </span>
-            </div>
-            <p className="text-brand-silver-400 text-sm leading-relaxed max-w-sm">
+            </Link>
+            <p className="text-brand-200 text-sm leading-loose max-w-sm">
               Discover extraordinary residential plots, smart value homes, and
               premium real estate across Nepal. Your seamless property journey
-              starts here, guided by local expertise and trust.
+              starts here, guided by local expertise and deep-rooted trust.
             </p>
           </div>
 
-          <div className="xl:w-2/3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 text-sm">
+          <div className="xl:w-2/3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12 text-sm">
+            {/* Column 1 */}
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">
-                Locations
-              </h4>
-              <ul className="space-y-3">
+              <h4 className="text-white font-serif text-lg mb-6">Locations</h4>
+              <ul className="space-y-4">
                 {cities.length > 0 ? (
                   cities.map((c) => (
                     <li key={c.city}>
-                      <a
+                      <Link
                         href={`/houses?city=${encodeURIComponent(c.city)}`}
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         {c.city}
-                      </a>
+                      </Link>
                     </li>
                   ))
                 ) : (
                   <>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Kathmandu
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Lalitpur
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Bhaktapur
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Pokhara
-                      </a>
+                      </Link>
                     </li>
                   </>
                 )}
@@ -162,10 +169,8 @@ export default function Footer() {
 
             {/* Column 2 */}
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">
-                Property Types
-              </h4>
-              <ul className="space-y-3">
+              <h4 className="text-white font-serif text-lg mb-6">Properties</h4>
+              <ul className="space-y-4">
                 {categories.length > 0 ? (
                   categories.map((cat) => {
                     let path = "/houses";
@@ -174,48 +179,48 @@ export default function Footer() {
                       path = "/lands";
                     return (
                       <li key={cat.key}>
-                        <a
+                        <Link
                           href={path}
-                          className="hover:text-white transition-colors capitalize"
+                          className="text-brand-300 hover:text-white transition-colors capitalize"
                         >
                           {cat.label}
-                        </a>
+                        </Link>
                       </li>
                     );
                   })
                 ) : (
                   <>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Residential Plots
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Commercial Land
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Luxury Villas
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="#"
-                        className="hover:text-white transition-colors"
+                        className="text-brand-300 hover:text-white transition-colors"
                       >
                         Apartments
-                      </a>
+                      </Link>
                     </li>
                   </>
                 )}
@@ -224,204 +229,165 @@ export default function Footer() {
 
             {/* Column 3 */}
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">
-                Services
-              </h4>
-              <ul className="space-y-3">
+              <h4 className="text-white font-serif text-lg mb-6">Services</h4>
+              <ul className="space-y-4">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link
+                    href="#"
+                    className="text-brand-300 hover:text-white transition-colors"
+                  >
                     Property Valuation
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link
+                    href="#"
+                    className="text-brand-300 hover:text-white transition-colors"
+                  >
                     Legal Assistance
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link
+                    href="#"
+                    className="text-brand-300 hover:text-white transition-colors"
+                  >
                     Vastu Consultation
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link
+                    href="#"
+                    className="text-brand-300 hover:text-white transition-colors"
+                  >
                     Schedule Site Visit
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
 
             {/* Column 4 */}
             <div>
-              <h4 className="text-brand-silver-400 font-medium mb-6">
-                Company
-              </h4>
-              <ul className="space-y-3">
+              <h4 className="text-white font-serif text-lg mb-6">Company</h4>
+              <ul className="space-y-4">
                 <li>
-                  <a
+                  <Link
                     href="/about"
-                    className="hover:text-white transition-colors"
+                    className="text-brand-300 hover:text-white transition-colors"
                   >
                     About Company
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="/teams"
-                    className="hover:text-white transition-colors"
+                    className="text-brand-300 hover:text-white transition-colors"
                   >
                     Meet Our Team
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link
+                    href="#"
+                    className="text-brand-300 hover:text-white transition-colors"
+                  >
                     Careers
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/legal/cookies"
-                    className="hover:text-white transition-colors"
-                  >
-                    Cookies Policy
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/legal/terms-conditions"
-                    className="hover:text-white transition-colors"
-                  >
-                    Terms and Conditions
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/legal/disclaimer"
-                    className="hover:text-white transition-colors"
-                  >
-                    Disclaimer and Advisory
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/legal/privacy"
-                    className="hover:text-white transition-colors"
-                  >
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a
+                  <Link
                     href="/testimonials"
-                    className="hover:text-white transition-colors"
+                    className="text-brand-300 hover:text-white transition-colors"
                   >
                     Testimonials
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* Middle Section: Contact & Base Info */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 border-t border-white/10 pt-8 sm:pt-10 mb-8 sm:mb-10">
-          {/* Socials */}
+        {/* Contact & Base Info */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 border-t border-brand-400/20 pt-10 mb-10">
           <div>
-            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-silver-500 mb-4">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-400 mb-5">
               Connect With Us
             </h4>
             <div className="flex items-center gap-5">
-              <a
-                href="#"
-                className="text-brand-silver-400 hover:text-white transition-colors"
-              >
-                <FontAwesomeIcon icon={faFacebookF} className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                className="text-brand-silver-400 hover:text-white transition-colors"
-              >
-                <FontAwesomeIcon icon={faInstagram} className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                className="text-brand-silver-400 hover:text-white transition-colors"
-              >
-                <FontAwesomeIcon icon={faXTwitter} className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                className="text-brand-silver-400 hover:text-white transition-colors"
-              >
-                <FontAwesomeIcon icon={faLinkedinIn} className="w-4 h-4" />
-              </a>
+              {[faFacebookF, faInstagram, faXTwitter, faLinkedinIn].map(
+                (icon, i) => (
+                  <Link
+                    key={i}
+                    href="#"
+                    className="w-10 h-10 rounded-full border border-brand-400/30 flex items-center justify-center text-brand-300 hover:bg-brand-accent-500 hover:text-white hover:border-brand-accent-500 transition-all duration-300"
+                  >
+                    <FontAwesomeIcon icon={icon} className="w-4 h-4" />
+                  </Link>
+                ),
+              )}
             </div>
           </div>
 
-          {/* Address */}
           <div>
-            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-silver-500 mb-4">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-400 mb-5">
               Visit Our Base
             </h4>
-            <p className="text-sm text-brand-silver-300 leading-relaxed">
+            <p className="text-sm text-brand-200 leading-relaxed font-medium">
               Chuchepati, Chabahil,
               <br />
               Kathmandu, Nepal, 44600
             </p>
           </div>
 
-          {/* Contact */}
           <div>
-            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-silver-500 mb-4">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-400 mb-5">
               Direct Lines
             </h4>
-            <p className="text-sm text-white font-medium mb-1">
-              +977 9851446901
-            </p>
-            <p className="text-sm text-white font-medium mb-1">
-              +977 9851446902
-            </p>
-            <p className="text-sm text-white font-medium mb-1">
-              +977 9851361431
-            </p>
-            <p className="text-sm text-brand-silver-400 hover:text-white transition-colors cursor-pointer">
-              Estateyetihomes@gmail.com
-            </p>
+            <div className="space-y-2">
+              <p className="text-sm text-white font-medium hover:text-brand-accent-300 transition-colors cursor-pointer w-fit">
+                +977 9851446901
+              </p>
+              <p className="text-sm text-white font-medium hover:text-brand-accent-300 transition-colors cursor-pointer w-fit">
+                +977 9851446902
+              </p>
+              <p className="text-sm text-brand-300 hover:text-brand-accent-300 transition-colors cursor-pointer mt-3 w-fit">
+                Estateyetihomes@gmail.com
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Section: Copyright & Links */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10 text-xs text-brand-silver-500">
-          <p>© 2026 YetiHomes Real Estate. All rights reserved.</p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6">
-            <a
+        {/* Bottom Section: Copyright & Legal */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-brand-400/20 text-xs text-brand-400">
+          <p>
+            © {new Date().getFullYear()} YetiHomes Real Estate. All rights
+            reserved.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <Link
               href="/legal/terms-conditions"
               className="hover:text-white transition-colors"
             >
               Terms & Conditions
-            </a>
-            <a
+            </Link>
+            <Link
               href="/legal/privacy"
               className="hover:text-white transition-colors"
             >
               Privacy Policy
-            </a>
-            <a
+            </Link>
+            <Link
               href="/legal/cookies"
               className="hover:text-white transition-colors"
             >
               Cookie Policy
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Sustainability Policy
-            </a>
-            <a
+            </Link>
+            <Link
               href="/legal/disclaimer"
               className="hover:text-white transition-colors"
             >
               Legal Info
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -7,10 +7,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "@/components/landing/footer";
-import NeighborhoodExplorer from "@/components/shared/explorer";
+
 import type { PropertyType } from "@/data/property-catalog";
 import type { SearchProperty } from "@/lib/api";
 import { formatNprPrice, getPrimaryImageUrl, submitInquiry } from "@/lib/api";
+import { IconBrandZoom } from "@tabler/icons-react";
 
 const AGENTS = [
   { name: "Kritika", image: "/teams/kritikaFace.jpg", phone: "9779768998508" },
@@ -65,7 +66,8 @@ const galleryFallbacks: Record<PropertyType, string[]> = {
 };
 
 function getGalleryImages(property: SearchProperty) {
-  const customImages = property.images?.map((img) => getPrimaryImageUrl([img])) || [];
+  const customImages =
+    property.images?.map((img) => getPrimaryImageUrl([img])) || [];
 
   const typeMap: Record<string, PropertyType> = {
     HOUSE: "house",
@@ -80,7 +82,10 @@ function getGalleryImages(property: SearchProperty) {
   return candidates.slice(0, 5);
 }
 
-function getPageContent(property: SearchProperty, agentName: string): PageContent {
+function getPageContent(
+  property: SearchProperty,
+  agentName: string,
+): PageContent {
   switch (property.propertyType) {
     case "HOUSE":
       return {
@@ -92,37 +97,69 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
         quickSpecs: [
           ...(property.areaValue
             ? [
-              {
-                icon: Icons.maximize,
-                label: "Built-up Area",
-                value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
-              },
-            ]
+                {
+                  icon: Icons.maximize,
+                  label: "Built-up Area",
+                  value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
+                },
+              ]
             : []),
           ...(property.houseDetails?.bedrooms
             ? [
-              {
-                icon: Icons.bedDouble,
-                label: "Bedrooms",
-                value: `${property.houseDetails.bedrooms} Beds`,
-              },
-            ]
+                {
+                  icon: Icons.bedDouble,
+                  label: "Bedrooms",
+                  value: `${property.houseDetails.bedrooms} Beds`,
+                },
+              ]
             : []),
           ...(property.houseDetails?.bathrooms
             ? [
-              {
-                icon: Icons.bathroom,
-                label: "Bathrooms",
-                value: `${property.houseDetails.bathrooms} Baths`,
-              },
-            ]
+                {
+                  icon: Icons.bathroom,
+                  label: "Bathrooms",
+                  value: `${property.houseDetails.bathrooms} Baths`,
+                },
+              ]
+            : []),
+          ...(property.houseDetails?.facingDirection
+            ? [
+                {
+                  icon: Icons.compass,
+                  label: "Facing",
+                  value: property.houseDetails.facingDirection.replace(
+                    "_",
+                    " ",
+                  ),
+                },
+              ]
+            : []),
+          ...(property.houseDetails?.roadType
+            ? [
+                {
+                  icon: Icons.road_access,
+                  label: "Road",
+                  value: property.houseDetails.roadType.replace("_", " "),
+                },
+              ]
+            : []),
+          ...(property.houseDetails?.roadSize
+            ? [
+                {
+                  icon: Icons.road_access,
+                  label: "Road Size",
+                  value: `${property.houseDetails.roadSize}ft`,
+                },
+              ]
             : []),
         ],
         detailSpecs: [
           {
             icon: Icons.maximize,
             label: "Area",
-            value: property.areaValue ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}` : "N/A",
+            value: property.areaValue
+              ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}`
+              : "N/A",
           },
           {
             icon: Icons.layers,
@@ -162,6 +199,25 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
             value: String(property.houseDetails?.buildYear || "N/A"),
           },
           {
+            icon: Icons.compass,
+            label: "Facing",
+            value:
+              property.houseDetails?.facingDirection?.replace("_", " ") ||
+              "N/A",
+          },
+          {
+            icon: Icons.road_access,
+            label: "Road Type",
+            value: property.houseDetails?.roadType?.replace("_", " ") || "N/A",
+          },
+          {
+            icon: Icons.road_access,
+            label: "Road Size",
+            value: property.houseDetails?.roadSize
+              ? `${property.houseDetails.roadSize}ft`
+              : "N/A",
+          },
+          {
             icon: Icons.droplet,
             label: "Water",
             value: property.waterAvailability || "N/A",
@@ -173,12 +229,19 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
           },
         ],
         otherDetails: [
-          { icon: Icons.building, label: "Type", value: property.houseDetails?.subType?.replace("_", " ") || "House" },
-          { icon: Icons.file, label: "Title Status", value: property.titleStatus?.replace("_", " ") || "N/A" },
+          {
+            icon: Icons.building,
+            label: "Type",
+            value: property.houseDetails?.subType?.replace("_", " ") || "House",
+          },
+          {
+            icon: Icons.file,
+            label: "Title Status",
+            value: property.titleStatus?.replace("_", " ") || "N/A",
+          },
         ],
         agentRole: "Residential Advisory Team",
-        agentDescription:
-          `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.`,
+        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -193,37 +256,39 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
         quickSpecs: [
           ...(property.areaValue
             ? [
-              {
-                icon: Icons.maximize,
-                label: "Land Area",
-                value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
-              },
-            ]
+                {
+                  icon: Icons.maximize,
+                  label: "Land Area",
+                  value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
+                },
+              ]
             : []),
           ...(property.landDetails?.roadAccessFeet
             ? [
-              {
-                icon: Icons.navigation,
-                label: "Access",
-                value: `${property.landDetails.roadAccessFeet}ft Road`,
-              },
-            ]
+                {
+                  icon: Icons.navigation,
+                  label: "Access",
+                  value: `${property.landDetails.roadAccessFeet}ft Road`,
+                },
+              ]
             : []),
           ...(property.landDetails?.facingDirection
             ? [
-              {
-                icon: Icons.compass,
-                label: "Facing",
-                value: property.landDetails.facingDirection.replace("_", " "),
-              },
-            ]
+                {
+                  icon: Icons.compass,
+                  label: "Facing",
+                  value: property.landDetails.facingDirection.replace("_", " "),
+                },
+              ]
             : []),
         ],
         detailSpecs: [
           {
             icon: Icons.maximize,
             label: "Land Area",
-            value: property.areaValue ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}` : "N/A",
+            value: property.areaValue
+              ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}`
+              : "N/A",
           },
           {
             icon: Icons.navigation,
@@ -231,10 +296,22 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
             value: `${property.landDetails?.roadAccessFeet || "N/A"}ft Road`,
           },
           {
+            icon: Icons.maximize,
+            label: "Frontage",
+            value: property.landDetails?.frontageFeet
+              ? `${property.landDetails.frontageFeet}ft`
+              : "N/A",
+          },
+          {
             icon: Icons.compass,
             label: "Facing",
             value:
               property.landDetails?.facingDirection?.replace("_", " ") || "N/A",
+          },
+          {
+            icon: Icons.building,
+            label: "Plot Shape",
+            value: property.landDetails?.plotShape || "N/A",
           },
           {
             icon: Icons.file,
@@ -253,13 +330,29 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
           },
         ],
         otherDetails: [
-          { icon: Icons.building, label: "Land Use", value: property.landDetails?.subType?.replace("_", " ") || "Land" },
-          { icon: Icons.file, label: "Title Status", value: property.titleStatus?.replace("_", " ") || "N/A" },
-          { icon: Icons.navigation, label: "Corner Plot", value: property.landDetails?.isCornerPlot ? "Yes" : "No" },
+          {
+            icon: Icons.building,
+            label: "Land Use",
+            value: property.landDetails?.subType?.replace("_", " ") || "Land",
+          },
+          {
+            icon: Icons.file,
+            label: "Title Status",
+            value: property.titleStatus?.replace("_", " ") || "N/A",
+          },
+          {
+            icon: Icons.navigation,
+            label: "Corner Plot",
+            value: property.landDetails?.isCornerPlot ? "Yes" : "No",
+          },
+          {
+            icon: Icons.building,
+            label: "Zoning",
+            value: property.landDetails?.zoningType || "N/A",
+          },
         ],
         agentRole: "Land Advisory Team",
-        agentDescription:
-          `Hi, I'm ${agentName} from YetiHomes Estate. We facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.`,
+        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -274,37 +367,69 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
         quickSpecs: [
           ...(property.areaValue
             ? [
-              {
-                icon: Icons.maximize,
-                label: "Built-up Area",
-                value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
-              },
-            ]
+                {
+                  icon: Icons.maximize,
+                  label: "Built-up Area",
+                  value: `${property.areaValue} ${property.areaUnit?.replace("_", " ")}`,
+                },
+              ]
             : []),
           ...(property.apartmentDetails?.floorNumber
             ? [
-              {
-                icon: Icons.layers,
-                label: "Floor",
-                value: String(property.apartmentDetails.floorNumber),
-              },
-            ]
+                {
+                  icon: Icons.layers,
+                  label: "Floor",
+                  value: String(property.apartmentDetails.floorNumber),
+                },
+              ]
             : []),
           ...(property.apartmentDetails?.bedrooms
             ? [
-              {
-                icon: Icons.bedDouble,
-                label: "Bedrooms",
-                value: `${property.apartmentDetails.bedrooms} Beds`,
-              },
-            ]
+                {
+                  icon: Icons.bedDouble,
+                  label: "Bedrooms",
+                  value: `${property.apartmentDetails.bedrooms} Beds`,
+                },
+              ]
+            : []),
+          ...(property.apartmentDetails?.facingDirection
+            ? [
+                {
+                  icon: Icons.compass,
+                  label: "Facing",
+                  value: property.apartmentDetails.facingDirection.replace(
+                    "_",
+                    " ",
+                  ),
+                },
+              ]
+            : []),
+          ...(property.apartmentDetails?.roadType
+            ? [
+                {
+                  icon: Icons.road_access,
+                  label: "Road",
+                  value: property.apartmentDetails.roadType.replace("_", " "),
+                },
+              ]
+            : []),
+          ...(property.apartmentDetails?.roadSize
+            ? [
+                {
+                  icon: Icons.road_access,
+                  label: "Road Size",
+                  value: `${property.apartmentDetails.roadSize}ft`,
+                },
+              ]
             : []),
         ],
         detailSpecs: [
           {
             icon: Icons.maximize,
             label: "Built-up Area",
-            value: property.areaValue ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}` : "N/A",
+            value: property.areaValue
+              ? `${property.areaValue} ${property.areaUnit?.replace("_", " ") || ""}`
+              : "N/A",
           },
           {
             icon: Icons.layers,
@@ -343,6 +468,26 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
             label: "Parking",
             value: property.apartmentDetails?.hasParking ? "Yes" : "No",
           },
+          {
+            icon: Icons.compass,
+            label: "Facing",
+            value:
+              property.apartmentDetails?.facingDirection?.replace("_", " ") ||
+              "N/A",
+          },
+          {
+            icon: Icons.road_access,
+            label: "Road Type",
+            value:
+              property.apartmentDetails?.roadType?.replace("_", " ") || "N/A",
+          },
+          {
+            icon: Icons.road_access,
+            label: "Road Size",
+            value: property.apartmentDetails?.roadSize
+              ? `${property.apartmentDetails.roadSize}ft`
+              : "N/A",
+          },
         ],
         otherDetails: [
           {
@@ -354,8 +499,7 @@ function getPageContent(property: SearchProperty, agentName: string): PageConten
           },
         ],
         agentRole: "Apartment Sales Team",
-        agentDescription:
-          `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.`,
+        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -398,7 +542,12 @@ export default function PropertySlugTemplate({
   const [hasLiked, setHasLiked] = useState(false);
 
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
-  const [inquiryForm, setInquiryForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [inquiryForm, setInquiryForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -411,11 +560,13 @@ export default function PropertySlugTemplate({
   }, [selectedImage]);
 
   const galleryImages = getGalleryImages(property);
-  const assignedAgent = AGENTS[(property.id.charCodeAt(0) || 0) % AGENTS.length];
+  const assignedAgent =
+    AGENTS[(property.id.charCodeAt(0) || 0) % AGENTS.length];
   const content = getPageContent(property, assignedAgent.name);
 
   // Generate deterministic view count
-  const viewCount = 100 + ((property.id.charCodeAt(property.id.length - 1) || 0) * 7);
+  const viewCount =
+    100 + (property.id.charCodeAt(property.id.length - 1) || 0) * 7;
 
   return (
     <main className="min-h-screen bg-white font-sans text-[#111111] pb-24">
@@ -430,22 +581,24 @@ export default function PropertySlugTemplate({
 
       <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-8 flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div>
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
+            {property.listingType && (
+              <span className="text-[18px] font-semibold text-gray-600 tracking-wide">
+                {property.listingType === "SALE" ? "For Sale" : "For Rent"}
+              </span>
+            )}
             {property.isVerified && (
-              <span className="px-3 py-1 bg-green-100 text-green-700 text-[12px] uppercase font-bold tracking-widest rounded-full flex items-center gap-1">
-                <Icons.check size={14} strokeWidth={3} /> Verified
+              <span className="text-[18px] font-semibold text-gray-600 tracking-wide flex items-center gap-1.5">
+                <Icons.check size={14} strokeWidth={2.5} /> Verified
               </span>
             )}
             {property.isOwnerApproved && (
-              <span className="text-blue-600 text-[11px] uppercase font-bold tracking-widest flex items-center gap-1.5 mt-0.5">
-                <div className="bg-blue-600 text-white rounded-sm w-4 h-4 flex items-center justify-center">
-                  <Icons.check size={12} strokeWidth={4} />
-                </div>
-                Owner Approved
+              <span className="text-[18px] font-semibold text-gray-600 tracking-wide flex items-center gap-1.5">
+                <Icons.check size={14} strokeWidth={2.5} /> Owner Approved
               </span>
             )}
             {property.badgeLabel && (
-              <span className="px-3 py-1 bg-purple-100 text-purple-700 text-[10px] uppercase font-bold tracking-widest rounded-full">
+              <span className="text-[18px] font-semibold text-gray-600 tracking-wide">
                 {property.badgeLabel}
               </span>
             )}
@@ -463,25 +616,39 @@ export default function PropertySlugTemplate({
               <Icons.eye size={18} strokeWidth={1.5} />
               <span>{viewCount} people viewed this property</span>
             </div>
+            {property.propertyCode && (
+              <div className="flex items-center gap-2 text-gray-500 text-[15px] font-medium border-l border-gray-200 pl-6">
+                <span className="font-semibold">
+                  ID: {property.propertyCode}
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
-          <button className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center hover:border-black transition-colors text-gray-700 hover:text-black">
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              alert("Link copied to clipboard!");
+            }}
+            className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center hover:border-black transition-colors text-gray-700 hover:text-black"
+          >
             <Icons.share size={16} strokeWidth={1.5} />
           </button>
           <a
-            href="tel:+9779812345678"
+            href="tel:+9779768998508"
             className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center hover:border-black transition-colors text-gray-700 hover:text-black"
           >
             <Icons.phone size={16} strokeWidth={1.5} />
           </a>
           <button
             onClick={() => setHasLiked((previous) => !previous)}
-            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors ${hasLiked
-              ? "bg-black text-white border-black"
-              : "border-gray-200 hover:border-black text-gray-700 hover:text-black"
-              }`}
+            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-colors ${
+              hasLiked
+                ? "bg-black text-white border-black"
+                : "border-gray-200 hover:border-black text-gray-700 hover:text-black"
+            }`}
           >
             <Icons.favorite
               size={16}
@@ -514,9 +681,13 @@ export default function PropertySlugTemplate({
             <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-black">
               {formatNprPrice(property.priceAmount)}
             </h2>
-            {property.propertyType === "LAND" && (
+            {property.pricePeriod && (
               <span className="text-sm text-gray-500 font-medium tracking-wider mt-1 block">
-                PER ANA
+                {property.pricePeriod === "MONTHLY"
+                  ? "PER MONTH"
+                  : property.pricePeriod === "YEARLY"
+                    ? "PER YEAR"
+                    : ""}
               </span>
             )}
           </div>
@@ -550,7 +721,10 @@ export default function PropertySlugTemplate({
             </div>
             <div className="w-full md:w-3/4 prose prose-lg text-gray-600 font-medium leading-relaxed">
               <p className="mb-6">{property.summary}</p>
-              <p>{property.description || "Further details have not been provided for this listing."}</p>
+              <p>
+                {property.description ||
+                  "Further details have not been provided for this listing."}
+              </p>
             </div>
           </div>
 
@@ -595,7 +769,10 @@ export default function PropertySlugTemplate({
               />
             </div>
             <h4 className="text-2xl font-medium tracking-tight text-black mb-1">
-              {assignedAgent.name} <span className="text-sm text-gray-500 block text-center mt-1">YetiHomes Estate</span>
+              {assignedAgent.name}{" "}
+              <span className="text-sm text-gray-500 block text-center mt-1">
+                YetiHomes Estate
+              </span>
             </h4>
             <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-8 mt-2">
               {content.agentRole}
@@ -624,15 +801,24 @@ export default function PropertySlugTemplate({
             </div>
 
             <div className="mt-8 pt-6 border-t border-outline-variant/30 w-full text-center flex flex-col gap-3">
-              <a href="tel:+9779768998508" className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider">
+              <a
+                href="tel:+9779768998508"
+                className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider"
+              >
                 <Icons.phoneCall size={16} strokeWidth={2} />
                 +977 9768998508
               </a>
-              <a href="tel:+9779851446901" className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider">
+              <a
+                href="tel:+9779851446901"
+                className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider"
+              >
                 <Icons.phoneCall size={16} strokeWidth={2} />
                 +977 9851446901
               </a>
-              <a href="tel:+9779851361431" className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider">
+              <a
+                href="tel:+9779851361431"
+                className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider"
+              >
                 <Icons.phoneCall size={16} strokeWidth={2} />
                 +977 9851361431
               </a>
@@ -743,9 +929,89 @@ export default function PropertySlugTemplate({
         </div>
       </div>
 
-      <div className="w-full border-t border-gray-200 pt-16 mt-24">
-        <NeighborhoodExplorer />
-      </div>
+      {property.servicesNearby && property.servicesNearby.length > 0 && (
+        <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-24">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-16 pt-16">
+            <div className="w-full md:w-1/4 shrink-0">
+              <SectionTitle lines={["Services", "Nearby"]} />
+            </div>
+            <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
+              {property.servicesNearby.map((service) => (
+                <div
+                  key={service.id}
+                  className="flex items-center gap-3 p-4 rounded-xl transition-colors group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <Icons.mapPin size={18} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                      {service.serviceType.replace("_", " ")}
+                    </p>
+                    <p className="font-semibold text-base text-black mt-0.5">
+                      {service.name}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {property.videoUrl && (
+        <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-24">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-16 pt-16">
+            <div className="w-full md:w-1/4 shrink-0">
+              <SectionTitle lines={["Property", "Video"]} />
+            </div>
+            <div className="w-full md:w-3/4">
+              <a
+                href={property.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-6 py-4 rounded-xl hover:bg-gray-50 transition-all group"
+              >
+                <div className="w-10 h-10 text-red flex items-center justify-center shrink-0">
+                  <IconBrandZoom size="46" />
+                </div>
+                <div>
+                  <p className="text-base font-bold text-black group-hover:text-primary transition-colors">
+                    Watch Property Video
+                  </p>
+                  <p className="text-sm text-gray-500">Opens in a new tab</p>
+                </div>
+                <Icons.arrowRight
+                  size={16}
+                  strokeWidth={1.5}
+                  className="text-gray-400 group-hover:text-black transition-colors ml-2"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {property.mapIframe && (
+        <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-24">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-16 border-t border-gray-200 pt-16">
+            <div className="w-full md:w-1/4 shrink-0">
+              <SectionTitle lines={["Location", "Map"]} />
+            </div>
+            <div className="w-full md:w-3/4">
+              <div className="relative w-full h-[400px] rounded-2xl overflow-hidden bg-gray-100">
+                <iframe
+                  src={property.mapIframe}
+                  className="absolute inset-0 w-full h-full"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Lightbox fixed to close on outside click */}
       <AnimatePresence>
@@ -813,16 +1079,22 @@ export default function PropertySlugTemplate({
                   <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Icons.check size={40} strokeWidth={3} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3 tracking-tight text-black">Request Sent!</h3>
+                  <h3 className="text-2xl font-bold mb-3 tracking-tight text-black">
+                    Request Sent!
+                  </h3>
                   <p className="text-gray-600 leading-relaxed font-medium">
-                    You will receive a call from our representative shortly to discuss your requirement.
+                    You will receive a call from our representative shortly to
+                    discuss your requirement.
                   </p>
                 </div>
               ) : (
                 <>
-                  <h3 className="text-2xl font-medium tracking-tight mb-2 text-black">Request Details</h3>
+                  <h3 className="text-2xl font-medium tracking-tight mb-2 text-black">
+                    Request Details
+                  </h3>
                   <p className="text-gray-500 mb-8 text-sm leading-relaxed">
-                    Leave your details and we will get back to you with more information about this property.
+                    Leave your details and we will get back to you with more
+                    information about this property.
                   </p>
 
                   <form
@@ -847,43 +1119,71 @@ export default function PropertySlugTemplate({
                     className="flex flex-col gap-5"
                   >
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Name</label>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">
+                        Name
+                      </label>
                       <input
                         required
                         type="text"
                         value={inquiryForm.name}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, name: e.target.value })}
+                        onChange={(e) =>
+                          setInquiryForm({
+                            ...inquiryForm,
+                            name: e.target.value,
+                          })
+                        }
                         className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50"
                         placeholder="Your full name"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Email</label>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">
+                        Email
+                      </label>
                       <input
                         required
                         type="email"
                         value={inquiryForm.email}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
+                        onChange={(e) =>
+                          setInquiryForm({
+                            ...inquiryForm,
+                            email: e.target.value,
+                          })
+                        }
                         className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50"
                         placeholder="your@email.com"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Phone</label>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">
+                        Phone
+                      </label>
                       <input
                         required
                         type="tel"
                         value={inquiryForm.phone}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
+                        onChange={(e) =>
+                          setInquiryForm({
+                            ...inquiryForm,
+                            phone: e.target.value,
+                          })
+                        }
                         className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50"
                         placeholder="Your phone number"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Message (Optional)</label>
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">
+                        Message (Optional)
+                      </label>
                       <textarea
                         value={inquiryForm.message}
-                        onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
+                        onChange={(e) =>
+                          setInquiryForm({
+                            ...inquiryForm,
+                            message: e.target.value,
+                          })
+                        }
                         className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50 min-h-[100px] resize-y"
                         placeholder="Any specific questions?"
                       />

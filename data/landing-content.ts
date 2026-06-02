@@ -38,7 +38,7 @@ export const heroContent = {
     "Ultra-modern architectural villa with glass walls and clean concrete lines set against a soft dusk sky with warm interior lighting",
 };
 
-export const priceRanges = ["Under 1 Crore", "1Cr - 3Cr", "3Cr - 5Cr", "5Cr - 10Cr", "10 Crore +"];
+export const priceRanges = ["2Cr - 3Cr", "3Cr - 5Cr", "5Cr - 8Cr", "8Cr - 15Cr", "18 Crore +"];
 
 export const propertyTypes = ["Houses & Villas", "Apartments", "Commercial Lands", "Residential Lands"];
 

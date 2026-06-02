@@ -54,7 +54,7 @@ export default function TrustHub() {
             },
             {
               icon: Icons.map,
-              title: "Verified 'Bato Ghate'",
+              title: "Verified 'Bato Ghato'",
               desc: "No more road access disputes. We cross-match the physical site road with the official Napi Naksha (cadastral map) and local ward office records.",
             },
             {

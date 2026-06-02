@@ -77,15 +77,35 @@ export default async function Home() {
           </section>
         ) : null}
 
-        <section className="h-36 overflow-hidden bg-surface-container-lowest md:h-64 -mt-24 lg:h-80">
-          <div className="relative h-full w-full">
+        <section className="relative w-full h-[160px] sm:h-[200px] md:h-[264px] -mt-24 overflow-hidden bg-brand-900">
+          {/* Background Image */}
+          <div className="absolute inset-0 w-full h-full z-0">
             <Image
-              src="/banner4.jpg"
+              src="/banner_yt.jpeg"
               alt="AdvLife Cityscape"
               fill
+              priority
               sizes="100vw"
-              className="absolute bottom-0 left-0 h-full w-full object-cover object-bottom"
+              /* Using object-center usually works best for strip banners so the focal point stays in the middle when cropped on mobile */
+              className="object-cover object-center"
             />
+          </div>
+
+          {/* 1. Subtle Brand Tint: Keeps the image cohesive with your dark red palette without overpowering it */}
+          <div className="absolute inset-0 bg-brand-900/30 mix-blend-overlay z-10 pointer-events-none"></div>
+
+          {/* 2. Top Gradient: Scaled down to just cover the area behind the navbar (h-24 = 96px) */}
+          <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-brand-900/80 via-brand-900/30 to-transparent z-20 pointer-events-none"></div>
+
+          {/* 3. Bottom Gradient: Scaled down for a short banner, blending it smoothly into the page surface below */}
+
+          {/* Container for any text/breadcrumbs you might want to overlay */}
+          <div className="relative z-30 w-full h-full max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col justify-end pb-6 sm:pb-8">
+            {/* Example of how to position text in a short strip banner:
+    <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white drop-shadow-md">
+      Page Title
+    </h1> 
+    */}
           </div>
         </section>
 

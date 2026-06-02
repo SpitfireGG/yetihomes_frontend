@@ -3,6 +3,11 @@ import { propertyTypeToApiPropertyType } from "@/lib/property-cache-utils";
 import { getCachedPropertySearch } from "@/lib/property-server-cache";
 import PropertyBrowserPage from "@/components/shared/property-browser-page";
 
+const INTENT_TO_LISTING_TYPE: Record<string, "SALE" | "RENT"> = {
+  buy: "SALE",
+  rent: "RENT",
+};
+
 export default async function PropertyBrowserRoute({
   propertyType,
   searchParams,
@@ -13,6 +18,12 @@ export default async function PropertyBrowserRoute({
   let initialResponse = null;
   const resolvedSearchParams = searchParams ? await searchParams : {};
 
+  const intent =
+    typeof resolvedSearchParams.intent === "string"
+      ? resolvedSearchParams.intent.toLowerCase()
+      : undefined;
+  const listingType = intent ? INTENT_TO_LISTING_TYPE[intent] : undefined;
+
   const filters: {
     propertyType: "HOUSE" | "APARTMENT" | "LAND";
     limit: number;
@@ -20,10 +31,16 @@ export default async function PropertyBrowserRoute({
     minPrice?: number;
     maxPrice?: number;
     q?: string;
+    listingType?: "SALE" | "RENT";
+    subType?: string;
   } = {
     limit: 20,
     propertyType: propertyTypeToApiPropertyType[propertyType],
   };
+
+  if (listingType) {
+    filters.listingType = listingType;
+  }
 
   if (
     resolvedSearchParams.city &&
@@ -59,6 +76,13 @@ export default async function PropertyBrowserRoute({
     }
   }
 
+  if (
+    resolvedSearchParams.type &&
+    typeof resolvedSearchParams.type === "string"
+  ) {
+    filters.subType = resolvedSearchParams.type;
+  }
+
   try {
     initialResponse = await getCachedPropertySearch(filters);
   } catch {}
@@ -66,6 +90,7 @@ export default async function PropertyBrowserRoute({
   return (
     <PropertyBrowserPage
       propertyType={propertyType}
+      listingType={listingType}
       initialResponse={initialResponse}
       initialFilters={filters}
     />

@@ -2,7 +2,7 @@
 
 import { Icons } from "@/components/ui/icons";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import PropertyDetailsPanel from "@/components/landing/property-details";
 import CustomFilter from "@/components/shared/filter";
@@ -20,10 +20,12 @@ import {
 
 export default function PropertyBrowserPage({
   propertyType,
+  listingType,
   initialResponse,
   initialFilters,
 }: {
   propertyType: PropertyType;
+  listingType?: "SALE" | "RENT";
   initialResponse?: SearchResponse | null;
   initialFilters?: Record<string, unknown>;
 }) {
@@ -47,9 +49,28 @@ export default function PropertyBrowserPage({
     initialFilters,
   });
 
+  const PAGE_SIZE = 20;
+  const totalPages = Math.ceil((meta?.total ?? 0) / PAGE_SIZE);
+
   const [selectedProperty, setSelectedProperty] =
     useState<SearchProperty | null>(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setCurrentPage(page);
+      const requiredItems = page * PAGE_SIZE;
+      if (requiredItems > properties.length && (meta?.hasMore ?? false)) {
+        loadMore();
+      }
+    },
+    [properties.length, meta?.hasMore, loadMore],
+  );
 
   const handleFilterChange = useCallback(
     (newFilters: Partial<SearchFilters>) => {
@@ -99,6 +120,9 @@ export default function PropertyBrowserPage({
             error={error}
             propertyType={propertyType}
             sortBy={filters.sortBy}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageSize={PAGE_SIZE}
             onPropertySelect={(property) => {
               setSelectedProperty((prev) =>
                 prev?.id === property.id ? null : property,
@@ -107,6 +131,7 @@ export default function PropertyBrowserPage({
             selectedPropertyId={selectedProperty?.id}
             onLoadMore={loadMore}
             onSortChange={setSortBy}
+            onPageChange={handlePageChange}
           />
         </div>
       </div>
