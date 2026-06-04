@@ -14,10 +14,15 @@ import {
   faXTwitter,
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
+import { subscribeToNewsletter } from "@/lib/api";
 
 export default function Footer() {
   const [cities, setCities] = useState<LandingCity[]>([]);
   const [categories, setCategories] = useState<LandingCategory[]>([]);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [nlSubmitting, setNlSubmitting] = useState(false);
+  const [nlStatus, setNlStatus] = useState<"idle" | "success" | "error">("idle");
+  const [nlMessage, setNlMessage] = useState("");
 
   useEffect(() => {
     getLandingPageData()
@@ -27,6 +32,24 @@ export default function Footer() {
       })
       .catch((err) => console.error("Failed to load footer data", err));
   }, []);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail.trim()) return;
+    setNlSubmitting(true);
+    setNlStatus("idle");
+    try {
+      await subscribeToNewsletter({ email: newsletterEmail.trim() });
+      setNlStatus("success");
+      setNlMessage("Thanks for subscribing!");
+      setNewsletterEmail("");
+    } catch (err) {
+      setNlStatus("error");
+      setNlMessage(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setNlSubmitting(false);
+    }
+  };
 
   return (
     <footer className="relative pt-24 pb-8 font-sans overflow-hidden bg-brand-900 selection:bg-brand-300 selection:text-brand-900">
@@ -67,21 +90,29 @@ export default function Footer() {
           <div className="w-full lg:w-auto flex-1 max-w-lg lg:ml-auto relative z-10">
             <form
               className="flex flex-col sm:flex-row items-stretch sm:items-center w-full gap-3 sm:gap-0"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleNewsletterSubmit}
             >
               <input
                 type="email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
                 placeholder="Enter your email address"
                 className="w-full bg-brand-900/50 border border-brand-400/30 text-white placeholder-brand-300/50 px-6 py-4 rounded-xl sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-brand-accent-500/50 focus:border-brand-accent-500 transition-all text-sm sm:text-base"
                 required
               />
               <button
                 type="submit"
-                className="bg-gradient-to-b from-slate-100 via-slate-200 to-slate-300 hover:from-white hover:via-slate-100 hover:to-slate-200 text-brand-900 px-8 py-4 rounded-xl sm:rounded-l-none font-extrabold tracking-wide text-sm transition-all duration-300 shadow-[0_0_20px_rgba(203,213,225,0.25)] whitespace-nowrap"
+                disabled={nlSubmitting}
+                className="bg-gradient-to-b from-slate-100 via-slate-200 to-slate-300 hover:from-white hover:via-slate-100 hover:to-slate-200 text-brand-900 px-8 py-4 rounded-xl sm:rounded-l-none font-extrabold tracking-wide text-sm transition-all duration-300 shadow-[0_0_20px_rgba(203,213,225,0.25)] whitespace-nowrap disabled:opacity-50"
               >
-                Subscribe
+                {nlSubmitting ? "Subscribing..." : "Subscribe"}
               </button>
             </form>
+            {nlStatus !== "idle" && (
+              <p className={`text-xs mt-4 text-center sm:text-right ${nlStatus === "success" ? "text-green-400" : "text-red-400"}`}>
+                {nlMessage}
+              </p>
+            )}
             <p className="text-xs text-brand-300/70 mt-4 text-center sm:text-right">
               We respect your privacy. No spam, just premium real estate.
             </p>
@@ -233,7 +264,7 @@ export default function Footer() {
               <ul className="space-y-4">
                 <li>
                   <Link
-                    href="#"
+                    href="/contact"
                     className="text-brand-300 hover:text-white transition-colors"
                   >
                     Property Valuation
@@ -241,7 +272,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/contact"
                     className="text-brand-300 hover:text-white transition-colors"
                   >
                     Legal Assistance
@@ -249,7 +280,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/contact"
                     className="text-brand-300 hover:text-white transition-colors"
                   >
                     Vastu Consultation
@@ -257,7 +288,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/contact"
                     className="text-brand-300 hover:text-white transition-colors"
                   >
                     Schedule Site Visit
@@ -288,7 +319,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/careers"
                     className="text-brand-300 hover:text-white transition-colors"
                   >
                     Careers
@@ -314,17 +345,22 @@ export default function Footer() {
               Connect With Us
             </h4>
             <div className="flex items-center gap-5">
-              {[faFacebookF, faInstagram, faXTwitter, faLinkedinIn].map(
-                (icon, i) => (
-                  <Link
-                    key={i}
-                    href="#"
-                    className="w-10 h-10 rounded-full border border-brand-400/30 flex items-center justify-center text-brand-300 hover:bg-brand-accent-500 hover:text-white hover:border-brand-accent-500 transition-all duration-300"
-                  >
-                    <FontAwesomeIcon icon={icon} className="w-4 h-4" />
-                  </Link>
-                ),
-              )}
+              {[
+                { icon: faFacebookF, href: "https://facebook.com/yetihomes" },
+                { icon: faInstagram, href: "https://instagram.com/yetihomes" },
+                { icon: faXTwitter, href: "https://x.com/yetihomes" },
+                { icon: faLinkedinIn, href: "https://linkedin.com/company/yetihomes" },
+              ].map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full border border-brand-400/30 flex items-center justify-center text-brand-300 hover:bg-brand-accent-500 hover:text-white hover:border-brand-accent-500 transition-all duration-300"
+                >
+                  <FontAwesomeIcon icon={item.icon} className="w-4 h-4" />
+                </Link>
+              ))}
             </div>
           </div>
 

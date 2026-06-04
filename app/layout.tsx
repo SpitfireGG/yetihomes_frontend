@@ -1,7 +1,22 @@
 import type { Metadata } from "next";
+import { Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/landing/header";
 import WhatsAppWidget from "@/components/shared/whatsapp-widget";
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-body-family",
+  display: "swap",
+  fallback: ["sans-serif"],
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-label-family",
+  display: "swap",
+  fallback: ["sans-serif"],
+});
 
 const siteUrl = "https://yetihomes.com";
 
@@ -56,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased" data-scroll-behavior="smooth">
+    <html lang="en" className={`${manrope.variable} ${plusJakartaSans.variable} h-full antialiased`} data-scroll-behavior="smooth">
       <body className="min-h-full font-body">
         <Navbar />
         <main>{children}</main>

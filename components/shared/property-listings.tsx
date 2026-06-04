@@ -22,29 +22,9 @@ const cardVariants: Variants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
+    transition: { duration: 0.35, ease: "easeOut" },
   },
 };
-
-function PropertyFooterStat({ property }: { property: SearchProperty }) {
-  if (property.propertyType === "LAND") {
-    return (
-      <div className="flex items-center gap-1.5 bg-surface-container-low px-2 py-1 rounded-md border border-outline-variant">
-        <Icons.maximize size={14} className="text-secondary" />
-        <span className="text-sm font-bold text-on-surface">
-          {property.areaValue ?? "—"}
-        </span>
-        {property.areaValue && (
-          <span className="text-xs font-medium text-outline">
-            {property.areaUnit?.replace("_", " ") ?? ""}
-          </span>
-        )}
-      </div>
-    );
-  }
-
-  return null;
-}
 
 type CardMetaItem = {
   icon: React.ComponentType<{ size?: number; className?: string }>;
@@ -126,6 +106,157 @@ function getPricePeriod(property: SearchProperty): string {
   if (property.pricePeriod === "YEARLY") return "/yr";
   return "Total";
 }
+
+function PropertyFooterStat({ property }: { property: SearchProperty }) {
+  if (property.propertyType === "LAND") {
+    return (
+      <div className="flex items-center gap-1.5 bg-surface-container-low px-2 py-1 rounded-md border border-outline-variant">
+        <Icons.maximize size={14} className="text-secondary" />
+        <span className="text-sm font-bold text-on-surface">
+          {property.areaValue ?? "—"}
+        </span>
+        {property.areaValue && (
+          <span className="text-xs font-medium text-outline">
+            {property.areaUnit?.replace("_", " ") ?? ""}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  return null;
+}
+
+const PropertyFooterStatMemo = React.memo(PropertyFooterStat);
+
+type ListingCardData = {
+  imageUrl: string;
+  cardMeta: CardMetaItem[];
+  typeLabel: string;
+  typeColor: string;
+  pricePeriod: string;
+};
+
+const ListingCard = React.memo(function ListingCard({
+  property,
+  cardData,
+  isSelected,
+  onSelect,
+}: {
+  property: SearchProperty;
+  cardData: ListingCardData;
+  isSelected: boolean;
+  onSelect?: (property: SearchProperty) => void;
+}) {
+  return (
+    <motion.div
+      variants={cardVariants}
+      whileHover={{ y: -6, transition: { duration: 0.2 } }}
+      onClick={() => onSelect?.(property)}
+      className={`group flex cursor-pointer flex-col overflow-hidden rounded-2xl border-2 bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl ${
+        isSelected
+          ? "border-primary shadow-md shadow-primary/20"
+          : "border-outline-variant/60"
+      }`}
+    >
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container-high">
+        <Image
+          src={cardData.imageUrl}
+          alt={property.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+        />
+        <div className="absolute left-4 top-4 rounded-lg border border-outline-variant/50 bg-surface-container-lowest/95 px-3 py-1.5 shadow-sm backdrop-blur-sm">
+          <span
+            className={`text-sm font-bold tracking-wide capitalize ${cardData.typeColor}`}
+          >
+            {cardData.typeLabel}
+          </span>
+        </div>
+        {property.isFeatured && (
+          <div className="absolute right-4 top-4 rounded-lg bg-primary px-2.5 py-1 shadow-sm">
+            <span className="text-xs font-bold uppercase tracking-wider text-white">
+              Featured
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-2 flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            {property.propertyCode && (
+              <span className="inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-primary/10 text-primary rounded-md mb-1">
+                {property.propertyCode}
+              </span>
+            )}
+            <h3 className="truncate font-headline text-lg font-semibold leading-tight text-on-surface transition-colors group-hover:text-primary">
+              {property.title}
+            </h3>
+          </div>
+          <button
+            type="button"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-container text-primary transition-colors duration-200 hover:bg-primary hover:text-on-primary"
+          >
+            <Icons.bookmark size={18} strokeWidth={2.5} />
+          </button>
+        </div>
+
+        <div className="mb-5 flex items-center gap-1.5 text-on-surface-variant">
+          <Icons.mapPin
+            size={16}
+            strokeWidth={2.5}
+            className="text-outline"
+          />
+          <span className="text-sm font-medium truncate">
+            {property.locationText}
+          </span>
+        </div>
+
+        {cardData.cardMeta.length > 0 ? (
+          <div className="mb-4 flex flex-wrap items-center gap-3 border-b border-outline-variant/40 pb-4">
+            {cardData.cardMeta.map((item, index) => (
+              <div
+                key={item.value}
+                className="flex items-center gap-2"
+              >
+                {index > 0 ? (
+                  <span className="h-1 w-1 rounded-full bg-outline-variant" />
+                ) : null}
+                <item.icon size={16} className={item.iconClass ?? "text-outline"} />
+                <span className="text-sm font-bold uppercase tracking-wider text-on-surface-variant">
+                  {item.value}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-auto" />
+        )}
+
+        <div
+          className={`flex items-center justify-between pt-4 ${
+            cardData.cardMeta.length > 0
+              ? ""
+              : "border-t border-outline-variant/40"
+          }`}
+        >
+          <div className="flex items-baseline gap-1">
+            <span className="font-headline text-lg font-semibold text-on-surface">
+              {formatNprPrice(property.priceAmount)}
+            </span>
+            <span className="text-sm font-medium text-on-surface-variant">
+              {cardData.pricePeriod}
+            </span>
+          </div>
+
+          <PropertyFooterStatMemo property={property} />
+        </div>
+      </div>
+    </motion.div>
+  );
+});
 
 function SkeletonCard() {
   return (
@@ -294,6 +425,22 @@ export default function PropertyListings({
 
   const usePagination = onPageChange !== undefined && totalPages > 0;
 
+  const items = usePagination ? displayedProperties : properties;
+
+  const cardDataMap = useMemo(() => {
+    const map = new Map<string, ListingCardData>();
+    for (const property of items) {
+      map.set(property.id, {
+        imageUrl: getPrimaryImageUrl(property.images),
+        cardMeta: getCardMeta(property),
+        typeLabel: getTypeLabel(property),
+        typeColor: getTypeColor(property),
+        pricePeriod: getPricePeriod(property),
+      });
+    }
+    return map;
+  }, [items]);
+
   return (
     <div className="h-full flex-1 overflow-y-auto bg-surface px-4 py-5 custom-scrollbar sm:px-6 lg:p-8">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -363,121 +510,16 @@ export default function PropertyListings({
             animate="show"
             className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3"
           >
-            {(usePagination ? displayedProperties : properties).map((property) => {
-              const imageUrl = getPrimaryImageUrl(property.images);
-              const cardMeta = getCardMeta(property);
-              const typeLabel = getTypeLabel(property);
-              const typeColor = getTypeColor(property);
-              const pricePeriod = getPricePeriod(property);
-
+            {items.map((property) => {
+              const cardData = cardDataMap.get(property.id)!;
               return (
-                <motion.div
+                <ListingCard
                   key={property.id}
-                  variants={cardVariants}
-                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                  onClick={() => onPropertySelect?.(property)}
-                  className={`group flex cursor-pointer flex-col overflow-hidden rounded-2xl border-2 bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl ${
-                    selectedPropertyId === property.id
-                      ? "border-primary shadow-md shadow-primary/20"
-                      : "border-outline-variant/60"
-                  }`}
-                >
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container-high">
-                    <Image
-                      src={imageUrl}
-                      alt={property.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                    <div className="absolute left-4 top-4 rounded-lg border border-outline-variant/50 bg-surface-container-lowest/95 px-3 py-1.5 shadow-sm backdrop-blur-sm">
-                      <span
-                        className={`text-sm font-bold tracking-wide capitalize ${typeColor}`}
-                      >
-                        {typeLabel}
-                      </span>
-                    </div>
-                    {property.isFeatured && (
-                      <div className="absolute right-4 top-4 rounded-lg bg-primary px-2.5 py-1 shadow-sm">
-                        <span className="text-xs font-bold uppercase tracking-wider text-white">
-                          Featured
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="mb-2 flex items-start justify-between gap-3">
-                      <div className="min-w-0 flex-1">
-                        {property.propertyCode && (
-                          <span className="inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-primary/10 text-primary rounded-md mb-1">
-                            {property.propertyCode}
-                          </span>
-                        )}
-                        <h3 className="truncate font-headline text-lg font-semibold leading-tight text-on-surface transition-colors group-hover:text-primary">
-                          {property.title}
-                        </h3>
-                      </div>
-                      <button
-                        type="button"
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-container text-primary transition-colors duration-200 hover:bg-primary hover:text-on-primary"
-                      >
-                        <Icons.bookmark size={18} strokeWidth={2.5} />
-                      </button>
-                    </div>
-
-                    <div className="mb-5 flex items-center gap-1.5 text-on-surface-variant">
-                      <Icons.mapPin
-                        size={16}
-                        strokeWidth={2.5}
-                        className="text-outline"
-                      />
-                      <span className="text-sm font-medium truncate">
-                        {property.locationText}
-                      </span>
-                    </div>
-
-                    {cardMeta.length > 0 ? (
-                      <div className="mb-4 flex flex-wrap items-center gap-3 border-b border-outline-variant/40 pb-4">
-                        {cardMeta.map((item, index) => (
-                          <div
-                            key={item.value}
-                            className="flex items-center gap-2"
-                          >
-                            {index > 0 ? (
-                              <span className="h-1 w-1 rounded-full bg-outline-variant" />
-                            ) : null}
-                            <item.icon size={16} className={item.iconClass ?? "text-outline"} />
-                            <span className="text-sm font-bold uppercase tracking-wider text-on-surface-variant">
-                              {item.value}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="mt-auto" />
-                    )}
-
-                    <div
-                      className={`flex items-center justify-between pt-4 ${
-                        cardMeta.length > 0
-                          ? ""
-                          : "border-t border-outline-variant/40"
-                      }`}
-                    >
-                      <div className="flex items-baseline gap-1">
-                        <span className="font-headline text-lg font-semibold text-on-surface">
-                          {formatNprPrice(property.priceAmount)}
-                        </span>
-                        <span className="text-sm font-medium text-on-surface-variant">
-                          {pricePeriod}
-                        </span>
-                      </div>
-
-                      <PropertyFooterStat property={property} />
-                    </div>
-                  </div>
-                </motion.div>
+                  property={property}
+                  cardData={cardData}
+                  isSelected={selectedPropertyId === property.id}
+                  onSelect={onPropertySelect}
+                />
               );
             })}
           </motion.div>

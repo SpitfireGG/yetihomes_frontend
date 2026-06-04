@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import PropertyBrowserRoute from "@/components/shared/property-browser-route";
 
-export const dynamic = "force-dynamic";
-
 const INTENT_TITLES: Record<string, string> = {
   buy: "Houses for Sale",
   rent: "Houses for Rent",

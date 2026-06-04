@@ -2,7 +2,7 @@
 
 import { Icons } from "@/components/ui/icons";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,7 @@ import type { BlogArticle } from "@/lib/api";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 const BRAND_PRIMARY = "var(--primary)";
+const BLOG_PAGE_SIZE = 12;
 
 function BlogHero({ article }: { article: BlogArticle }) {
   return (
@@ -184,7 +185,7 @@ function CategoryFilter({
   );
 }
 
-function ArticleCard({
+const ArticleCard = React.memo(function ArticleCard({
   article,
   index,
   variant = "default",
@@ -290,7 +291,7 @@ function ArticleCard({
       </div>
     </motion.article>
   );
-}
+});
 
 function BlogNewsletter() {
   const [email, setEmail] = useState("");
@@ -464,6 +465,19 @@ export default function BlogPageClient({
           (article) => article.category === activeCategory,
         );
 
+  const [blogPage, setBlogPage] = useState(1);
+  const totalBlogPages = Math.max(1, Math.ceil(filteredArticles.length / BLOG_PAGE_SIZE));
+  const paginatedArticles = useMemo(
+    () => filteredArticles.slice(0, blogPage * BLOG_PAGE_SIZE),
+    [filteredArticles, blogPage],
+  );
+  const hasMoreBlog = paginatedArticles.length < filteredArticles.length;
+
+  const handleCategoryChange = useCallback((category: string) => {
+    setActiveCategory(category);
+    setBlogPage(1);
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col overflow-hidden bg-background font-sans text-on-surface">
       {featuredArticle ? (
@@ -486,7 +500,7 @@ export default function BlogPageClient({
             <CategoryFilter
               active={activeCategory}
               categories={categories}
-              onChange={setActiveCategory}
+              onChange={handleCategoryChange}
             />
           ) : null}
 
@@ -501,21 +515,35 @@ export default function BlogPageClient({
                   transition={{ duration: 0.3 }}
                 >
                   {filteredArticles.length > 0 ? (
-                    <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-                      <ArticleCard
-                        article={filteredArticles[0]}
-                        variant="large"
-                        index={0}
-                      />
-                      {filteredArticles.slice(1).map((article, index) => (
+                    <>
+                      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
                         <ArticleCard
-                          key={article.id}
-                          article={article}
-                          variant="default"
-                          index={index + 1}
+                          article={paginatedArticles[0]}
+                          variant="large"
+                          index={0}
                         />
-                      ))}
-                    </div>
+                        {paginatedArticles.slice(1).map((article, index) => (
+                          <ArticleCard
+                            key={article.id}
+                            article={article}
+                            variant="default"
+                            index={index + 1}
+                          />
+                        ))}
+                      </div>
+
+                      {hasMoreBlog && (
+                        <div className="mt-12 flex justify-center">
+                          <button
+                            onClick={() => setBlogPage((p) => p + 1)}
+                            className="inline-flex items-center gap-2 rounded-full border-2 border-outline-variant bg-surface-container-lowest px-8 py-3 font-headline text-sm font-semibold tracking-wide text-on-surface transition-all hover:border-primary hover:text-primary hover:shadow-md"
+                          >
+                            <Icons.chevronDown size={16} />
+                            Load More Articles ({paginatedArticles.length} of {filteredArticles.length})
+                          </button>
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <div className="flex flex-col items-center justify-center py-24 text-center">
                       <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-surface-container">

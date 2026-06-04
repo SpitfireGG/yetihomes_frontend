@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import ValuationModal from "../shared/valuationModal";
 
 export default function HeroSection() {
@@ -10,15 +11,24 @@ export default function HeroSection() {
     <section className="relative w-full h-[80svh] md:h-[100svh] min-h-[500px] md:min-h-[800px] overflow-hidden flex flex-col justify-between p-6 md:p-12 lg:p-16">
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0 bg-black">
-        <picture className="absolute inset-0">
-          <source media="(min-width: 768px)" srcSet="/MobileHero.jpg" />
-          <img
-            src="/MobileHero.jpg"
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover object-top"
-          />
-        </picture>
+        <Image
+          src="/MobileHero.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="md:hidden object-cover object-top"
+        />
+        <Image
+          src="/HERO.jpeg"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="hidden md:block object-cover object-center"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80 md:to-black/50" />
       </div>
 

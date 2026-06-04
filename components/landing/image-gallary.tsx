@@ -3,6 +3,7 @@
 import { Icons } from "@/components/ui/icons";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Sample property images
@@ -31,10 +32,12 @@ export default function ImageGallery() {
                 : "opacity-70 hover:opacity-100"
             }`}
           >
-            <img
+            <Image
               src={img}
               alt={`Thumbnail ${index + 1}`}
-              className="w-full h-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 96px, 200px"
+              className="object-cover"
             />
           </button>
         ))}
@@ -68,16 +71,23 @@ export default function ImageGallery() {
         </div>
 
         <AnimatePresence mode="wait">
-          <motion.img
+          <motion.div
             key={activeIndex}
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            src={propertyImages[activeIndex]}
-            alt="Main Property View"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+            className="absolute inset-0"
+          >
+            <Image
+              src={propertyImages[activeIndex]}
+              alt="Main Property View"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 75vw"
+              className="object-cover"
+            />
+          </motion.div>
         </AnimatePresence>
       </div>
     </div>

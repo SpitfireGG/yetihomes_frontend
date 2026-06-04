@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { submitInquiry } from "@/lib/api";
 
 export default function ValuationModal({
   isOpen,
@@ -10,7 +11,6 @@ export default function ValuationModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  // 1. Updated state to include separate email, phone, and message fields
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,12 +19,32 @@ export default function ValuationModal({
     propertyType: "house",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle the form submission (e.g., API call)
-    console.log("Valuation requested:", formData);
-    onClose();
+    setIsSubmitting(true);
+    setStatus("idle");
+    try {
+      await submitInquiry({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        inquiryType: "Property Valuation",
+        message: `Property Address: ${formData.address}\nProperty Type: ${formData.propertyType}\n${formData.message}`,
+      });
+      setStatus("success");
+      setStatusMessage("Valuation request submitted! We'll contact you within 24 hours.");
+      setFormData({ name: "", email: "", phone: "", address: "", propertyType: "house", message: "" });
+      setTimeout(onClose, 2000);
+    } catch (err) {
+      setStatus("error");
+      setStatusMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -47,8 +67,7 @@ export default function ValuationModal({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              // Added max-h-[90vh] and overflow-y-auto to prevent the taller form from clipping on small screens
-              className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden pointer-events-auto max-h-[90vh] overflow-y-auto custom-scrollbar"
+                            className="w-full max-w-lg bg-white rounded-2xl shadow-2xl pointer-events-auto max-h-[90vh] overflow-y-auto custom-scrollbar"
             >
               <div className="p-8">
                 <div className="flex justify-between items-start mb-6">
@@ -189,12 +208,23 @@ export default function ValuationModal({
                     />
                   </div>
 
+                  {status !== "idle" && (
+                    <div className={`flex items-center gap-2 rounded-xl p-3 ${status === "success" ? "bg-green-500/10 text-green-600" : "bg-red-500/10 text-red-600"}`}>
+                      {status === "success" ? (
+                        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      ) : (
+                        <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      )}
+                      <span className="text-sm font-medium">{statusMessage}</span>
+                    </div>
+                  )}
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full bg-gray-900 text-white font-medium py-3.5 rounded-lg hover:bg-gray-800 transition-colors shadow-md hover:shadow-lg active:scale-[0.98]"
+                      disabled={isSubmitting}
+                      className="w-full bg-gray-900 text-white font-medium py-3.5 rounded-lg hover:bg-gray-800 transition-colors shadow-md hover:shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Submit Request
+                      {isSubmitting ? "Submitting..." : "Submit Request"}
                     </button>
                   </div>
                 </form>

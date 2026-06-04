@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionHeading from "./sectionHeading";
 
@@ -114,12 +115,14 @@ export default function TrustHub() {
               {[...partnerLogos, ...partnerLogos].map((logo, index) => (
                 <div
                   key={index}
-                  className="w-24 h-16 md:w-32 md:h-20 flex items-center justify-center shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
+                  className="relative w-24 h-16 md:w-32 md:h-20 flex items-center justify-center shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
                 >
-                  <img
+                  <Image
                     src={logo.src}
                     alt={logo.alt}
-                    className="max-w-full max-h-full object-contain"
+                    fill
+                    sizes="(max-width: 768px) 96px, 128px"
+                    className="object-contain"
                   />
                 </div>
               ))}

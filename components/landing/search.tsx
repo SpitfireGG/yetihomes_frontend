@@ -3,6 +3,7 @@
 import { Icons } from "@/components/ui/icons";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   motion,
@@ -154,14 +155,22 @@ export default function AnimatedHeroSearch() {
             className="relative w-full h-full"
             style={{ opacity: prefersReducedMotion ? 1 : bgOpacity }}
           >
-            <picture className="absolute inset-0 z-0 h-full w-full">
-              <source media="(min-width: 768px)" srcSet="/HERO.jpeg" />
-              <img
-                src="/MobileHero.jpeg"
-                alt="Yeti Homes Hero Background"
-                className="object-cover w-full h-full object-top md:object-center"
-              />
-            </picture>
+            <Image
+              src="/HERO.jpeg"
+              alt="Yeti Homes Hero Background"
+              fill
+              priority
+              sizes="100vw"
+              className="hidden md:block object-cover object-center"
+            />
+            <Image
+              src="/MobileHero.jpeg"
+              alt="Yeti Homes Hero Background"
+              fill
+              priority
+              sizes="100vw"
+              className="md:hidden object-cover object-top"
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/80 md:to-black/60" />
           </motion.div>
         </motion.div>

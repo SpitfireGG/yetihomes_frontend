@@ -2,6 +2,7 @@
 
 import { Icons } from "@/components/ui/icons";
 
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import SectionHeading from "./sectionHeading";
 import type { Review } from "@/lib/api";
@@ -27,12 +28,20 @@ const REVIEW_CARD_STYLE_VARIANTS = [
     offsetClass: "lg:-translate-y-0.5",
   },
 ] as const;
+const REVIEWS_PAGE_SIZE = 12;
 
 export default function ClientReviews({ reviews }: { reviews: Review[] }) {
+  const [visibleCount, setVisibleCount] = useState(REVIEWS_PAGE_SIZE);
   const featuredCardIndex = Math.min(
     FEATURED_REVIEW_INDEX,
     Math.max(reviews.length - 1, 0),
   );
+  const visibleReviews = reviews.slice(0, visibleCount);
+  const hasMore = visibleCount < reviews.length;
+
+  const handleLoadMore = useCallback(() => {
+    setVisibleCount((c) => Math.min(c + REVIEWS_PAGE_SIZE, reviews.length));
+  }, [reviews.length]);
 
   return (
     <div className="relative overflow-hidden">
@@ -46,7 +55,7 @@ export default function ClientReviews({ reviews }: { reviews: Review[] }) {
         </div>
 
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-          {reviews.map((review, index) => {
+          {visibleReviews.map((review, index) => {
             const previewText = review.text;
             const isGradientCard = index === featuredCardIndex;
             const styleVariant =
@@ -132,6 +141,18 @@ export default function ClientReviews({ reviews }: { reviews: Review[] }) {
             );
           })}
         </div>
+
+        {hasMore && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={handleLoadMore}
+              className="inline-flex items-center gap-2 rounded-full border-2 border-outline-variant bg-surface-container-lowest px-8 py-3 font-headline text-sm font-semibold tracking-wide text-on-surface transition-all hover:border-primary hover:text-primary hover:shadow-md"
+            >
+              <Icons.chevronDown size={16} />
+              Load More Reviews ({visibleCount} of {reviews.length})
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

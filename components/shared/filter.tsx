@@ -219,6 +219,13 @@ function DualRangeSlider({
   onMaxChange: (value: number) => void;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    return () => {
+      cleanupRef.current?.();
+    };
+  }, []);
 
   const handlePointerDown = (type: "min" | "max", event: React.PointerEvent) => {
     event.preventDefault();
@@ -226,6 +233,8 @@ function DualRangeSlider({
     if (!track) {
       return;
     }
+
+    cleanupRef.current?.();
 
     const handlePointerMove = (moveEvent: PointerEvent) => {
       const rect = track.getBoundingClientRect();
@@ -248,11 +257,17 @@ function DualRangeSlider({
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerup", handlePointerUp);
       document.body.style.userSelect = "auto";
+      cleanupRef.current = null;
     };
 
     document.body.style.userSelect = "none";
     window.addEventListener("pointermove", handlePointerMove);
     window.addEventListener("pointerup", handlePointerUp);
+    cleanupRef.current = () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      document.body.style.userSelect = "auto";
+    };
   };
 
   const minPercent = ((minValue - min) / (max - min)) * 100;
