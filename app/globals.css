@@ -337,3 +337,32 @@ textarea {
 .inner-glow:hover::after {
   opacity: 1;
 }
+
+/* ================================================================
+   PREMIUM ANIMATED LOADER
+   ================================================================ */
+
+.loader {
+  width: var(--l-size, 80px);
+  height: var(--l-size, 80px);
+  aspect-ratio: 1;
+  padding: var(--l-padding, 10px);
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-mask: conic-gradient(#000 0 0) content-box xor, conic-gradient(#000 0 0);
+  mask: conic-gradient(#000 0 0) content-box exclude, conic-gradient(#000 0 0);
+  filter: blur(var(--l-blur, 12px));
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(#0000 0 5%, var(--primary), #0000 20% 50%);
+  animation: loader-spin 1.5s linear infinite;
+}
+
+@keyframes loader-spin {
+  to { rotate: 1turn; }
+}

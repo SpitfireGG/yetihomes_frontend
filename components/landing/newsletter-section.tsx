@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
+import { Loader } from "@/components/ui/loader";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -84,7 +85,7 @@ export function NewsletterSection() {
                   disabled={isLoading}
                   className="rounded-full bg-primary px-8 py-4 font-headline text-sm font-bold tracking-[0.18em] uppercase text-on-primary transition-colors hover:bg-on-surface disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  {isLoading ? <Icons.loader size={18} className="animate-spin" /> : null}
+                  {isLoading ? <Loader size={18} /> : null}
                   Join
                 </button>
               </form>

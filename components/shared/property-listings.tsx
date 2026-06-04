@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
+import { Loader } from "@/components/ui/loader";
 
 import React, { useMemo } from "react";
 import Image from "next/image";
@@ -452,7 +453,7 @@ export default function PropertyListings({
         <div className="flex items-center gap-2 text-sm font-medium text-on-surface-variant">
           {isRefreshing ? (
             <>
-              <Icons.loader size={14} className="animate-spin text-primary" />
+              <Loader size={14} />
               <span className="shrink-0 text-xs uppercase tracking-[0.14em] text-primary">
                 Updating
               </span>
@@ -542,7 +543,7 @@ export default function PropertyListings({
               >
                 {isLoadingMore ? (
                   <>
-                    <Icons.loader size={16} className="animate-spin" />
+                    <Loader size={16} />
                     Loading...
                   </>
                 ) : (

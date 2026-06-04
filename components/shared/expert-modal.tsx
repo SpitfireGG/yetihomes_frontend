@@ -1,5 +1,6 @@
 "use client";
 import { Icons } from "@/components/ui/icons";
+import { Loader } from "@/components/ui/loader";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -97,7 +98,7 @@ export function ExpertModal({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: formData.name,
+          fullName: formData.name,
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
@@ -330,7 +331,7 @@ export function ExpertModal({
                       >
                         {isSubmitting ? (
                           <>
-                            <Icons.loader size={18} className="animate-spin" />
+                            <Loader size={18} />
                             Submitting...
                           </>
                         ) : (

@@ -21,7 +21,9 @@ export default function Footer() {
   const [categories, setCategories] = useState<LandingCategory[]>([]);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [nlSubmitting, setNlSubmitting] = useState(false);
-  const [nlStatus, setNlStatus] = useState<"idle" | "success" | "error">("idle");
+  const [nlStatus, setNlStatus] = useState<"idle" | "success" | "error">(
+    "idle",
+  );
   const [nlMessage, setNlMessage] = useState("");
 
   useEffect(() => {
@@ -45,7 +47,9 @@ export default function Footer() {
       setNewsletterEmail("");
     } catch (err) {
       setNlStatus("error");
-      setNlMessage(err instanceof Error ? err.message : "Something went wrong.");
+      setNlMessage(
+        err instanceof Error ? err.message : "Something went wrong.",
+      );
     } finally {
       setNlSubmitting(false);
     }
@@ -109,7 +113,9 @@ export default function Footer() {
               </button>
             </form>
             {nlStatus !== "idle" && (
-              <p className={`text-xs mt-4 text-center sm:text-right ${nlStatus === "success" ? "text-green-400" : "text-red-400"}`}>
+              <p
+                className={`text-xs mt-4 text-center sm:text-right ${nlStatus === "success" ? "text-green-400" : "text-red-400"}`}
+              >
                 {nlMessage}
               </p>
             )}
@@ -133,7 +139,7 @@ export default function Footer() {
                 />
               </div>
               <span className="font-serif font-bold text-3xl tracking-tight text-white">
-                YetihomesEstate Pvt. Ltd
+                Yeti Homes Estate Pvt. Ltd
               </span>
             </Link>
             <p className="text-brand-200 text-sm leading-loose max-w-sm">
@@ -349,7 +355,10 @@ export default function Footer() {
                 { icon: faFacebookF, href: "https://facebook.com/yetihomes" },
                 { icon: faInstagram, href: "https://instagram.com/yetihomes" },
                 { icon: faXTwitter, href: "https://x.com/yetihomes" },
-                { icon: faLinkedinIn, href: "https://linkedin.com/company/yetihomes" },
+                {
+                  icon: faLinkedinIn,
+                  href: "https://linkedin.com/company/yetihomes",
+                },
               ].map((item, i) => (
                 <Link
                   key={i}
@@ -386,6 +395,9 @@ export default function Footer() {
               <p className="text-sm text-white font-medium hover:text-brand-accent-300 transition-colors cursor-pointer w-fit">
                 +977 9851446902
               </p>
+              <p className="text-sm text-white font-medium hover:text-brand-accent-300 transition-colors cursor-pointer w-fit">
+                +977 9851361431"
+              </p>
               <p className="text-sm text-brand-300 hover:text-brand-accent-300 transition-colors cursor-pointer mt-3 w-fit">
                 Estateyetihomes@gmail.com
               </p>
@@ -396,8 +408,7 @@ export default function Footer() {
         {/* Bottom Section: Copyright & Legal */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-brand-400/20 text-xs text-brand-400">
           <p>
-            © {new Date().getFullYear()} YetiHomes Real Estate. All rights
-            reserved.
+            © {new Date().getFullYear()} YetiHomes Estate. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6">
             <Link

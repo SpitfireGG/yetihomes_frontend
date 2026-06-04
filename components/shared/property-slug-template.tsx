@@ -543,7 +543,7 @@ export default function PropertySlugTemplate({
 
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
   const [inquiryForm, setInquiryForm] = useState({
-    name: "",
+    fullName: "",
     email: "",
     phone: "",
     message: "",
@@ -1125,11 +1125,11 @@ export default function PropertySlugTemplate({
                       <input
                         required
                         type="text"
-                        value={inquiryForm.name}
+                        value={inquiryForm.fullName}
                         onChange={(e) =>
                           setInquiryForm({
                             ...inquiryForm,
-                            name: e.target.value,
+                            fullName: e.target.value,
                           })
                         }
                         className="w-full border border-gray-200 rounded-xl p-3.5 focus:outline-none focus:border-black transition-colors bg-gray-50/50"

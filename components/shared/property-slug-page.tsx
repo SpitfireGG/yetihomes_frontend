@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import PropertySlugTemplate from "@/components/shared/property-slug-template";
+import { Loader } from "@/components/ui/loader";
 import { getPropertyBySlug, type SearchProperty } from "@/lib/api";
 import {
   primePropertyDetailCache,
@@ -98,8 +99,8 @@ export default function PropertySlugPage({
 
   if (isLoading && !property) {
     return (
-      <div className="flex h-screen w-full items-center justify-center font-headline text-lg">
-        Loading...
+      <div className="flex h-screen w-full items-center justify-center">
+        <Loader size={64} />
       </div>
     );
   }

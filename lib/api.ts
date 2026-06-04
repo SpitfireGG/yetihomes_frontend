@@ -534,7 +534,7 @@ export async function subscribeToNewsletter(
 }
 
 export type InquiryDto = {
-  name: string;
+  fullName: string;
   email: string;
   phone?: string;
   propertyId?: string;
@@ -545,7 +545,7 @@ export type InquiryDto = {
 
 export type InquiryApiResponse = ApiResponse<{
   id: string;
-  name: string;
+  fullName: string;
   email: string;
   phone: string | null;
   inquiryType: string;

@@ -29,7 +29,7 @@ export default function ValuationModal({
     setStatus("idle");
     try {
       await submitInquiry({
-        name: formData.name,
+        fullName: formData.name,
         email: formData.email,
         phone: formData.phone,
         inquiryType: "Property Valuation",

@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
+import { Loader } from "@/components/ui/loader";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -338,7 +339,7 @@ export default function ContactPage() {
                     {isSubmitting ? "Transmitting..." : "Submit Inquiry"}
                   </span>
                   {isSubmitting ? (
-                    <Icons.loader size={18} className="animate-spin" />
+                    <Loader size={18} />
                   ) : (
                     <Icons.arrowRight
                       size={18}

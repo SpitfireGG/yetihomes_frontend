@@ -52,9 +52,9 @@ export const metadata: Metadata = {
       "Discover curated homes, apartments, and land for sale in Nepal.",
   },
   icons: {
-    icon: "/Yeti-Logo-01.svg",
-    shortcut: "/Yeti-Logo-01.svg",
-    apple: "/Yeti-Logo-01.svg",
+    icon: "/Yeti-Logo-02.svg",
+    shortcut: "/Yeti-Logo-02.svg",
+    apple: "/Yeti-Logo-02.svg",
   },
   robots: {
     index: true,
@@ -71,7 +71,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${plusJakartaSans.variable} h-full antialiased`} data-scroll-behavior="smooth">
+    <html
+      lang="en"
+      className={`${manrope.variable} ${plusJakartaSans.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+    >
       <body className="min-h-full font-body">
         <Navbar />
         <main>{children}</main>

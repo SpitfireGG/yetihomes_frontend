@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
+import { Loader } from "@/components/ui/loader";
 
 import React, { useMemo, useState, useCallback } from "react";
 import Image from "next/image";
@@ -375,7 +376,7 @@ function BlogNewsletter() {
                 disabled={isLoading}
                 className="absolute right-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary/90 disabled:opacity-70"
               >
-                {isLoading ? <Icons.loader size={16} className="animate-spin" /> : "Subscribe"}
+                {isLoading ? <Loader size={16} /> : "Subscribe"}
               </button>
             </form>
             {message && (
