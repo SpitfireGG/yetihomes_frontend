@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Footer from "@/components/landing/footer";
 
 import type { SearchProperty } from "@/lib/api";
-import { formatNprPrice, getPrimaryImageUrl, pickFallbackImage, submitInquiry } from "@/lib/api";
+import { formatNprPrice, getPrimaryImageUrl, submitInquiry } from "@/lib/api";
 import { IconBrandZoom } from "@tabler/icons-react";
 
 const AGENTS = [
@@ -43,21 +43,8 @@ type PageContent = {
   secondaryAction: string;
 };
 
-const GALLERY_SLOT_COUNT = 5;
-
 function getGalleryImages(property: SearchProperty) {
-  const images: string[] = [];
-
-  for (let i = 0; i < GALLERY_SLOT_COUNT; i++) {
-    const img = property.images?.[i];
-    if (img) {
-      images.push(getPrimaryImageUrl([img], undefined, property, i));
-    } else {
-      images.push(pickFallbackImage(property, i));
-    }
-  }
-
-  return images;
+  return property.images.map((img) => getPrimaryImageUrl([img])).filter((url) => url.length > 0);
 }
 
 function getPageContent(

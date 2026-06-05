@@ -26,14 +26,16 @@ export function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
         listing.offset ? "lg:translate-y-12" : ""
       }`}
     >
-      <div className="relative mb-6 aspect-[4/3] sm:aspect-[3/5] lg:aspect-[4/5] overflow-hidden rounded-[28px]">
-        <Image
-          src={listing.image}
-          alt={listing.imageAlt}
-          fill
-          sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+      <div className="relative mb-6 aspect-[4/3] sm:aspect-[3/5] lg:aspect-[4/5] overflow-hidden rounded-[28px] bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20">
+        {listing.image ? (
+          <Image
+            src={listing.image}
+            alt={listing.imageAlt}
+            fill
+            sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : null}
 
         {listing.eyebrow ? (
           <div className="absolute left-4 top-4">

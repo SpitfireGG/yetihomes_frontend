@@ -17,6 +17,9 @@ const statIcons: Record<
   area: IconRulerMeasure,
   road: Icons.navigation,
   facing: Icons.compass,
+  parking: IconRulerMeasure,
+  floor: IconRulerMeasure,
+  furnishing: IconRulerMeasure,
 };
 
 export function LandListingCard({
@@ -30,14 +33,16 @@ export function LandListingCard({
         listing.offset ? "lg:translate-y-12" : ""
       }`}
     >
-      <div className="relative mb-4 aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-[20px]">
-        <Image
-          src={listing.image}
-          alt={listing.imageAlt}
-          fill
-          sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+      <div className="relative mb-4 aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-[20px] bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20">
+        {listing.image ? (
+          <Image
+            src={listing.image}
+            alt={listing.imageAlt}
+            fill
+            sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : null}
 
         {listing.eyebrow ? (
           <div className="absolute left-4 top-4">

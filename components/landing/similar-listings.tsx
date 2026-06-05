@@ -11,6 +11,11 @@ import {
   faHeart,
   faChevronLeft,
   faChevronRight,
+  faRoad,
+  faCompass,
+  faCar,
+  faLayerGroup,
+  faCouch,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   LandingCarouselSection,
@@ -25,8 +30,11 @@ const statIcons: Record<PropertyShowcaseStatKind, typeof faBed> = {
   bed: faBed,
   bath: faBath,
   area: faRulerCombined,
-  road: faRulerCombined,
-  facing: faRulerCombined,
+  road: faRoad,
+  facing: faCompass,
+  parking: faCar,
+  floor: faLayerGroup,
+  furnishing: faCouch,
 };
 
 function getBadgeClasses(tone: PropertyShowcaseEyebrowTone) {
@@ -58,26 +66,28 @@ function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
 
   return (
     <article className="group flex h-full w-full cursor-pointer flex-col">
-      <div className="relative mb-5 aspect-[4/5] overflow-hidden rounded-[24px] bg-surface-container-high shadow-sm">
-        <div
-          className="flex h-full w-full transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${activeImg * 100}%)` }}
-        >
-          {listing.images.map((image, index) => (
-            <div
-              key={`${listing.id}-image-${index}`}
-              className="relative h-full w-full shrink-0"
-            >
-              <Image
-                src={image}
-                alt={`${listing.title} view ${index + 1}`}
-                fill
-                sizes="(max-width: 768px) 85vw, (max-width: 1024px) 380px, 400px"
-                className="pointer-events-none object-cover"
-              />
-            </div>
-          ))}
-        </div>
+      <div className="relative mb-5 aspect-[4/5] overflow-hidden rounded-[24px] bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20 shadow-sm">
+        {listing.images.length > 0 ? (
+          <div
+            className="flex h-full w-full transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${activeImg * 100}%)` }}
+          >
+            {listing.images.map((image, index) => (
+              <div
+                key={`${listing.id}-image-${index}`}
+                className="relative h-full w-full shrink-0"
+              >
+                <Image
+                  src={image}
+                  alt={`${listing.title} view ${index + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 85vw, (max-width: 1024px) 380px, 400px"
+                  className="pointer-events-none object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        ) : null}
 
         {listing.eyebrow ? (
           <div className="absolute left-4 top-4 z-20">

@@ -263,14 +263,16 @@ const ListingCard = React.memo(function ListingCard({
           : "border-outline-variant/60"
       }`}
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container-high">
-        <Image
-          src={cardData.imageUrl}
-          alt={property.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-        />
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20">
+        {cardData.imageUrl ? (
+          <Image
+            src={cardData.imageUrl}
+            alt={property.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          />
+        ) : null}
         <div className="absolute left-4 top-4 rounded-lg border border-outline-variant/50 bg-surface-container-lowest/95 px-3 py-1.5 shadow-sm backdrop-blur-sm">
           <span
             className={`text-sm font-bold tracking-wide capitalize ${cardData.typeColor}`}

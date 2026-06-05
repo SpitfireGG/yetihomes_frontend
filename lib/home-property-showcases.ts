@@ -33,14 +33,7 @@ const propertyHrefByType: Record<ApiPropertyType, string> = {
   LAND: "/lands",
 };
 
-const imageFallbackByType: Record<ApiPropertyType, string> = {
-  HOUSE:
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
-  APARTMENT:
-    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-  LAND:
-    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
-};
+
 
 function dedupeProperties(properties: SearchProperty[]) {
   const byId = new Map<string, SearchProperty>();
@@ -188,19 +181,17 @@ function resolveEyebrow(
 }
 
 function resolvePropertyImages(property: SearchProperty) {
-  const fallbackImage = imageFallbackByType[property.propertyType];
   const sortedImages = [...(property.images || [])].sort((left, right) => {
     if (left.isPrimary === right.isPrimary) {
       return 0;
     }
-
     return left.isPrimary ? -1 : 1;
   });
-  const resolvedImages = sortedImages.map((image) =>
-    resolveApiAssetUrl(image.url, fallbackImage),
-  );
+  const resolvedImages = sortedImages
+    .map((image) => resolveApiAssetUrl(image.url))
+    .filter((url) => url.length > 0);
   const uniqueImages = Array.from(new Set(resolvedImages));
-  const primaryImage = uniqueImages[0] ?? fallbackImage;
+  const primaryImage = uniqueImages[0] ?? "";
   const primaryAlt =
     sortedImages.find((image) => image.isPrimary)?.altText ??
     sortedImages[0]?.altText ??
@@ -209,71 +200,67 @@ function resolvePropertyImages(property: SearchProperty) {
   return {
     image: primaryImage,
     imageAlt: primaryAlt,
-    images: uniqueImages.length > 0 ? uniqueImages : [fallbackImage],
+    images: uniqueImages,
   };
 }
 
 function buildResidentialStats(property: SearchProperty) {
   const stats: PropertyShowcaseListing["stats"] = [];
-  const bedroomCount =
-    property.houseDetails?.bedrooms ?? property.apartmentDetails?.bedrooms;
-  const bathroomCount =
-    property.houseDetails?.bathrooms ?? property.apartmentDetails?.bathrooms;
+  const isApartment = property.propertyType === "APARTMENT";
+  const details = isApartment ? property.apartmentDetails : property.houseDetails;
+
   const areaValue = formatNumericValue(property.areaValue);
   const areaUnit = formatEnumLabel(property.areaUnit);
-
-  const parking = 
-    property.houseDetails?.parkingSpaces ?? (property.apartmentDetails?.hasParking ? 1 : null);
-  const floors = 
-    property.houseDetails?.floors ?? property.apartmentDetails?.floorNumber;
-  const furnishing = 
-    property.houseDetails?.furnishingStatus ?? property.apartmentDetails?.furnishingStatus;
-
-  if (bedroomCount !== null && bedroomCount !== undefined) {
-    stats.push({
-      kind: "bed",
-      value: bedroomCount,
-      label: bedroomCount === 1 ? "Bed" : "Beds",
-    });
-  }
-
-  if (bathroomCount !== null && bathroomCount !== undefined) {
-    stats.push({
-      kind: "bath",
-      value: bathroomCount,
-      label: bathroomCount === 1 ? "Bath" : "Baths",
-    });
-  }
-
   if (areaValue && areaUnit) {
-    stats.push({
-      kind: "area",
-      value: areaValue,
-      label: areaUnit,
-    });
+    stats.push({ kind: "area", value: areaValue, label: areaUnit });
+  } else if (property.listingType === "RENT") {
+    stats.push({ kind: "furnishing", value: "", label: "For Rent" });
+  } else {
+    stats.push({ kind: "furnishing", value: "", label: "For Sale" });
   }
 
-  if (parking !== null && parking !== undefined && parking > 0) {
-    stats.push({
-      kind: "parking",
-      value: parking,
-      label: parking === 1 ? "Parking" : "Parkings",
-    });
-  } else if (floors !== null && floors !== undefined) {
-    stats.push({
-      kind: "floor",
-      value: floors,
-      label: floors === 1 ? "Floor" : "Floors",
-    });
-  } else if (furnishing) {
-    const formattedFurnishing = formatEnumLabel(furnishing);
-    if (formattedFurnishing) {
-      stats.push({
-        kind: "furnishing",
-        value: "",
-        label: formattedFurnishing,
-      });
+  if (isApartment) {
+    if (property.apartmentDetails?.floorNumber != null) {
+      stats.push({ kind: "floor", value: property.apartmentDetails.floorNumber, label: property.apartmentDetails.floorNumber === 1 ? "Floor" : "Floors" });
+    } else if (property.apartmentDetails?.bedrooms != null) {
+      stats.push({ kind: "bed", value: property.apartmentDetails.bedrooms, label: property.apartmentDetails.bedrooms === 1 ? "Bed" : "Beds" });
+    } else if (details?.bathrooms != null) {
+      stats.push({ kind: "bath", value: details.bathrooms, label: details.bathrooms === 1 ? "Bath" : "Baths" });
     }
+  } else if (property.houseDetails?.floors != null) {
+    stats.push({ kind: "floor", value: property.houseDetails.floors, label: property.houseDetails.floors === 1 ? "Floor" : "Floors" });
+  } else if (property.houseDetails?.bedrooms != null) {
+    stats.push({ kind: "bed", value: property.houseDetails.bedrooms, label: property.houseDetails.bedrooms === 1 ? "Bed" : "Beds" });
+  } else if (details?.bathrooms != null) {
+    stats.push({ kind: "bath", value: details.bathrooms, label: details.bathrooms === 1 ? "Bath" : "Baths" });
+  }
+
+  const facing = formatEnumLabel(details?.facingDirection);
+  if (facing) {
+    stats.push({ kind: "facing", value: facing, label: "Facing" });
+  } else {
+    const furnishing = formatEnumLabel(details?.furnishingStatus);
+    if (furnishing) {
+      stats.push({ kind: "furnishing", value: "", label: furnishing });
+    } else if (property.electricity) {
+      stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
+    } else if (property.waterAvailability) {
+      stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
+    }
+  }
+
+  const roadSize = details?.roadSize;
+  if (roadSize != null) {
+    stats.push({ kind: "road", value: roadSize, label: "Ft Road" });
+  } else if (details?.roadType) {
+    stats.push({ kind: "road", value: "", label: formatEnumLabel(details.roadType) ?? "Road" });
+  } else if (isApartment ? property.apartmentDetails?.hasParking : property.houseDetails?.parkingSpaces) {
+    const parkingValue = isApartment ? 1 : property.houseDetails?.parkingSpaces;
+    stats.push({ kind: "parking", value: parkingValue ?? 1, label: parkingValue === 1 ? "Parking" : "Parkings" });
+  } else if (details?.bathrooms != null) {
+    stats.push({ kind: "bath", value: details.bathrooms, label: details.bathrooms === 1 ? "Bath" : "Baths" });
+  } else if (property.titleStatus) {
+    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
   }
 
   return stats.slice(0, 4);
@@ -281,33 +268,47 @@ function buildResidentialStats(property: SearchProperty) {
 
 function buildLandStats(property: SearchProperty) {
   const stats: PropertyShowcaseListing["stats"] = [];
+  const land = property.landDetails;
+
   const areaValue = formatNumericValue(property.areaValue);
   const areaUnit = formatEnumLabel(property.areaUnit);
-  const roadAccess = formatNumericValue(property.landDetails?.roadAccessFeet);
-  const facingDirection = formatEnumLabel(property.landDetails?.facingDirection);
-
   if (areaValue && areaUnit) {
-    stats.push({
-      kind: "area",
-      value: areaValue,
-      label: areaUnit,
-    });
+    stats.push({ kind: "area", value: areaValue, label: areaUnit });
+  } else if (property.listingType === "RENT") {
+    stats.push({ kind: "furnishing", value: "", label: "For Rent" });
+  } else {
+    stats.push({ kind: "furnishing", value: "", label: "For Sale" });
   }
 
+  const roadAccess = formatNumericValue(land?.roadAccessFeet);
   if (roadAccess) {
-    stats.push({
-      kind: "road",
-      value: roadAccess,
-      label: "Ft Road",
-    });
+    stats.push({ kind: "road", value: roadAccess, label: "Ft Road" });
+  } else {
+    const frontage = formatNumericValue(land?.frontageFeet);
+    if (frontage) {
+      stats.push({ kind: "road", value: frontage, label: "Ft Frontage" });
+    } else if (property.electricity) {
+      stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
+    }
   }
 
+  const facingDirection = formatEnumLabel(land?.facingDirection);
   if (facingDirection) {
-    stats.push({
-      kind: "facing",
-      value: facingDirection,
-      label: "Facing",
-    });
+    stats.push({ kind: "facing", value: facingDirection, label: "Facing" });
+  } else if (land?.plotShape) {
+    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(land.plotShape) ?? "Plot" });
+  }
+
+  if (land?.isCornerPlot) {
+    stats.push({ kind: "parking", value: 1, label: "Corner Plot" });
+  } else if (land?.plotShape) {
+    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(land.plotShape) ?? "Plot" });
+  } else if (land?.zoningType) {
+    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(land.zoningType) ?? "Zoned" });
+  } else if (property.waterAvailability) {
+    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
+  } else if (property.titleStatus) {
+    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
   }
 
   return stats.slice(0, 4);
