@@ -106,22 +106,64 @@ export async function getCachedPropertySearch(
 }
 
 export async function getAllProperties(): Promise<SearchProperty[]> {
-  try {
-    const allProperties: SearchProperty[] = [];
-    let hasMore = true;
-    let skip = 0;
-    const take = 50;
+  const allProperties: SearchProperty[] = [];
+  let hasMore = true;
+  let skip = 0;
+  const take = 50;
 
+  async function fetchPage(path: string) {
+    const response = await serverApiGet<SearchProperty[], SearchMeta>(
+      path,
+      PROPERTY_LIST_REVALIDATE_SECONDS,
+      ["properties", "properties:all"],
+    );
+    return response;
+  }
+
+  try {
     while (hasMore) {
-      const response = await serverApiGet<SearchProperty[], SearchMeta>(
+      const response = await fetchPage(
         `/properties/search?skip=${skip}&take=${take}`,
-        PROPERTY_LIST_REVALIDATE_SECONDS,
-        ["properties", "properties:all"],
       );
 
-      allProperties.push(...response.data);
+      if (response.data?.length) {
+        allProperties.push(...response.data);
+      }
 
-      if (response.data.length < take) {
+      if (!response.data || response.data.length < take) {
+        hasMore = false;
+      } else {
+        skip += take;
+      }
+    }
+
+    if (allProperties.length > 0) {
+      return allProperties;
+    }
+
+    console.warn(
+      "[getAllProperties] search endpoint returned 0 properties, falling back to list endpoint",
+    );
+  } catch (error) {
+    console.error(
+      "[getAllProperties] search endpoint failed:",
+      error instanceof Error ? error.message : error,
+    );
+  }
+
+  // Fallback: try the plain list endpoint (no images, but data is better than empty)
+  try {
+    hasMore = true;
+    skip = 0;
+
+    while (hasMore) {
+      const response = await fetchPage(`/properties?skip=${skip}&take=${take}`);
+
+      if (response.data?.length) {
+        allProperties.push(...response.data);
+      }
+
+      if (!response.data || response.data.length < take) {
         hasMore = false;
       } else {
         skip += take;
@@ -129,7 +171,11 @@ export async function getAllProperties(): Promise<SearchProperty[]> {
     }
 
     return allProperties;
-  } catch {
+  } catch (error) {
+    console.error(
+      "[getAllProperties] list endpoint also failed:",
+      error instanceof Error ? error.message : error,
+    );
     return [];
   }
 }
