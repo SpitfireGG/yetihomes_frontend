@@ -114,7 +114,7 @@ export async function getAllProperties(): Promise<SearchProperty[]> {
 
     while (hasMore) {
       const response = await serverApiGet<SearchProperty[], SearchMeta>(
-        `/properties?skip=${skip}&take=${take}`,
+        `/properties/search?skip=${skip}&take=${take}`,
         PROPERTY_LIST_REVALIDATE_SECONDS,
         ["properties", "properties:all"],
       );
