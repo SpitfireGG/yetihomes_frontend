@@ -84,12 +84,14 @@ export default function WhatsAppWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+    <div
+      ref={widgetRef}
+      className="fixed bottom-6 right-6 z-[100] flex flex-col items-end"
+    >
       {/* --- Widget Panel --- */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            ref={widgetRef}
             initial={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(4px)" }}
