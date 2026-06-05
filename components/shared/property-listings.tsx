@@ -34,53 +34,156 @@ type CardMetaItem = {
 };
 
 function getCardMeta(property: SearchProperty): CardMetaItem[] {
-  if (property.propertyType === "HOUSE" && property.houseDetails) {
-    const meta: CardMetaItem[] = [];
-    if (property.houseDetails.floors)
-      meta.push({ icon: Icons.layers, iconClass: "text-primary", value: `${property.houseDetails.floors} Floors` });
-    if (property.areaValue && property.areaUnit)
-      meta.push({ icon: Icons.maximize, iconClass: "text-secondary", value: `${property.areaValue} ${property.areaUnit.replace("_", " ")}` });
-    if (property.houseDetails.bathrooms)
-      meta.push({ icon: Icons.bathroom, iconClass: "text-tertiary", value: `${property.houseDetails.bathrooms} Baths` });
-    if (property.houseDetails.facingDirection)
-      meta.push({ icon: Icons.compass, iconClass: "text-primary", value: property.houseDetails.facingDirection.replace("_", " ") });
-    if (property.houseDetails.roadType)
-      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: property.houseDetails.roadType.replace("_", " ") });
-    if (property.houseDetails.roadSize)
-      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: `${property.houseDetails.roadSize}ft Road` });
-    return meta;
+  const meta: CardMetaItem[] = [];
+
+  // 1. Area / size is always the anchor (top-level on the property,
+  //    so it shows even when *Details payloads are null/missing).
+  if (property.areaValue && property.areaUnit) {
+    meta.push({
+      icon: Icons.maximize,
+      iconClass: "text-secondary",
+      value: `${property.areaValue} ${property.areaUnit.replace("_", " ")}`,
+    });
   }
 
-  if (property.propertyType === "APARTMENT" && property.apartmentDetails) {
-    const meta: CardMetaItem[] = [];
-    if (property.apartmentDetails.floorNumber)
-      meta.push({ icon: Icons.layers, iconClass: "text-primary", value: `Floor ${property.apartmentDetails.floorNumber}` });
-    if (property.areaValue && property.areaUnit)
-      meta.push({ icon: Icons.maximize, iconClass: "text-secondary", value: `${property.areaValue} ${property.areaUnit.replace("_", " ")}` });
-    if (property.apartmentDetails.bathrooms)
-      meta.push({ icon: Icons.bathroom, iconClass: "text-tertiary", value: `${property.apartmentDetails.bathrooms} Baths` });
-    if (property.apartmentDetails.facingDirection)
-      meta.push({ icon: Icons.compass, iconClass: "text-primary", value: property.apartmentDetails.facingDirection.replace("_", " ") });
-    if (property.apartmentDetails.roadType)
-      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: property.apartmentDetails.roadType.replace("_", " ") });
-    if (property.apartmentDetails.roadSize)
-      meta.push({ icon: Icons.road_access, iconClass: "text-secondary", value: `${property.apartmentDetails.roadSize}ft Road` });
-    return meta;
+  // 2. Type-specific details: floors, facing, road size (or
+  //    best available alternatives if a field is missing).
+  if (property.propertyType === "HOUSE") {
+    if (property.houseDetails?.floors) {
+      meta.push({
+        icon: Icons.layers,
+        iconClass: "text-primary",
+        value: `${property.houseDetails.floors} Floor${property.houseDetails.floors > 1 ? "s" : ""}`,
+      });
+    } else if (property.houseDetails?.bedrooms) {
+      meta.push({
+        icon: Icons.bedDouble,
+        iconClass: "text-primary",
+        value: `${property.houseDetails.bedrooms} Bed${property.houseDetails.bedrooms > 1 ? "s" : ""}`,
+      });
+    }
+
+    if (property.houseDetails?.facingDirection) {
+      meta.push({
+        icon: Icons.compass,
+        iconClass: "text-primary",
+        value: property.houseDetails.facingDirection.replace("_", " "),
+      });
+    } else if (property.houseDetails?.furnishingStatus) {
+      meta.push({
+        icon: Icons.armchair,
+        iconClass: "text-secondary",
+        value: property.houseDetails.furnishingStatus.replace("_", " "),
+      });
+    }
+
+    if (property.houseDetails?.roadSize) {
+      meta.push({
+        icon: Icons.road_access,
+        iconClass: "text-secondary",
+        value: `${property.houseDetails.roadSize}ft Road`,
+      });
+    } else if (property.houseDetails?.roadType) {
+      meta.push({
+        icon: Icons.road_access,
+        iconClass: "text-secondary",
+        value: property.houseDetails.roadType.replace("_", " "),
+      });
+    } else if (property.houseDetails?.bathrooms) {
+      meta.push({
+        icon: Icons.bathroom,
+        iconClass: "text-tertiary",
+        value: `${property.houseDetails.bathrooms} Bath${property.houseDetails.bathrooms > 1 ? "s" : ""}`,
+      });
+    }
+  } else if (property.propertyType === "APARTMENT") {
+    if (property.apartmentDetails?.floorNumber) {
+      meta.push({
+        icon: Icons.layers,
+        iconClass: "text-primary",
+        value: `Floor ${property.apartmentDetails.floorNumber}`,
+      });
+    } else if (property.apartmentDetails?.bedrooms) {
+      meta.push({
+        icon: Icons.bedDouble,
+        iconClass: "text-primary",
+        value: `${property.apartmentDetails.bedrooms} Bed${property.apartmentDetails.bedrooms > 1 ? "s" : ""}`,
+      });
+    }
+
+    if (property.apartmentDetails?.facingDirection) {
+      meta.push({
+        icon: Icons.compass,
+        iconClass: "text-primary",
+        value: property.apartmentDetails.facingDirection.replace("_", " "),
+      });
+    } else if (property.apartmentDetails?.furnishingStatus) {
+      meta.push({
+        icon: Icons.armchair,
+        iconClass: "text-secondary",
+        value: property.apartmentDetails.furnishingStatus.replace("_", " "),
+      });
+    }
+
+    if (property.apartmentDetails?.roadSize) {
+      meta.push({
+        icon: Icons.road_access,
+        iconClass: "text-secondary",
+        value: `${property.apartmentDetails.roadSize}ft Road`,
+      });
+    } else if (property.apartmentDetails?.roadType) {
+      meta.push({
+        icon: Icons.road_access,
+        iconClass: "text-secondary",
+        value: property.apartmentDetails.roadType.replace("_", " "),
+      });
+    } else if (property.apartmentDetails?.bathrooms) {
+      meta.push({
+        icon: Icons.bathroom,
+        iconClass: "text-tertiary",
+        value: `${property.apartmentDetails.bathrooms} Bath${property.apartmentDetails.bathrooms > 1 ? "s" : ""}`,
+      });
+    }
+  } else if (property.propertyType === "LAND") {
+    if (property.landDetails?.roadAccessFeet) {
+      meta.push({
+        icon: Icons.navigation,
+        iconClass: "text-primary",
+        value: `${property.landDetails.roadAccessFeet}ft Road`,
+      });
+    } else if (property.landDetails?.frontageFeet) {
+      meta.push({
+        icon: Icons.total_area,
+        iconClass: "text-primary",
+        value: `${property.landDetails.frontageFeet}ft Frontage`,
+      });
+    }
+
+    if (property.landDetails?.facingDirection) {
+      meta.push({
+        icon: Icons.compass,
+        iconClass: "text-primary",
+        value: property.landDetails.facingDirection.replace("_", " "),
+      });
+    }
+
+    if (property.landDetails?.isCornerPlot) {
+      meta.push({
+        icon: Icons.maximize,
+        iconClass: "text-tertiary",
+        value: "Corner Plot",
+      });
+    } else if (property.landDetails?.plotShape) {
+      meta.push({
+        icon: Icons.layoutGrid,
+        iconClass: "text-secondary",
+        value: property.landDetails.plotShape,
+      });
+    }
   }
 
-  if (property.propertyType === "LAND" && property.landDetails) {
-    const meta: CardMetaItem[] = [];
-    if (property.areaValue && property.areaUnit)
-      meta.push({ icon: Icons.maximize, iconClass: "text-secondary", value: `${property.areaValue} ${property.areaUnit.replace("_", " ")}` });
-    if (property.landDetails.roadAccessFeet)
-      meta.push({ icon: Icons.navigation, iconClass: "text-primary", value: `${property.landDetails.roadAccessFeet} ft Road` });
-    if (property.landDetails.facingDirection)
-      meta.push({ icon: Icons.layers, iconClass: "text-secondary", value: property.landDetails.facingDirection.replace("_", " ") });
-    if (property.landDetails.isCornerPlot) meta.push({ icon: Icons.maximize, iconClass: "text-tertiary", value: "Corner Plot" });
-    return meta;
-  }
-
-  return [];
+  // Cap at 4 details for visual consistency across types.
+  return meta.slice(0, 4);
 }
 
 function getTypeLabel(property: SearchProperty): string {

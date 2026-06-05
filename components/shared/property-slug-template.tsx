@@ -8,9 +8,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "@/components/landing/footer";
 
-import type { PropertyType } from "@/data/property-catalog";
 import type { SearchProperty } from "@/lib/api";
-import { formatNprPrice, getPrimaryImageUrl, submitInquiry } from "@/lib/api";
+import { formatNprPrice, getPrimaryImageUrl, pickFallbackImage, submitInquiry } from "@/lib/api";
 import { IconBrandZoom } from "@tabler/icons-react";
 
 const AGENTS = [
@@ -44,42 +43,21 @@ type PageContent = {
   secondaryAction: string;
 };
 
-const galleryFallbacks: Record<PropertyType, string[]> = {
-  house: [
-    "https://images.unsplash.com/photo-1628624747186-a941c476b7ef?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1584738766473-61c083514bf4?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80",
-  ],
-  land: [
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80",
-  ],
-  apartment: [
-    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1600&q=80",
-  ],
-};
+const GALLERY_SLOT_COUNT = 5;
 
 function getGalleryImages(property: SearchProperty) {
-  const customImages =
-    property.images?.map((img) => getPrimaryImageUrl([img])) || [];
+  const images: string[] = [];
 
-  const typeMap: Record<string, PropertyType> = {
-    HOUSE: "house",
-    LAND: "land",
-    APARTMENT: "apartment",
-  };
+  for (let i = 0; i < GALLERY_SLOT_COUNT; i++) {
+    const img = property.images?.[i];
+    if (img) {
+      images.push(getPrimaryImageUrl([img], undefined, property, i));
+    } else {
+      images.push(pickFallbackImage(property, i));
+    }
+  }
 
-  const propType = typeMap[property.propertyType] || "house";
-
-  const candidates = [...customImages, ...galleryFallbacks[propType]];
-
-  return candidates.slice(0, 5);
+  return images;
 }
 
 function getPageContent(

@@ -84,9 +84,13 @@ export default function PropertyDetailsPanel({
   const resolvedDetailsHref =
     detailsHref ?? `${propertyRouteSegments[propertyType]}/${property.slug}`;
 
-  const primaryImage = getPrimaryImageUrl(property.images);
-  const image2 = property.images[1] ? getPrimaryImageUrl([property.images[1]]) : primaryImage;
-  const image3 = property.images[2] ? getPrimaryImageUrl([property.images[2]]) : primaryImage;
+  const primaryImage = getPrimaryImageUrl(property.images, undefined, property, 0);
+  const image2 = property.images[1]
+    ? getPrimaryImageUrl([property.images[1]], undefined, property, 1)
+    : primaryImage;
+  const image3 = property.images[2]
+    ? getPrimaryImageUrl([property.images[2]], undefined, property, 2)
+    : primaryImage;
   const overviewChips: OverviewChip[] = [];
 
   if (property.houseDetails?.bedrooms) {

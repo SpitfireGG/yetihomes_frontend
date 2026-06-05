@@ -362,7 +362,7 @@ export default function Navbar({
           price: `${p.currency === "USD" ? "$" : "रु"} ${Number(p.priceAmount).toLocaleString()}`,
           href: `/${p.propertyType.toLowerCase()}s/${p.slug}`,
           postedAgo: getTimeAgo(p.createdAt),
-          image: getPrimaryImageUrl(p.images || []),
+          image: getPrimaryImageUrl(p.images || [], undefined, p, 0),
         }));
         setListings(mapped);
       })
