@@ -148,13 +148,17 @@ function CityGrid({ cities }: { cities: LandingCityCard[] }) {
             href={`/houses?city=${encodeURIComponent(cityData.city)}`}
             className="group relative h-48 w-full overflow-hidden rounded-2xl bg-surface-container-high shadow-sm transition-shadow duration-300 hover:shadow-lg"
           >
-            <Image
-              src={cityData.imageUrl}
-              alt={`${cityData.city} Property View`}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 16vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
-            />
+            {cityData.imageUrl ? (
+              <Image
+                src={cityData.imageUrl}
+                alt={`${cityData.city} Property View`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 16vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary/20 to-tertiary/30" />
+            )}
 
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 p-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <h3 className="translate-y-4 text-lg font-bold text-white transition-transform duration-500 ease-out group-hover:translate-y-0">

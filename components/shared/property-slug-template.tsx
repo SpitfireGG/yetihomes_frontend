@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Footer from "@/components/landing/footer";
 
 import type { SearchProperty } from "@/lib/api";
-import { formatNprPrice, getPrimaryImageUrl, pickFallbackImage, submitInquiry } from "@/lib/api";
+import { formatNprPrice, getPrimaryImageUrl, submitInquiry } from "@/lib/api";
 import { IconBrandZoom } from "@tabler/icons-react";
 
 const AGENTS = [
@@ -51,9 +51,10 @@ function getGalleryImages(property: SearchProperty) {
   for (let i = 0; i < GALLERY_SLOT_COUNT; i++) {
     const img = property.images?.[i];
     if (img) {
-      images.push(getPrimaryImageUrl([img], undefined, property, i));
-    } else {
-      images.push(pickFallbackImage(property, i));
+      const url = getPrimaryImageUrl([img]);
+      if (url) {
+        images.push(url);
+      }
     }
   }
 
@@ -639,17 +640,28 @@ export default function PropertySlugTemplate({
 
       <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-8">
         <div
-          className="relative w-full h-[50vh] lg:h-[70vh] cursor-zoom-in group overflow-hidden bg-gray-100"
-          onClick={() => setSelectedImage(galleryImages[0])}
+          className="relative w-full h-[50vh] lg:h-[70vh] cursor-zoom-in group overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20"
+          onClick={() => galleryImages[0] && setSelectedImage(galleryImages[0])}
         >
-          <Image
-            src={galleryImages[0]}
-            alt={`${property.title} hero view`}
-            fill
-            priority
-            sizes="(max-width: 1440px) 100vw, 1440px"
-            className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
-          />
+          {galleryImages[0] ? (
+            <Image
+              src={galleryImages[0]}
+              alt={`${property.title} hero view`}
+              fill
+              priority
+              sizes="(max-width: 1440px) 100vw, 1440px"
+              className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex flex-col items-center gap-3 text-on-surface-variant/60">
+                <IconBrandZoom className="size-16" strokeWidth={1} />
+                <span className="text-xs font-bold uppercase tracking-[0.22em]">
+                  {property.title}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

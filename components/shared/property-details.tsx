@@ -1,9 +1,7 @@
 "use client";
-
 import { Icons } from "@/components/ui/icons";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const propertyData = {
@@ -13,11 +11,7 @@ const propertyData = {
   period: "/month",
   description:
     "Welcome to Midnight Ridge Villa 🏡 Experience a peaceful escape at Midnight Ridge Villa, a modern retreat set on a quiet hillside with stunning views of the Kathmandu valley and starry nights.",
-  images: [
-    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=500&q=80",
-    "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=500&q=80",
-  ],
+  images: [] as string[],
   amenities: [
     { icon: Icons.doorOpen, label: "6 Rooms" },
     { icon: Icons.bedDouble, label: "4 Beds" },
@@ -33,35 +27,23 @@ const tabs = ["Overview", "About"];
 function ImageGallery() {
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-2 h-[260px] md:h-[300px] mb-6">
-      <div className="col-span-2 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
-        <Image
-          src={propertyData.images[0]}
-          alt="Main View"
-          fill
-          sizes="(max-width: 768px) 100vw, 520px"
-          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-        />
+      <div className="col-span-2 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer bg-gradient-to-br from-primary/25 via-secondary/20 to-tertiary/25">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Icons.home className="size-20 text-on-surface-variant/30" strokeWidth={1} />
+        </div>
         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
       </div>
 
-      <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-        <Image
-          src={propertyData.images[1]}
-          alt="Bedroom"
-          fill
-          sizes="(max-width: 768px) 50vw, 260px"
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-        />
+      <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer bg-gradient-to-br from-secondary/25 via-tertiary/20 to-primary/25">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Icons.bedDouble className="size-10 text-on-surface-variant/30" strokeWidth={1} />
+        </div>
       </div>
 
-      <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer">
-        <Image
-          src={propertyData.images[2]}
-          alt="Living Area"
-          fill
-          sizes="(max-width: 768px) 50vw, 260px"
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-        />
+      <div className="col-span-1 row-span-1 relative rounded-2xl overflow-hidden group cursor-pointer bg-gradient-to-br from-tertiary/25 via-primary/20 to-secondary/25">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Icons.armchair className="size-10 text-on-surface-variant/30" strokeWidth={1} />
+        </div>
 
         <div className="absolute inset-0 bg-black/40 flex items-center justify-center hover:bg-black/50 transition-colors">
           <span className="text-white text-sm font-semibold tracking-wide">
@@ -175,15 +157,7 @@ export default function PropertyDetailsPanel() {
             </button>
           </div>
 
-          <div className="relative w-full h-48 bg-surface-container-high rounded-2xl overflow-hidden group cursor-pointer border border-outline-variant">
-            <Image
-              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80"
-              alt="Map Location"
-              fill
-              sizes="100vw"
-              className="object-cover opacity-80 mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out"
-            />
-
+          <div className="relative w-full h-48 bg-gradient-to-br from-primary/15 via-secondary/15 to-tertiary/15 rounded-2xl overflow-hidden group cursor-pointer border border-outline-variant">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-12 h-12">
                 <div className="absolute inset-0 bg-secondary/25 rounded-full animate-ping"></div>
@@ -198,14 +172,8 @@ export default function PropertyDetailsPanel() {
             </div>
 
             <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-surface-container-lowest/95 backdrop-blur px-3 py-2 rounded-xl shadow-md border border-outline-variant flex items-center gap-3">
-              <div className="w-8 h-8 relative rounded-md overflow-hidden shrink-0">
-              <Image
-                src={propertyData.images[0]}
-                alt="thumb"
-                fill
-                sizes="64px"
-                className="object-cover"
-              />
+              <div className="w-8 h-8 rounded-md overflow-hidden shrink-0 bg-gradient-to-br from-primary/30 via-secondary/20 to-tertiary/30 flex items-center justify-center">
+                <Icons.home className="size-5 text-on-surface-variant/60" strokeWidth={1.5} />
               </div>
               <div className="pr-2">
                 <p className="text-[10px] font-bold text-on-surface leading-none mb-1">

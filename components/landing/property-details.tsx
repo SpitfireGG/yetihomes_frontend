@@ -84,13 +84,13 @@ export default function PropertyDetailsPanel({
   const resolvedDetailsHref =
     detailsHref ?? `${propertyRouteSegments[propertyType]}/${property.slug}`;
 
-  const primaryImage = getPrimaryImageUrl(property.images, undefined, property, 0);
+  const primaryImage = getPrimaryImageUrl(property.images);
   const image2 = property.images[1]
-    ? getPrimaryImageUrl([property.images[1]], undefined, property, 1)
-    : primaryImage;
+    ? getPrimaryImageUrl([property.images[1]])
+    : "";
   const image3 = property.images[2]
-    ? getPrimaryImageUrl([property.images[2]], undefined, property, 2)
-    : primaryImage;
+    ? getPrimaryImageUrl([property.images[2]])
+    : "";
   const overviewChips: OverviewChip[] = [];
 
   if (property.houseDetails?.bedrooms) {
@@ -161,33 +161,39 @@ export default function PropertyDetailsPanel({
       )}
 
       <div className="mt-10 mb-6 flex h-40 shrink-0 gap-2.5 sm:mt-2 sm:h-52 sm:gap-3 lg:h-56">
-        <div className="relative w-[65%] h-full rounded-2xl overflow-hidden shadow-sm">
-<Image
-  src={primaryImage}
-  alt={property.title}
-  fill
-  sizes="(max-width: 768px) 100vw, 520px"
-  className="object-cover"
-/>
+        <div className="relative w-[65%] h-full rounded-2xl overflow-hidden shadow-sm bg-gradient-to-br from-primary/25 via-secondary/20 to-tertiary/25">
+{primaryImage ? (
+  <Image
+    src={primaryImage}
+    alt={property.title}
+    fill
+    sizes="(max-width: 768px) 100vw, 520px"
+    className="object-cover"
+  />
+) : null}
         </div>
         <div className="flex flex-col gap-3 w-[35%] h-full">
-          <div className="relative flex-1 rounded-2xl overflow-hidden shadow-sm">
-<Image
-  src={image2}
-  fill
-  sizes="(max-width: 768px) 50vw, 260px"
-  className="object-cover scale-110"
-  alt={`${property.title} view 2`}
-/>
+          <div className="relative flex-1 rounded-2xl overflow-hidden shadow-sm bg-gradient-to-br from-secondary/25 via-tertiary/20 to-primary/25">
+{image2 ? (
+  <Image
+    src={image2}
+    fill
+    sizes="(max-width: 768px) 50vw, 260px"
+    className="object-cover scale-110"
+    alt={`${property.title} view 2`}
+  />
+) : null}
           </div>
-          <div className="relative flex-1 rounded-2xl overflow-hidden shadow-sm">
-<Image
-  src={image3}
-  fill
-  sizes="(max-width: 768px) 50vw, 260px"
-  className="object-cover scale-125 origin-top-left"
-  alt={`${property.title} view 3`}
-/>
+          <div className="relative flex-1 rounded-2xl overflow-hidden shadow-sm bg-gradient-to-br from-tertiary/25 via-primary/20 to-secondary/25">
+{image3 ? (
+  <Image
+    src={image3}
+    fill
+    sizes="(max-width: 768px) 50vw, 260px"
+    className="object-cover scale-125 origin-top-left"
+    alt={`${property.title} view 3`}
+  />
+) : null}
           </div>
         </div>
       </div>

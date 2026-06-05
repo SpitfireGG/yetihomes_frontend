@@ -3,15 +3,13 @@
 import { Icons } from "@/components/ui/icons";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Sample property images
-const propertyImages = [
-  "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=1200&q=80", // Original Main
-  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=500&q=80",
-  "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=500&q=80",
-  "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=500&q=80",
+const propertyGradients = [
+  "from-primary/30 via-secondary/20 to-tertiary/30",
+  "from-secondary/30 via-tertiary/20 to-primary/30",
+  "from-tertiary/30 via-primary/20 to-secondary/30",
+  "from-primary/25 via-tertiary/25 to-secondary/25",
 ];
 
 export default function ImageGallery() {
@@ -22,23 +20,19 @@ export default function ImageGallery() {
 
       {/* Thumbnails Column */}
       <div className="w-full lg:w-1/4 flex flex-row lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto pr-2 pl-2 pt-4 pb-2 custom-scrollbar snap-x">
-        {propertyImages.map((img, index) => (
+        {propertyGradients.map((gradient, index) => (
           <button
             key={index}
             onClick={() => setActiveIndex(index)}
-            className={`relative w-24 h-24 lg:w-full lg:h-48 shrink-0 snap-center rounded-2xl overflow-hidden transition-all duration-300 ${
+            className={`relative w-24 h-24 lg:w-full lg:h-48 shrink-0 snap-center rounded-2xl overflow-hidden transition-all duration-300 bg-gradient-to-br ${gradient} ${
               activeIndex === index
                 ? "ring-4 ring-primary ring-offset-2"
                 : "opacity-70 hover:opacity-100"
             }`}
           >
-            <Image
-              src={img}
-              alt={`Thumbnail ${index + 1}`}
-              fill
-              sizes="(max-width: 1024px) 96px, 200px"
-              className="object-cover"
-            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Icons.home className="size-8 text-on-surface-variant/40" strokeWidth={1} />
+            </div>
           </button>
         ))}
       </div>
@@ -62,7 +56,7 @@ export default function ImageGallery() {
           </button>
           <button
             onClick={() =>
-              setActiveIndex((prev) => (prev + 1) % propertyImages.length)
+              setActiveIndex((prev) => (prev + 1) % propertyGradients.length)
             }
             className="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-4 py-2 rounded-lg font-medium text-sm shadow-sm hover:bg-primary-container hover:text-primary transition-all whitespace-nowrap"
           >
@@ -77,16 +71,11 @@ export default function ImageGallery() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0"
+            className={`absolute inset-0 bg-gradient-to-br ${propertyGradients[activeIndex]}`}
           >
-            <Image
-              src={propertyImages[activeIndex]}
-              alt="Main Property View"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 75vw"
-              className="object-cover"
-            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Icons.home className="size-24 text-on-surface-variant/30" strokeWidth={0.8} />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

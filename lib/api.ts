@@ -246,8 +246,6 @@ export type LandingPageData = {
 
 export type LandingPageApiResponse = ApiResponse<LandingPageData>;
 
-const BLOG_COVER_IMAGE_FALLBACK =
-  "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80";
 const BLOG_AUTHOR_IMAGE_FALLBACK = "https://avatar.vercel.sh/yetihomes-blog";
 const TEAM_IMAGE_FALLBACK = "/teams/team1.jpeg";
 const REVIEW_IMAGE_FALLBACK = "https://avatar.vercel.sh/yetihomes-review";
@@ -284,10 +282,10 @@ async function apiRequest<T, M = never>(
 
 export function resolveApiAssetUrl(
   assetPath: string | null | undefined,
-  fallbackUrl: string,
+  fallbackUrl: string | null = null,
 ): string {
   if (!assetPath) {
-    return fallbackUrl;
+    return fallbackUrl ?? "";
   }
 
   if (assetPath.startsWith("http://") || assetPath.startsWith("https://")) {
@@ -326,10 +324,7 @@ export function mapBlogArticle(article: RawBlogArticle): BlogArticle {
       article.authorImage,
       BLOG_AUTHOR_IMAGE_FALLBACK,
     ),
-    coverImage: resolveApiAssetUrl(
-      article.coverImage,
-      BLOG_COVER_IMAGE_FALLBACK,
-    ),
+    coverImage: resolveApiAssetUrl(article.coverImage),
     publishDateLabel: formatBlogPublishDate(article.publishDate),
   };
 }
@@ -422,63 +417,10 @@ export function formatNprPrice(
 }
 
 /* ------------------------------------------------------------------ */
-/*  Image helpers — proper URL resolution + type-specific fallbacks   */
+/*  Image helpers — no remote fallbacks, callers render a placeholder  */
 /* ------------------------------------------------------------------ */
 
-const FALLBACK_IMAGES: Record<string, string[]> = {
-  HOUSE: [
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1576941089067-2de3c901e126?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1584738766473-61c083514bf4?auto=format&fit=crop&w=1600&q=80",
-  ],
-  LAND: [
-    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
-  ],
-  APARTMENT: [
-    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1502672260266-1c1e52b154ce?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1600&q=80",
-  ],
-  DEFAULT: [
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80",
-  ],
-};
-
-function hashString(value: string): number {
-  let hash = 0;
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash << 5) - hash + value.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash);
-}
-
-export function pickFallbackImage(
-  property: Pick<SearchProperty, "id" | "propertyType"> | undefined,
-  slotIndex: number = 0,
-): string {
-  const key =
-    property?.propertyType && FALLBACK_IMAGES[property.propertyType]
-      ? property.propertyType
-      : "DEFAULT";
-  const pool = FALLBACK_IMAGES[key];
-  const seed = property?.id ?? "default";
-  return pool[(hashString(seed) + slotIndex) % pool.length];
-}
-
-export function resolveImageUrl(
-  url: string | null | undefined,
-  backendBase?: string,
-): string {
+function resolveImageUrl(url: string | null | undefined): string {
   if (!url) return "";
 
   if (url.startsWith("http://") || url.startsWith("https://")) {
@@ -486,32 +428,21 @@ export function resolveImageUrl(
   }
 
   const normalized = url.replace(/^\/+/, "");
-  const base = backendBase ?? API_ORIGIN;
 
   if (
     normalized.startsWith("uploads/") ||
     normalized.startsWith("blogs/")
   ) {
-    return `${base}/${normalized}`.replace("localhost", "127.0.0.1");
+    return `${API_ORIGIN}/${normalized}`.replace("localhost", "127.0.0.1");
   }
 
   // Default: treat as an upload path.
-  return `${base}/uploads/${normalized}`.replace("localhost", "127.0.0.1");
+  return `${API_ORIGIN}/uploads/${normalized}`.replace("localhost", "127.0.0.1");
 }
 
-export function getPrimaryImageUrl(
-  images: PropertyImage[],
-  backendBase?: string,
-  property?: Pick<SearchProperty, "id" | "propertyType">,
-  slotIndex: number = 0,
-): string {
+export function getPrimaryImageUrl(images: PropertyImage[]): string {
   const primary = images.find((img) => img.isPrimary) || images[0];
-
-  if (!primary) {
-    return pickFallbackImage(property, slotIndex);
-  }
-
-  return resolveImageUrl(primary.url, backendBase);
+  return primary ? resolveImageUrl(primary.url) : "";
 }
 
 export async function getPropertyBySlug(

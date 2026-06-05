@@ -17,7 +17,7 @@ export const apartmentProperties = [
     rating: "4.9",
     type: "Penthouse",
     typeColor: "text-primary",
-    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80",
+    image: "",
     floor: "12th Floor",
     rooms: "4 Beds",
   },
@@ -31,7 +31,7 @@ export const apartmentProperties = [
     rating: "4.7",
     type: "Apartment",
     typeColor: "text-secondary",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+    image: "",
     floor: "8th Floor",
     rooms: "3 Beds",
   },
@@ -45,7 +45,7 @@ export const apartmentProperties = [
     rating: "4.8",
     type: "Studio",
     typeColor: "text-tertiary",
-    image: "https://images.unsplash.com/photo-1502672260266-1c1e52b154ce?auto=format&fit=crop&w=800&q=80",
+    image: "",
     floor: "3rd Floor",
     rooms: "1 Bed",
   },
@@ -59,7 +59,7 @@ export const apartmentProperties = [
     rating: "4.6",
     type: "Condo",
     typeColor: "text-primary",
-    image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80",
+    image: "",
     floor: "5th Floor",
     rooms: "3 Beds",
   },
@@ -119,14 +119,20 @@ export default function ApartmentListings({ onToggleFilter, onSelectProperty }: 
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-brand-navy-900/5 border border-outline-variant transition-shadow duration-300 group cursor-pointer flex flex-col h-full"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container-high">
-                <Image
-                  src={property.image}
-                  alt={property.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-secondary/20 via-tertiary/15 to-primary/20">
+                {property.image ? (
+                  <Image
+                    src={property.image}
+                    alt={property.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Icons.building className="size-16 text-on-surface-variant/30" strokeWidth={1} />
+                  </div>
+                )}
 
                 <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/20">
                   <span

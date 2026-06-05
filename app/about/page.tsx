@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -11,15 +10,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#F8F8F5] font-sans text-gray-900">
-      <section className="relative h-[50vh] min-h-[320px] overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80"
-          alt="YetiHomes Office"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+      <section className="relative h-[50vh] min-h-[320px] overflow-hidden bg-gradient-to-br from-brand-navy-900 via-primary to-secondary">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.10),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.06),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
           <div className="mx-auto w-full max-w-[1440px]">

@@ -26,7 +26,6 @@ const nextConfig: NextConfig = {
         hostname: "api.yetihomesestate.com.np",
         pathname: "/uploads/**",
       },
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "avatar.vercel.sh", pathname: "/**" },
       { protocol: "https", hostname: "i.ytimg.com", pathname: "/**" },
       { protocol: "https", hostname: "upload.wikimedia.org", pathname: "/**" },

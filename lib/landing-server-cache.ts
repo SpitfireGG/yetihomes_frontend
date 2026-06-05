@@ -14,9 +14,6 @@ const API_BASE_URL =
 // Ensure the URL ends with /api (NestJS global prefix)
 const resolvedBaseUrl = API_BASE_URL.endsWith("/api") ? API_BASE_URL : `${API_BASE_URL}/api`;
 
-const LANDING_CITY_IMAGE_FALLBACK =
-  "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80";
-
 export const LANDING_PAGE_CACHE_REVALIDATE_SECONDS = 60;
 
 export type LandingCityCard = {
@@ -64,7 +61,7 @@ const getLandingPageCache = unstable_cache(
       categories: response.data.categories,
       cities: response.data.cities.map((city) => ({
         ...city,
-        imageUrl: resolveApiAssetUrl(city.imageUrl, LANDING_CITY_IMAGE_FALLBACK),
+        imageUrl: resolveApiAssetUrl(city.imageUrl),
       })),
     };
   },

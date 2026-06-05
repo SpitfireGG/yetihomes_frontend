@@ -14,6 +14,9 @@ import {
   faChevronRight,
   faRoad,
   faCompass,
+  faCar,
+  faLayerGroup,
+  faCouch,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   LandingCarouselSection,
@@ -31,6 +34,9 @@ const statIcons: Record<PropertyShowcaseStatKind, IconDefinition> = {
   area: faRulerCombined,
   road: faRoad,
   facing: faCompass,
+  parking: faCar,
+  floor: faLayerGroup,
+  furnishing: faCouch,
 };
 
 function getBadgeClasses(tone: PropertyShowcaseEyebrowTone) {
@@ -63,25 +69,36 @@ function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
   return (
     <article className="group flex h-full w-full cursor-pointer flex-col">
       <div className="relative mb-5 aspect-[4/5] overflow-hidden rounded-[24px] bg-surface-container-high shadow-sm">
-        <div
-          className="flex h-full w-full transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${activeImg * 100}%)` }}
-        >
-          {listing.images.map((image, index) => (
-            <div
-              key={`${listing.id}-image-${index}`}
-              className="relative h-full w-full shrink-0"
-            >
-              <Image
-                src={image}
-                alt={`${listing.title} view ${index + 1}`}
-                fill
-                sizes="(max-width: 768px) 85vw, (max-width: 1024px) 380px, 400px"
-                className="object-cover"
-              />
+        {listing.images.length === 0 ? (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20">
+            <div className="flex flex-col items-center gap-2 text-on-surface-variant/60">
+              <FontAwesomeIcon icon={faRulerCombined} className="text-3xl" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.22em]">
+                {listing.title}
+              </span>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div
+            className="flex h-full w-full transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${activeImg * 100}%)` }}
+          >
+            {listing.images.map((image, index) => (
+              <div
+                key={`${listing.id}-image-${index}`}
+                className="relative h-full w-full shrink-0"
+              >
+                <Image
+                  src={image}
+                  alt={`${listing.title} view ${index + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 85vw, (max-width: 1024px) 380px, 400px"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         {listing.eyebrow ? (
           <div className="absolute left-4 top-4 z-20">

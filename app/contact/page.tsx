@@ -4,7 +4,6 @@ import { Icons } from "@/components/ui/icons";
 import { Loader } from "@/components/ui/loader";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import Footer from "@/components/landing/footer";
@@ -368,15 +367,9 @@ export default function ContactPage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.5, delay: 0.4 }}
-            className="mt-32 relative aspect-[16/9] w-full rounded-[32px] overflow-hidden grayscale hover:grayscale-0 transition-all duration-[2s] editorial-shadow"
+            className="mt-32 relative aspect-[16/9] w-full rounded-[32px] overflow-hidden bg-gradient-to-br from-brand-navy-900 via-primary to-secondary editorial-shadow"
           >
-            <Image
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80"
-              alt="Headquarters Office"
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.10),transparent_50%),radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.06),transparent_50%)]"></div>
             <div className="absolute inset-0 bg-black/20" />
             <div className="absolute bottom-8 left-8 flex items-center gap-3 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full">
               <Icons.clock size={16} className="text-primary" strokeWidth={2} />

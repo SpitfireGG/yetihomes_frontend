@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -44,15 +43,8 @@ const openings = [
 export default function CareersPage() {
   return (
     <div className="min-h-screen bg-[#F8F8F5] font-sans text-gray-900">
-      <section className="relative h-[40vh] min-h-[280px] overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=2000&q=80"
-          alt="YetiHomes Team"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+      <section className="relative h-[40vh] min-h-[280px] overflow-hidden bg-gradient-to-br from-primary via-brand-800 to-secondary">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.10),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.06),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
           <div className="mx-auto w-full max-w-[1440px]">

@@ -17,6 +17,9 @@ const statIcons: Record<
   area: IconRulerMeasure,
   road: Icons.navigation,
   facing: Icons.compass,
+  parking: Icons.parking,
+  floor: Icons.layers,
+  furnishing: Icons.armchair,
 };
 
 export function LandListingCard({
@@ -30,14 +33,25 @@ export function LandListingCard({
         listing.offset ? "lg:translate-y-12" : ""
       }`}
     >
-      <div className="relative mb-4 aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-[20px]">
-        <Image
-          src={listing.image}
-          alt={listing.imageAlt}
-          fill
-          sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+      <div className="relative mb-4 aspect-[4/3] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-[20px] bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20">
+        {listing.image ? (
+          <Image
+            src={listing.image}
+            alt={listing.imageAlt}
+            fill
+            sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="flex flex-col items-center gap-2 text-on-surface-variant/60">
+              <IconRulerMeasure className="size-12" strokeWidth={1} />
+              <span className="text-[10px] font-bold uppercase tracking-[0.22em]">
+                {listing.title}
+              </span>
+            </div>
+          </div>
+        )}
 
         {listing.eyebrow ? (
           <div className="absolute left-4 top-4">
