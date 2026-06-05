@@ -17,7 +17,8 @@ export const houseProperties = [
     rating: "4.9",
     type: "Home",
     typeColor: "text-primary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "2",
@@ -29,7 +30,8 @@ export const houseProperties = [
     rating: "4.7",
     type: "Apartment",
     typeColor: "text-tertiary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "3",
@@ -41,7 +43,8 @@ export const houseProperties = [
     rating: "4.8",
     type: "Villa",
     typeColor: "text-secondary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "4",
@@ -53,7 +56,8 @@ export const houseProperties = [
     rating: "4.7",
     type: "Home",
     typeColor: "text-primary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "5",
@@ -65,7 +69,8 @@ export const houseProperties = [
     rating: "4.7",
     type: "Villa",
     typeColor: "text-secondary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "6",
@@ -77,7 +82,8 @@ export const houseProperties = [
     rating: "4.6",
     type: "Apartment",
     typeColor: "text-tertiary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -145,20 +151,14 @@ export default function PropListings({
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-brand-navy-900/5 border border-outline-variant transition-shadow duration-300 group cursor-pointer flex flex-col h-full"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/15 to-tertiary/20">
-                {property.image ? (
-                  <Image
-                    src={property.image}
-                    alt={property.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Icons.home className="size-16 text-on-surface-variant/30" strokeWidth={1} />
-                  </div>
-                )}
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container-high">
+                <Image
+                  src={property.image}
+                  alt={property.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
 
                 <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/20">
                   <span

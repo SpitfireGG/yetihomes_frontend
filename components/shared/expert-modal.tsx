@@ -4,6 +4,7 @@ import { Loader } from "@/components/ui/loader";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 interface Expert {
   id: string;
@@ -29,7 +30,7 @@ const defaultExperts: Expert[] = [
     role: "Director of Residential Sales",
     phone: "+977 98512 34567",
     email: "sonam@yetihomes.com",
-    image: "",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
   },
   {
     id: "2",
@@ -37,7 +38,7 @@ const defaultExperts: Expert[] = [
     role: "Senior Luxury Property Specialist",
     phone: "+977 98512 34568",
     email: "tashi@yetihomes.com",
-    image: "",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c0d2b?auto=format&fit=crop&w=200&q=80",
   },
   {
     id: "3",
@@ -45,7 +46,7 @@ const defaultExperts: Expert[] = [
     role: "Commercial & Investment Advisor",
     phone: "+977 98512 34569",
     email: "karma@yetihomes.com",
-    image: "",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80",
   },
 ];
 
@@ -179,12 +180,14 @@ export function ExpertModal({
                               : "bg-white/5 hover:bg-white/10"
                           }`}
                         >
-                          <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold uppercase">
-                            {expert.name
-                              .split(" ")
-                              .map((part) => part[0])
-                              .slice(0, 2)
-                              .join("")}
+                          <div className="relative size-12 shrink-0 overflow-hidden rounded-full">
+                            <Image
+                              src={expert.image}
+                              alt={expert.name}
+                              fill
+                              sizes="48px"
+                              className="object-cover"
+                            />
                           </div>
                           <div className="min-w-0">
                             <p className="truncate font-semibold">{expert.name}</p>
@@ -201,12 +204,14 @@ export function ExpertModal({
                     {selectedExpert ? (
                       <div className="mb-6 rounded-2xl bg-green-500/10 p-6">
                         <div className="mb-4 flex items-center gap-4">
-                          <div className="flex size-16 shrink-0 items-center justify-center rounded-full border-2 border-primary bg-primary/10 text-lg font-bold uppercase text-primary">
-                            {selectedExpert.name
-                              .split(" ")
-                              .map((part) => part[0])
-                              .slice(0, 2)
-                              .join("")}
+                          <div className="relative size-16 shrink-0 overflow-hidden rounded-full border-2 border-primary">
+                            <Image
+                              src={selectedExpert.image}
+                              alt={selectedExpert.name}
+                              fill
+                              sizes="64px"
+                              className="object-cover"
+                            />
                           </div>
                           <div>
                             <h4 className="font-bold text-on-surface">

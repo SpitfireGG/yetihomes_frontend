@@ -30,8 +30,8 @@ export default function LegalLayout({
   return (
     <div className="min-h-screen bg-[#F8F8F5] pt-24 pb-20 font-sans">
       {/* Mini Hero Section */}
-      <div className="bg-gradient-to-br from-brand-navy-900 via-brand-navy-800 to-brand-navy-900 text-white py-16 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_50%)]"></div>
+      <div className="bg-brand-navy-900 text-white py-16 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80')] opacity-10 object-cover bg-center mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
         <div className="max-w-6xl mx-auto relative z-10">

@@ -6,6 +6,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+// (Keep your existing landProperties array here)
 export const landProperties = [
   {
     id: "l1",
@@ -18,7 +19,8 @@ export const landProperties = [
     unit: "Aana",
     type: "Residential Plot",
     typeColor: "text-primary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "l2",
@@ -31,7 +33,8 @@ export const landProperties = [
     unit: "Aana",
     type: "Commercial Land",
     typeColor: "text-secondary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1534237710431-e2fc698436d0?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "l3",
@@ -44,7 +47,8 @@ export const landProperties = [
     unit: "Aana",
     type: "Premium Plot",
     typeColor: "text-tertiary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "l4",
@@ -57,7 +61,8 @@ export const landProperties = [
     unit: "Aana",
     type: "Residential Plot",
     typeColor: "text-primary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1584950346377-ceca02e5b7a7?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "l5",
@@ -70,7 +75,8 @@ export const landProperties = [
     unit: "Ropani",
     type: "Agricultural",
     typeColor: "text-tertiary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1590682680695-43b964a3ae17?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "l6",
@@ -83,7 +89,8 @@ export const landProperties = [
     unit: "Aana",
     type: "Commercial Land",
     typeColor: "text-secondary",
-    image: "",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -135,20 +142,14 @@ export default function LandListings({
           >
             {/* NO LINK OVERLAY, onClick is at the parent level */}
 
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-tertiary/20 via-primary/15 to-secondary/20">
-              {property.image ? (
-                <Image
-                  src={property.image}
-                  alt={property.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Icons.maximize className="size-16 text-on-surface-variant/30" strokeWidth={1} />
-                </div>
-              )}
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container-high">
+              <Image
+                src={property.image}
+                alt={property.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
               <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/20">
                 <span
                   className={`text-xs font-bold tracking-wide ${property.typeColor}`}

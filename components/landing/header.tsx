@@ -362,7 +362,7 @@ export default function Navbar({
           price: `${p.currency === "USD" ? "$" : "रु"} ${Number(p.priceAmount).toLocaleString()}`,
           href: `/${p.propertyType.toLowerCase()}s/${p.slug}`,
           postedAgo: getTimeAgo(p.createdAt),
-          image: getPrimaryImageUrl(p.images || []),
+          image: getPrimaryImageUrl(p.images || [], undefined, p, 0),
         }));
         setListings(mapped);
       })
@@ -917,10 +917,17 @@ export default function Navbar({
                       </ul>
                     </div>
                   </div>
-                  <div className="w-[280px] bg-gradient-to-br from-primary via-brand-800 to-secondary p-6 relative flex flex-col justify-end overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="w-[280px] bg-secondary-container/40 p-6 relative flex flex-col justify-end overflow-hidden group">
+                    <Image
+                      src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80"
+                      alt="Corporate"
+                      fill
+                      sizes="280px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
                     <div className="relative z-10">
-                      <span className="inline-block px-2.5 py-1 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest rounded mb-3">
+                      <span className="inline-block px-2.5 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded mb-3">
                         Our Mission
                       </span>
                       <h4 className="text-white font-bold text-lg leading-tight mb-2">
