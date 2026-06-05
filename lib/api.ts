@@ -705,8 +705,20 @@ export async function getLandingPageData(
 }
 
 export async function getNewListings(): Promise<SearchProperty[]> {
-  const url = `${API_BASE_URL}/properties/search/new-listings`;
-  const res = await fetch(url, { cache: "no-store" });
-  const json = await res.json();
-  return json.data || [];
+  try {
+    const response = await apiRequest<SearchProperty[]>(
+      `/properties/search/new-listings`,
+      { method: "GET" },
+    );
+    return Array.isArray(response.data) ? response.data : [];
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.warn(
+        `[api] getNewListings failed (${error.status}): ${error.message}`,
+      );
+    } else {
+      console.warn("[api] getNewListings failed:", error);
+    }
+    return [];
+  }
 }

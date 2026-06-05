@@ -8,7 +8,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    if (!body.name || !body.email || !body.message) {
+    const name = body.fullName || body.name;
+    if (!name || !body.email || !body.message) {
       return NextResponse.json(
         { success: false, message: "Name, email, and message are required", statusCode: 400 },
         { status: 400 }
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
 
     const ticketId = crypto.randomUUID();
     console.log("[TICKET] New support ticket:", {
-      name: body.name,
+      name,
       email: body.email,
       subject: body.subject,
       category: body.category,
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
     try {
       await sendSupportTicketConfirmation(
         body.email,
-        body.name,
+        name,
         ticketId,
         body.subject || "General Inquiry"
       );
@@ -45,7 +46,7 @@ export async function POST(request: Request) {
     try {
       await sendNewTicketAdminNotification(
         {
-          name: body.name,
+          name,
           email: body.email,
           phone: body.phone,
           subject: body.subject,
@@ -63,7 +64,7 @@ export async function POST(request: Request) {
       success: true,
       data: {
         id: ticketId,
-        name: body.name,
+        name,
         email: body.email,
         subject: body.subject || "General Inquiry",
         status: "pending",

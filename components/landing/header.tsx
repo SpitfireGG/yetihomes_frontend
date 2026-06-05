@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   IconBuildingSkyscraper,
@@ -21,6 +21,18 @@ import {
   IconPhone,
   IconX,
   IconSend,
+  IconCircleCheck,
+  IconSparkles,
+  IconRocket,
+  IconLanguage,
+  IconCurrency,
+  IconLayoutGrid,
+  IconBolt,
+  IconChevronRight,
+  IconPlus,
+  IconMinus,
+  IconFileText,
+  IconCurrencyDollar,
 } from "@tabler/icons-react";
 import { getNewListings, SearchProperty, searchProperties, submitSupportTicket, getPrimaryImageUrl } from "@/lib/api";
 
@@ -33,6 +45,7 @@ const Icons = {
   shield: IconShield,
   arrowRight: IconArrowRight,
   chevronDown: IconChevronDown,
+  chevronRight: IconChevronRight,
   search: IconSearch,
   message: IconMessage,
   help: IconHelp,
@@ -41,6 +54,17 @@ const Icons = {
   phone: IconPhone,
   close: IconX,
   send: IconSend,
+  check: IconCircleCheck,
+  sparkles: IconSparkles,
+  rocket: IconRocket,
+  language: IconLanguage,
+  currency: IconCurrency,
+  grid: IconLayoutGrid,
+  bolt: IconBolt,
+  plus: IconPlus,
+  minus: IconMinus,
+  file: IconFileText,
+  dollar: IconCurrencyDollar,
 };
 
 type Leaf = { label: string; slug: string };
@@ -104,9 +128,152 @@ const groupHref = (intent: Intent, group: Group) =>
   `${group.basePath}?intent=${intent}`;
 
 /* ------------------------------------------------------------------ */
-/*  NEW LISTINGS — placeholder data                                   */
-/*  Replace `recentListings` with data fetched from your API          */
-/*  (e.g. GET /api/listings?since=7d). Kept as a prop-friendly shape. */
+/*  MOBILE DRAWER HELPERS                                             */
+/* ------------------------------------------------------------------ */
+
+type MobileSectionProps = {
+  icon: React.ReactNode;
+  label: string;
+  badge?: React.ReactNode;
+  open: boolean;
+  onToggle: () => void;
+  isLink?: boolean;
+  isButton?: boolean;
+  href?: string;
+  onSelect?: () => void;
+  children?: React.ReactNode;
+};
+
+const MobileSection = ({
+  icon,
+  label,
+  badge,
+  open,
+  onToggle,
+  isLink,
+  isButton,
+  href,
+  onSelect,
+  children,
+}: MobileSectionProps) => {
+  const baseRow =
+    "flex items-center gap-3.5 w-full px-4 py-3.5 rounded-2xl text-left text-on-surface hover:bg-surface-container transition-colors group";
+  const labelEl = (
+    <span className="flex items-center gap-3.5 flex-1 min-w-0">
+      <span className="w-9 h-9 rounded-xl bg-primary-container/60 text-primary grid place-items-center shrink-0 group-hover:scale-105 transition-transform">
+        {icon}
+      </span>
+      <span className="text-[15px] font-bold tracking-tight truncate">
+        {label}
+      </span>
+      {badge}
+    </span>
+  );
+
+  if (isLink && href) {
+    return (
+      <Link href={href} onClick={onSelect} className={baseRow}>
+        {labelEl}
+        <Icons.chevronRight
+          size={16}
+          strokeWidth={2.2}
+          className="text-outline group-hover:text-primary group-hover:translate-x-0.5 transition-all"
+        />
+      </Link>
+    );
+  }
+
+  if (isButton) {
+    return (
+      <button onClick={onToggle} className={baseRow} type="button">
+        {labelEl}
+        <Icons.chevronRight
+          size={16}
+          strokeWidth={2.2}
+          className="text-outline group-hover:text-primary group-hover:translate-x-0.5 transition-all"
+        />
+      </button>
+    );
+  }
+
+  return (
+    <div className="px-1">
+      <button
+        onClick={onToggle}
+        aria-expanded={open}
+        className={baseRow}
+        type="button"
+      >
+        {labelEl}
+        <motion.span
+          animate={{ rotate: open ? 45 : 0 }}
+          transition={{ type: "spring", stiffness: 380, damping: 24 }}
+          className="text-outline group-hover:text-primary transition-colors"
+        >
+          <Icons.plus size={16} strokeWidth={2.5} />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && children && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pt-1 pb-2">{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const PropertyAccordionBody = ({
+  intent,
+  onSelect,
+}: {
+  intent: Intent;
+  onSelect: () => void;
+}) => (
+  <div className="px-2 pb-2 pt-1 space-y-3">
+    {PROPERTY_GROUPS.map((group) => {
+      const GroupIcon = Icons[group.icon];
+      return (
+        <div key={group.slug}>
+          <Link
+            href={groupHref(intent, group)}
+            onClick={onSelect}
+            className="flex items-center gap-2 px-3 py-2 text-[11px] font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors"
+          >
+            <GroupIcon size={14} strokeWidth={2.2} />
+            {group.label}
+          </Link>
+          <ul className="ml-3 border-l border-outline-variant/50 pl-3 space-y-0.5">
+            {group.leaves.map((leaf) => (
+              <li key={leaf.slug}>
+                <Link
+                  href={leafHref(intent, group, leaf)}
+                  onClick={onSelect}
+                  className="flex items-center justify-between py-2 px-2 rounded-lg text-sm font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors group"
+                >
+                  <span>{leaf.label}</span>
+                  <Icons.chevronRight
+                    size={13}
+                    className="text-outline opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })}
+  </div>
+);
+
 /* ------------------------------------------------------------------ */
 
 export type RecentListing = {
@@ -260,6 +427,46 @@ export default function Navbar({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const pathname = usePathname();
+
+  // Auto-close the mobile drawer when the route changes.
+  // Using a `useRef` keyed to pathname lets us detect a real change
+  // without synchronously calling setState in an effect body.
+  const prevPathRef = useRef(pathname);
+  useEffect(() => {
+    if (prevPathRef.current !== pathname) {
+      prevPathRef.current = pathname;
+      setIsMobileMenuOpen(false);
+      setMobileAccordion(null);
+    }
+  }, [pathname]);
+
+  // Esc also closes the mobile drawer, full-screen overlays and popovers.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+      if (isSearchOpen) {
+        setIsSearchOpen(false);
+        setSearchQuery("");
+        setSearchResults([]);
+      }
+      if (isChatOpen) setIsChatOpen(false);
+      if (isSupportOpen) {
+        setIsSupportOpen(false);
+        setSupportSuccess(false);
+      }
+      if (isInvestmentModalOpen) setIsInvestmentModalOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMobileMenuOpen, isSearchOpen, isChatOpen, isSupportOpen, isInvestmentModalOpen]);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+    setMobileAccordion(null);
+  }, []);
+
   const menuVariants: Variants = {
     closed: { opacity: 0, y: "-100%" },
     open: {
@@ -378,7 +585,7 @@ export default function Navbar({
           <div className="relative w-11 h-11 group-hover:scale-105 transition-transform duration-300">
             <Link
               href="/"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMobileMenu}
               className="block w-full h-full"
             >
               <Image
@@ -861,28 +1068,469 @@ export default function Navbar({
           </div>
 
           {/* Mobile triggers */}
-          <div className="flex items-center gap-1 lg:hidden">
+          <div className="flex items-center gap-0.5 lg:hidden">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="z-50 text-on-surface hover:text-primary transition-colors p-2"
+              aria-label="Search"
+              className="z-50 text-on-surface hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-low"
             >
-              <Icons.search size={22} />
+              <Icons.search size={20} strokeWidth={2.2} />
             </button>
             <button
               onClick={() => setIsChatOpen(true)}
-              className="z-50 text-on-surface hover:text-primary transition-colors p-2"
+              aria-label="Chat with us"
+              className="z-50 text-on-surface hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-low"
             >
-              <Icons.message size={22} />
+              <Icons.message size={20} strokeWidth={2.2} />
             </button>
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="z-50 text-on-surface hover:text-primary transition-colors p-2"
+              onClick={() => setIsMobileMenuOpen((v) => !v)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+              className="z-50 relative text-on-surface hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-low w-10 h-10 flex items-center justify-center"
             >
-              <Icons.menu size={22} />
+              <AnimatePresence mode="wait" initial={false}>
+                {isMobileMenuOpen ? (
+                  <motion.span
+                    key="x"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Icons.close size={20} strokeWidth={2.2} />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Icons.menu size={22} strokeWidth={2.2} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </button>
           </div>
         </div>
       </header>
+
+      {/* ============================================================ */}
+      {/* MOBILE DRAWER                                                */}
+      {/* ============================================================ */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.button
+              key="mobile-backdrop"
+              type="button"
+              aria-label="Close menu"
+              onClick={closeMobileMenu}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-[65] bg-black/55 backdrop-blur-sm lg:hidden cursor-default"
+            />
+
+            {/* Drawer */}
+            <motion.aside
+              key="mobile-drawer"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Main navigation"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 360, damping: 36, mass: 0.8 }}
+              className="fixed top-0 right-0 bottom-0 z-[68] w-full sm:max-w-md bg-surface-container-lowest shadow-2xl shadow-black/25 flex flex-col lg:hidden"
+            >
+              {/* Drawer header */}
+              <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-outline-variant/50">
+                <Link
+                  href="/"
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-2.5"
+                >
+                  <div className="relative w-9 h-9">
+                    <Image
+                      src="/Yeti-Logo-01.svg"
+                      alt="YetiHomes"
+                      fill
+                      sizes="36px"
+                      className="object-contain"
+                    />
+                  </div>
+                  <span className="font-headline text-sm font-extrabold tracking-[0.28em] text-on-surface">
+                    YETI HOMES
+                  </span>
+                </Link>
+                <button
+                  onClick={closeMobileMenu}
+                  aria-label="Close menu"
+                  className="w-9 h-9 grid place-items-center rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"
+                >
+                  <Icons.close size={20} strokeWidth={2.2} />
+                </button>
+              </div>
+
+              {/* Quick utility row */}
+              <div className="grid grid-cols-3 gap-2 px-5 pt-5">
+                {[
+                  {
+                    icon: "search" as const,
+                    label: "Search",
+                    onClick: () => {
+                      closeMobileMenu();
+                      setIsSearchOpen(true);
+                    },
+                  },
+                  {
+                    icon: "message" as const,
+                    label: "WhatsApp",
+                    onClick: () => {
+                      closeMobileMenu();
+                      setIsChatOpen(true);
+                    },
+                  },
+                  {
+                    icon: "help" as const,
+                    label: "Support",
+                    onClick: () => {
+                      closeMobileMenu();
+                      setIsSupportOpen(true);
+                    },
+                  },
+                ].map((b) => {
+                  const I = Icons[b.icon];
+                  return (
+                    <button
+                      key={b.label}
+                      onClick={b.onClick}
+                      className="group flex flex-col items-center gap-1.5 py-3 rounded-2xl bg-surface-container-low border border-outline-variant/40 hover:border-primary/30 hover:bg-primary-container/40 transition-colors"
+                    >
+                      <span className="text-on-surface-variant group-hover:text-primary transition-colors">
+                        {I ? <I size={18} strokeWidth={2} /> : null}
+                      </span>
+                      <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-on-surface-variant group-hover:text-primary transition-colors">
+                        {b.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Nav scroll area */}
+              <nav
+                aria-label="Mobile primary"
+                className="flex-1 overflow-y-auto px-3 py-5 overscroll-contain"
+              >
+                <MobileSection
+                  icon={<Icons.home size={20} strokeWidth={2} />}
+                  label="Home"
+                  badge={null}
+                  open={mobileAccordion === "home"}
+                  onToggle={() =>
+                    setMobileAccordion(mobileAccordion === "home" ? null : "home")
+                  }
+                  isLink
+                  href="/"
+                  onSelect={closeMobileMenu}
+                />
+
+                {/* New Listings */}
+                <MobileSection
+                  icon={<Icons.sparkles size={20} strokeWidth={2} />}
+                  label="New Listings"
+                  badge={
+                    <span className="ml-auto inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-primary">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                      {listings.length} new
+                    </span>
+                  }
+                  open={mobileAccordion === "new"}
+                  onToggle={() =>
+                    setMobileAccordion(mobileAccordion === "new" ? null : "new")
+                  }
+                >
+                  <div className="px-2 pb-3 pt-1">
+                    <p className="text-[10px] font-bold tracking-widest uppercase text-outline px-3 pb-2">
+                      Fresh in the last 7 days
+                    </p>
+                    {listings.length === 0 ? (
+                      <p className="px-3 py-4 text-sm text-on-surface-variant">
+                        No new listings yet.
+                      </p>
+                    ) : (
+                      <ul className="space-y-1">
+                        {listings.slice(0, 5).map((l) => (
+                          <li key={l.id}>
+                            <Link
+                              href={l.href}
+                              onClick={closeMobileMenu}
+                              className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-surface-container transition-colors group"
+                            >
+                              <div className="w-12 h-12 rounded-lg bg-surface-container overflow-hidden relative shrink-0">
+                                {l.image ? (
+                                  <Image
+                                    src={l.image}
+                                    alt={l.title}
+                                    fill
+                                    sizes="48px"
+                                    className="object-cover"
+                                  />
+                                ) : (
+                                  <span className="absolute inset-0 grid place-items-center text-on-surface-variant/40">
+                                    <Icons.building size={16} />
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">
+                                  {l.title}
+                                </p>
+                                <p className="text-[11px] text-on-surface-variant truncate">
+                                  {l.location}
+                                </p>
+                              </div>
+                              <span className="text-xs font-bold text-primary shrink-0">
+                                {l.price}
+                              </span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <Link
+                      href="/houses?sort=newest"
+                      onClick={closeMobileMenu}
+                      className="mt-2 mx-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold tracking-widest uppercase text-primary hover:bg-primary-container/40 rounded-xl transition-colors"
+                    >
+                      See all <Icons.arrowRight size={13} strokeWidth={2.5} />
+                    </Link>
+                  </div>
+                </MobileSection>
+
+                {/* Buy */}
+                <MobileSection
+                  icon={<Icons.building size={20} strokeWidth={2} />}
+                  label="Buy"
+                  badge={
+                    <span className="ml-auto text-[10px] font-bold tracking-widest uppercase text-outline">
+                      Properties to Buy
+                    </span>
+                  }
+                  open={mobileAccordion === "buy"}
+                  onToggle={() =>
+                    setMobileAccordion(mobileAccordion === "buy" ? null : "buy")
+                  }
+                >
+                  <PropertyAccordionBody intent="buy" onSelect={closeMobileMenu} />
+                  <Link
+                    href="/houses?intent=buy"
+                    onClick={closeMobileMenu}
+                    className="mt-1 mx-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold tracking-widest uppercase text-primary hover:bg-primary-container/40 rounded-xl transition-colors"
+                  >
+                    Browse all <Icons.arrowRight size={13} strokeWidth={2.5} />
+                  </Link>
+                </MobileSection>
+
+                {/* Rent */}
+                <MobileSection
+                  icon={<Icons.bolt size={20} strokeWidth={2} />}
+                  label="Rent"
+                  badge={
+                    <span className="ml-auto text-[10px] font-bold tracking-widest uppercase text-outline">
+                      Properties to Rent
+                    </span>
+                  }
+                  open={mobileAccordion === "rent"}
+                  onToggle={() =>
+                    setMobileAccordion(mobileAccordion === "rent" ? null : "rent")
+                  }
+                >
+                  <PropertyAccordionBody intent="rent" onSelect={closeMobileMenu} />
+                  <Link
+                    href="/houses?intent=rent"
+                    onClick={closeMobileMenu}
+                    className="mt-1 mx-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold tracking-widest uppercase text-primary hover:bg-primary-container/40 rounded-xl transition-colors"
+                  >
+                    Browse all <Icons.arrowRight size={13} strokeWidth={2.5} />
+                  </Link>
+                </MobileSection>
+
+                {/* Investment */}
+                <MobileSection
+                  icon={<Icons.rocket size={20} strokeWidth={2} />}
+                  label="Investment"
+                  badge={
+                    <span className="ml-auto inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-tertiary">
+                      Coming soon
+                    </span>
+                  }
+                  open={false}
+                  onToggle={() => {
+                    closeMobileMenu();
+                    setIsInvestmentModalOpen(true);
+                  }}
+                  isButton
+                />
+
+                {/* Company */}
+                <MobileSection
+                  icon={<Icons.users size={20} strokeWidth={2} />}
+                  label="Company"
+                  badge={null}
+                  open={mobileAccordion === "company"}
+                  onToggle={() =>
+                    setMobileAccordion(mobileAccordion === "company" ? null : "company")
+                  }
+                >
+                  <div className="px-2 pb-3 pt-1 space-y-1">
+                    <p className="text-[10px] font-bold tracking-widest uppercase text-outline px-3 pb-1">
+                      Who We Are
+                    </p>
+                    {[
+                      { href: "/about", icon: "building" as const, label: "About Company" },
+                      { href: "/teams", icon: "users" as const, label: "Meet Our Team" },
+                      { href: "/careers", icon: "briefcase" as const, label: "Careers" },
+                    ].map((it) => {
+                      const I = Icons[it.icon];
+                      return (
+                        <Link
+                          key={it.href}
+                          href={it.href}
+                          onClick={closeMobileMenu}
+                          className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-surface-container transition-colors group"
+                        >
+                          <span className="w-8 h-8 rounded-lg bg-primary-container/50 grid place-items-center text-primary">
+                            {I ? <I size={15} strokeWidth={2} /> : null}
+                          </span>
+                          <span className="text-sm font-semibold text-on-surface group-hover:text-primary transition-colors">
+                            {it.label}
+                          </span>
+                          <Icons.chevronRight
+                            size={14}
+                            className="ml-auto text-outline group-hover:text-primary group-hover:translate-x-0.5 transition-all"
+                          />
+                        </Link>
+                      );
+                    })}
+                    <p className="text-[10px] font-bold tracking-widest uppercase text-outline px-3 pt-3 pb-1">
+                      Trust & Security
+                    </p>
+                    {[
+                      { href: "/legal/cookies", label: "Cookies Policy" },
+                      { href: "/legal/terms-conditions", label: "Terms & Conditions" },
+                      { href: "/legal/disclaimer", label: "Disclaimer & Advisory" },
+                      { href: "/legal/privacy", label: "Privacy Policy" },
+                      { href: "/testimonials", label: "Testimonials" },
+                    ].map((it) => (
+                      <Link
+                        key={it.href}
+                        href={it.href}
+                        onClick={closeMobileMenu}
+                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-surface-container transition-colors group"
+                      >
+                        <span className="w-8 h-8 rounded-lg bg-secondary-container/60 grid place-items-center text-secondary">
+                          <Icons.shield size={15} strokeWidth={2} />
+                        </span>
+                        <span className="text-sm font-semibold text-on-surface group-hover:text-secondary transition-colors">
+                          {it.label}
+                        </span>
+                        <Icons.chevronRight
+                          size={14}
+                          className="ml-auto text-outline group-hover:text-secondary group-hover:translate-x-0.5 transition-all"
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </MobileSection>
+
+                <div className="h-px bg-outline-variant/40 my-3 mx-3" />
+
+                {/* Blog */}
+                <MobileSection
+                  icon={<Icons.file size={20} strokeWidth={2} />}
+                  label="Blog"
+                  badge={null}
+                  open={false}
+                  onToggle={() => {}}
+                  isLink
+                  href="/blog"
+                  onSelect={closeMobileMenu}
+                />
+
+                {/* Tools */}
+                <MobileSection
+                  icon={<Icons.grid size={20} strokeWidth={2} />}
+                  label="Tools"
+                  badge={null}
+                  open={false}
+                  onToggle={() => {}}
+                  isLink
+                  href="/tools"
+                  onSelect={closeMobileMenu}
+                />
+              </nav>
+
+              {/* Drawer footer: language, currency, contact CTAs */}
+              <div className="border-t border-outline-variant/50 bg-surface-container-low/60 backdrop-blur-sm">
+                <div className="px-5 pt-4 pb-2 flex items-center gap-2">
+                  <button
+                    onClick={() =>
+                      setActiveDropdown(activeDropdown === "language" ? null : "language")
+                    }
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-widest uppercase border transition-colors ${
+                      activeDropdown === "language"
+                        ? "border-primary text-primary bg-primary-container/40"
+                        : "border-outline-variant/60 text-on-surface-variant hover:text-primary"
+                    }`}
+                  >
+                    <Icons.language size={14} strokeWidth={2.2} />
+                    {language}
+                  </button>
+                  <button
+                    onClick={() =>
+                      setActiveDropdown(activeDropdown === "currency" ? null : "currency")
+                    }
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-widest uppercase border transition-colors ${
+                      activeDropdown === "currency"
+                        ? "border-primary text-primary bg-primary-container/40"
+                        : "border-outline-variant/60 text-on-surface-variant hover:text-primary"
+                    }`}
+                  >
+                    <Icons.currency size={14} strokeWidth={2.2} />
+                    {currency}
+                  </button>
+                </div>
+
+                <div className="px-5 pb-5 pt-2 grid grid-cols-2 gap-2">
+                  <a
+                    href="tel:+9779768998508"
+                    className="flex items-center justify-center gap-2 py-3 rounded-xl border border-outline-variant/60 text-on-surface text-xs font-bold tracking-widest uppercase hover:border-primary hover:text-primary transition-colors"
+                  >
+                    <Icons.phone size={15} strokeWidth={2.2} />
+                    Call
+                  </a>
+                  <a
+                    href="https://wa.me/9779768998508?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20properties."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#25D366] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#20BD5A] transition-colors"
+                  >
+                    <Icons.message size={15} strokeWidth={2.2} />
+                    WhatsApp
+                  </a>
+                </div>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Search Overlay */}
       <AnimatePresence>
@@ -1030,7 +1678,7 @@ export default function Navbar({
               {supportSuccess ? (
                 <div className="text-center py-8">
                   <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Icons.close size={40} strokeWidth={2} className="rotate-45" />
+                    <Icons.check size={40} strokeWidth={2} />
                   </div>
                   <h3 className="text-2xl font-bold mb-3 tracking-tight text-black">Ticket Submitted!</h3>
                   <p className="text-gray-600 leading-relaxed font-medium">

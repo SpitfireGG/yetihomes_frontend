@@ -8,7 +8,10 @@ import { useState, type ElementType } from "react";
 import SectionHeading from "../shared/sectionHeading";
 import type { LandingCategory, LandingCategoryKey } from "@/lib/api";
 import type { LandingCityCard } from "@/lib/landing-server-cache";
-import { RequirementModal, useRequirementModal } from "@/components/shared/requirement-modal";
+import {
+  RequirementModal,
+  useRequirementModal,
+} from "@/components/shared/requirement-modal";
 import { ExpertModal, useExpertModal } from "@/components/shared/expert-modal";
 
 const CATEGORY_TO_ROUTE: Record<string, string> = {
@@ -19,7 +22,6 @@ const CATEGORY_TO_ROUTE: Record<string, string> = {
   apartments: "/apartments",
   "land-plot": "/lands",
 };
-
 
 const categoryIconMap: Record<LandingCategoryKey, ElementType> = {
   residential: Icons.home,
@@ -67,7 +69,7 @@ function CustomRequirementCTA({
           <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
             <button
               onClick={onSendRequirement}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-surface-container-lowest px-6 py-3 text-sm font-bold text-primary shadow-sm transition-colors hover:bg-primary-container sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-surface-container-lowest px-6 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-primary-container sm:w-auto"
             >
               Send us your Requirement
               <Icons.arrowRight size={16} />
@@ -91,11 +93,7 @@ function CustomRequirementCTA({
   );
 }
 
-function FeaturedCategories({
-  categories,
-}: {
-  categories: LandingCategory[];
-}) {
+function FeaturedCategories({ categories }: { categories: LandingCategory[] }) {
   return (
     <section className="bg-surface-container-lowest px-6 pb-20 pt-10 lg:px-12">
       <div className="mx-auto mb-12 max-w-7xl text-center">
@@ -132,11 +130,7 @@ function FeaturedCategories({
   );
 }
 
-function CityGrid({
-  cities,
-}: {
-  cities: LandingCityCard[];
-}) {
+function CityGrid({ cities }: { cities: LandingCityCard[] }) {
   return (
     <section className="bg-surface-container-lowest px-6 pb-24 lg:px-12">
       <div className="mx-auto mb-12 max-w-7xl text-center">
@@ -199,7 +193,10 @@ export default function PropertyLanding({
       {hasCategories ? <FeaturedCategories categories={categories} /> : null}
       {hasCities ? <CityGrid cities={cities} /> : null}
 
-      <RequirementModal isOpen={requirementModal.isOpen} onClose={requirementModal.close} />
+      <RequirementModal
+        isOpen={requirementModal.isOpen}
+        onClose={requirementModal.close}
+      />
       <ExpertModal isOpen={expertModal.isOpen} onClose={expertModal.close} />
     </main>
   );

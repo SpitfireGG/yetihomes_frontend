@@ -8,7 +8,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    if (!body.name || !body.email || !body.message) {
+    const name = body.fullName || body.name;
+    if (!name || !body.email || !body.message) {
       return NextResponse.json(
         { success: false, message: "Name, email, and message are required", statusCode: 400 },
         { status: 400 }
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
 
     const inquiryId = crypto.randomUUID();
     console.log("[INQUIRY] New inquiry:", {
-      name: body.name,
+      name,
       email: body.email,
       inquiryType: body.inquiryType,
       propertyId: body.propertyId,
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
     try {
       await sendInquiryConfirmation(
         body.email,
-        body.name,
+        name,
         inquiryId,
         body.inquiryType || "General"
       );
@@ -45,7 +46,7 @@ export async function POST(request: Request) {
     try {
       await sendNewInquiryAdminNotification(
         {
-          name: body.name,
+          name,
           email: body.email,
           phone: body.phone,
           inquiryType: body.inquiryType,
@@ -64,7 +65,7 @@ export async function POST(request: Request) {
       success: true,
       data: {
         id: inquiryId,
-        name: body.name,
+        name,
         email: body.email,
         phone: body.phone || null,
         inquiryType: body.inquiryType || "General",

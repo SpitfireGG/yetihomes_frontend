@@ -408,7 +408,8 @@ export default function Footer() {
         {/* Bottom Section: Copyright & Legal */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-brand-400/20 text-xs text-brand-400">
           <p>
-            © {new Date().getFullYear()} YetiHomes Estate. All rights reserved.
+            © {new Date().getFullYear()} Yeti Homes Estate Pvt. Ltd. All rights
+            reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6">
             <Link
