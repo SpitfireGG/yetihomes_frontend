@@ -16,7 +16,6 @@ import {
   IconSearch,
   IconMessage,
   IconHelp,
-  IconGlobe,
   IconMenu2,
   IconPhone,
   IconX,
@@ -24,15 +23,13 @@ import {
   IconCircleCheck,
   IconSparkles,
   IconRocket,
-  IconLanguage,
-  IconCurrency,
+  IconWorld,
   IconLayoutGrid,
   IconBolt,
   IconChevronRight,
   IconPlus,
   IconMinus,
   IconFileText,
-  IconCurrencyDollar,
 } from "@tabler/icons-react";
 import { getNewListings, SearchProperty, searchProperties, submitSupportTicket, getPrimaryImageUrl } from "@/lib/api";
 
@@ -49,7 +46,7 @@ const Icons = {
   search: IconSearch,
   message: IconMessage,
   help: IconHelp,
-  globe: IconGlobe,
+  globe: IconWorld,
   menu: IconMenu2,
   phone: IconPhone,
   close: IconX,
@@ -57,14 +54,11 @@ const Icons = {
   check: IconCircleCheck,
   sparkles: IconSparkles,
   rocket: IconRocket,
-  language: IconLanguage,
-  currency: IconCurrency,
   grid: IconLayoutGrid,
   bolt: IconBolt,
   plus: IconPlus,
   minus: IconMinus,
   file: IconFileText,
-  dollar: IconCurrencyDollar,
 };
 
 type Leaf = { label: string; slug: string };
@@ -374,9 +368,6 @@ export default function Navbar({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
 
-  const [activeDropdown, setActiveDropdown] = useState<
-    "language" | "currency" | null
-  >(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -393,8 +384,6 @@ export default function Navbar({
   const [isSupportSubmitting, setIsSupportSubmitting] = useState(false);
   const [supportSuccess, setSupportSuccess] = useState(false);
   const router = useRouter();
-  const [currency, setCurrency] = useState<"NPR" | "USD">("NPR");
-  const [language, setLanguage] = useState<"EN" | "NE">("EN");
 
   // Close-delay timer so the mega-menu doesn't snap shut when the cursor
   // crosses the small gap between trigger and panel.
@@ -482,16 +471,6 @@ export default function Navbar({
       y: 0,
       transition: { delay: 0.08 * idx + 0.2, duration: 0.5, ease: "easeOut" },
     }),
-  };
-  const popoverVariants: Variants = {
-    hidden: { opacity: 0, y: 10, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { type: "spring", stiffness: 400, damping: 30 },
-    },
-    exit: { opacity: 0, y: 10, scale: 0.95, transition: { duration: 0.2 } },
   };
   const megaVariants: Variants = {
     hidden: { opacity: 0, y: 8, scale: 0.99 },
@@ -780,6 +759,19 @@ export default function Navbar({
             {hoveredPath === "investment" && <Underline />}
           </button>
 
+          {/* Article */}
+          <Link
+            href="/blog"
+            className={`relative py-2 px-1 transition-colors ${hoveredPath === "article" ? "text-on-surface" : "hover:text-on-surface"}`}
+            onMouseEnter={() => {
+              setHoveredPath("article");
+              scheduleClose();
+            }}
+          >
+            <span className="relative z-10">Article</span>
+            {hoveredPath === "article" && <Underline />}
+          </Link>
+
           {/* Company */}
           <div
             className="relative py-2 px-1"
@@ -987,84 +979,11 @@ export default function Navbar({
           <div className="w-px h-5 bg-outline-variant hidden sm:block mx-1" />
 
           {/* Language / currency */}
-          <div className="hidden sm:flex items-center gap-4">
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setActiveDropdown(
-                    activeDropdown === "language" ? null : "language",
-                  )
-                }
-                className={`flex items-center gap-1.5 transition-colors ${activeDropdown === "language" ? "text-primary" : "hover:text-primary"}`}
-              >
-                <Icons.globe size={16} strokeWidth={2.5} />
-                <span className="text-xs font-bold">{language}</span>
-              </button>
-              <AnimatePresence>
-                {activeDropdown === "language" && (
-                  <motion.div
-                    variants={popoverVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="absolute top-full mt-4 right-0 w-32 bg-surface-container-lowest/90 backdrop-blur-lg border border-outline-variant rounded-xl shadow-xl overflow-hidden"
-                  >
-                    {(["EN", "NE"] as const).map((l) => (
-                      <button
-                        key={l}
-                        onClick={() => {
-                          setLanguage(l);
-                          setActiveDropdown(null);
-                        }}
-                        className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-surface-container transition-colors ${language === l ? "text-primary" : "text-on-surface"}`}
-                      >
-                        {l === "EN" ? "English" : "Nepali"}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setActiveDropdown(
-                    activeDropdown === "currency" ? null : "currency",
-                  )
-                }
-                className={`flex items-center gap-1 transition-colors ${activeDropdown === "currency" ? "text-primary" : "hover:text-primary"}`}
-              >
-                <span
-                  className={`text-xs font-bold px-2 py-1 rounded-md border transition-colors ${activeDropdown === "currency" ? "bg-primary/10 border-primary/20 text-primary" : "bg-surface-container-low border-outline-variant text-on-surface"}`}
-                >
-                  {currency}
-                </span>
-              </button>
-              <AnimatePresence>
-                {activeDropdown === "currency" && (
-                  <motion.div
-                    variants={popoverVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="absolute top-full mt-4 right-0 w-32 bg-surface-container-lowest/90 backdrop-blur-lg border border-outline-variant rounded-xl shadow-xl overflow-hidden"
-                  >
-                    {(["NPR", "USD"] as const).map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => {
-                          setCurrency(c);
-                          setActiveDropdown(null);
-                        }}
-                        className={`w-full text-left px-4 py-2 text-xs font-bold hover:bg-surface-container transition-colors ${currency === c ? "text-primary" : "text-on-surface"}`}
-                      >
-                        {c === "NPR" ? "NPR (रु)" : "USD ($)"}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+          <div className="hidden sm:flex items-center gap-3">
+            <Icons.globe size={16} strokeWidth={1.5} className="text-outline" />
+            <span className="text-xs font-bold text-on-surface-variant">EN</span>
+            <span className="text-xs text-outline">|</span>
+            <span className="text-xs font-bold text-on-surface-variant">NPR</span>
           </div>
 
           {/* Mobile triggers */}
@@ -1452,10 +1371,10 @@ export default function Navbar({
 
                 <div className="h-px bg-outline-variant/40 my-3 mx-3" />
 
-                {/* Blog */}
+                {/* Article */}
                 <MobileSection
                   icon={<Icons.file size={20} strokeWidth={2} />}
-                  label="Blog"
+                  label="Article"
                   badge={null}
                   open={false}
                   onToggle={() => {}}
@@ -1479,33 +1398,11 @@ export default function Navbar({
 
               {/* Drawer footer: language, currency, contact CTAs */}
               <div className="border-t border-outline-variant/50 bg-surface-container-low/60 backdrop-blur-sm">
-                <div className="px-5 pt-4 pb-2 flex items-center gap-2">
-                  <button
-                    onClick={() =>
-                      setActiveDropdown(activeDropdown === "language" ? null : "language")
-                    }
-                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-widest uppercase border transition-colors ${
-                      activeDropdown === "language"
-                        ? "border-primary text-primary bg-primary-container/40"
-                        : "border-outline-variant/60 text-on-surface-variant hover:text-primary"
-                    }`}
-                  >
-                    <Icons.language size={14} strokeWidth={2.2} />
-                    {language}
-                  </button>
-                  <button
-                    onClick={() =>
-                      setActiveDropdown(activeDropdown === "currency" ? null : "currency")
-                    }
-                    className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold tracking-widest uppercase border transition-colors ${
-                      activeDropdown === "currency"
-                        ? "border-primary text-primary bg-primary-container/40"
-                        : "border-outline-variant/60 text-on-surface-variant hover:text-primary"
-                    }`}
-                  >
-                    <Icons.currency size={14} strokeWidth={2.2} />
-                    {currency}
-                  </button>
+                <div className="px-5 pt-4 pb-2 flex items-center justify-center gap-3">
+                  <Icons.globe size={16} strokeWidth={1.5} className="text-outline" />
+                  <span className="text-xs font-bold text-on-surface-variant">EN</span>
+                  <span className="text-xs text-outline">|</span>
+                  <span className="text-xs font-bold text-on-surface-variant">NPR</span>
                 </div>
 
                 <div className="px-5 pb-5 pt-2 grid grid-cols-2 gap-2">

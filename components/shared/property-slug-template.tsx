@@ -12,12 +12,6 @@ import type { SearchProperty } from "@/lib/api";
 import { formatNprPrice, getPrimaryImageUrl, submitInquiry } from "@/lib/api";
 import { IconBrandZoom } from "@tabler/icons-react";
 
-const AGENTS = [
-  { name: "Kritika", image: "/teams/kritikaFace.jpg", phone: "9779768998508" },
-  { name: "Ngima", image: "/teams/ngimaFace.jpeg", phone: "9779851446901" },
-  { name: "Suresh", image: "/teams/team1.jpeg", phone: "9779851361431" },
-];
-
 type SpecItem = {
   icon: React.ComponentType<{
     size?: number;
@@ -51,7 +45,6 @@ function getGalleryImages(property: SearchProperty) {
 
 function getPageContent(
   property: SearchProperty,
-  agentName: string,
 ): PageContent {
   switch (property.propertyType) {
     case "HOUSE":
@@ -207,8 +200,8 @@ function getPageContent(
             value: property.titleStatus?.replace("_", " ") || "N/A",
           },
         ],
-        agentRole: "Residential Advisory Team",
-        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.`,
+        agentRole: "Yeti Homes Estate",
+        agentDescription: `We help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -318,8 +311,8 @@ function getPageContent(
             value: property.landDetails?.zoningType || "N/A",
           },
         ],
-        agentRole: "Land Advisory Team",
-        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.`,
+        agentRole: "Yeti Homes Estate",
+        agentDescription: `We facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -465,8 +458,8 @@ function getPageContent(
               "Apartment",
           },
         ],
-        agentRole: "Apartment Sales Team",
-        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.`,
+        agentRole: "Yeti Homes Estate",
+        agentDescription: `We help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -482,8 +475,8 @@ function getPageContent(
         quickSpecs: [],
         detailSpecs: [],
         otherDetails: [],
-        agentRole: "Yeti Homes Estate Team",
-        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We can help you with this property.`,
+        agentRole: "Yeti Homes Estate",
+        agentDescription: `We can help you with this property.`,
         primaryAction: "Contact",
         secondaryAction: "Details",
       };
@@ -527,9 +520,7 @@ export default function PropertySlugTemplate({
   }, [selectedImage]);
 
   const galleryImages = getGalleryImages(property);
-  const assignedAgent =
-    AGENTS[(property.id.charCodeAt(0) || 0) % AGENTS.length];
-  const content = getPageContent(property, assignedAgent.name);
+  const content = getPageContent(property);
 
   // Generate deterministic view count
   const viewCount =
@@ -726,31 +717,25 @@ export default function PropertySlugTemplate({
 
         <div className="w-full xl:w-[380px] xl:self-start shrink-0">
           <div className="sticky top-32 h-fit rounded-[32px] border border-outline-variant/40 bg-surface-container-lowest p-8 lg:p-10 flex flex-col items-center editorial-shadow">
-            <div className="w-24 h-24 rounded-full overflow-hidden mb-6 relative border-4 border-surface shadow-sm bg-gray-100">
+            <div className="w-24 h-24 rounded-full overflow-hidden mb-6 relative border-4 border-surface shadow-sm bg-white p-3">
               <Image
-                src={assignedAgent.image}
-                alt={`${assignedAgent.name} from Yeti Homes Estate Estate`}
+                src="/Yeti-Logo-02.svg"
+                alt="Yeti Homes Estate"
                 fill
                 sizes="96px"
-                className="object-cover"
+                className="object-contain"
               />
             </div>
-            <h4 className="text-2xl font-medium tracking-tight text-black mb-1">
-              {assignedAgent.name}{" "}
-              <span className="text-sm text-gray-500 block text-center mt-1">
-                Yeti Homes Estate Estate
-              </span>
+            <h4 className="text-2xl font-medium tracking-tight text-black mb-1 text-center">
+              Yeti Homes Estate
             </h4>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-8 mt-2">
-              {content.agentRole}
-            </p>
             <p className="text-sm text-gray-600 mb-8 leading-relaxed text-center font-light">
               {content.agentDescription}
             </p>
 
             <div className="flex flex-col gap-4 w-full">
               <a
-                href={`https://wa.me/${assignedAgent.phone}?text=${encodeURIComponent(`Hello ${assignedAgent.name}, I would like to schedule a tour for ${property.title}`)}`}
+                href={`https://wa.me/9779768998508?text=${encodeURIComponent(`Hello, I would like to schedule a tour for ${property.title}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-xl border border-outline-variant/40 bg-black py-4 text-white text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors flex items-center justify-center gap-3"
