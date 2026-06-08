@@ -41,6 +41,8 @@ export default function LandsPage({
     maxPrice?: string;
     intent?: string;
     type?: string;
+    q?: string;
+    facingDirection?: string;
   }>;
 }) {
   return <PropertyBrowserRoute propertyType="land" searchParams={searchParams} />;

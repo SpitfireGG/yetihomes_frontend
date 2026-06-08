@@ -1461,7 +1461,11 @@ export default function Navbar({
                       setIsSearching(true);
                       searchTimerRef.current = setTimeout(async () => {
                         try {
-                          const res = await searchProperties({ q: val.trim(), limit: 10 });
+                          const trimmed = val.trim();
+                          const filters: Parameters<typeof searchProperties>[0] = trimmed.match(/^[A-Z]{2,4}-\d+$/)
+                            ? { propertyCode: trimmed, limit: 10 }
+                            : { q: trimmed, limit: 10 };
+                          const res = await searchProperties(filters);
                           setSearchResults(res.data);
                         } catch { setSearchResults([]); }
                         finally { setIsSearching(false); }

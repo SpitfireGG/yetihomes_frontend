@@ -39,6 +39,8 @@ export default function HousesPage({
     maxPrice?: string;
     intent?: string;
     type?: string;
+    q?: string;
+    facingDirection?: string;
   }>;
 }) {
   return <PropertyBrowserRoute propertyType="house" searchParams={searchParams} />;

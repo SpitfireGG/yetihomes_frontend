@@ -31,8 +31,10 @@ export default async function PropertyBrowserRoute({
     minPrice?: number;
     maxPrice?: number;
     q?: string;
+    propertyCode?: string;
     listingType?: "SALE" | "RENT";
     subType?: string;
+    facingDirection?: string;
   } = {
     limit: 20,
     propertyType: propertyTypeToApiPropertyType[propertyType],
@@ -53,7 +55,19 @@ export default async function PropertyBrowserRoute({
     resolvedSearchParams.q &&
     typeof resolvedSearchParams.q === "string"
   ) {
-    filters.q = resolvedSearchParams.q;
+    const q = resolvedSearchParams.q;
+    if (/^[A-Z]{2,4}-\d+$/.test(q)) {
+      filters.propertyCode = q;
+    } else {
+      filters.q = q;
+    }
+  }
+
+  if (
+    resolvedSearchParams.facingDirection &&
+    typeof resolvedSearchParams.facingDirection === "string"
+  ) {
+    filters.facingDirection = resolvedSearchParams.facingDirection;
   }
 
   if (

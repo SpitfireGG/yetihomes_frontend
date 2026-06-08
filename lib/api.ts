@@ -27,6 +27,7 @@ export class ApiError extends Error {
 
 export type SearchFilters = {
   q?: string;
+  propertyCode?: string;
   propertyType?: "HOUSE" | "APARTMENT" | "LAND";
   listingType?: "SALE" | "RENT";
   minPrice?: number;
