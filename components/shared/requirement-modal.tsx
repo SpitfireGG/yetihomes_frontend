@@ -60,7 +60,8 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
           fullName: formData.name,
           email: formData.email,
           phone: formData.phone,
-          message: `${formData.requirement}\n\nBudget: ${formData.budget}\nLocation: ${formData.location}`.trim(),
+          message:
+            `${formData.requirement}\n\nBudget: ${formData.budget}\nLocation: ${formData.location}`.trim(),
           inquiryType: "Custom Requirement",
         }),
       });
@@ -80,7 +81,9 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -177,7 +180,9 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                     >
                       <option value="">Select budget</option>
                       <option value="Under 50 Lakhs">Under 50 Lakhs</option>
-                      <option value="50 Lakhs - 1 Crore">50 Lakhs - 1 Crore</option>
+                      <option value="50 Lakhs - 1 Crore">
+                        50 Lakhs - 1 Crore
+                      </option>
                       <option value="1 - 2 Crore">1 - 2 Crore</option>
                       <option value="2 - 5 Crore">2 - 5 Crore</option>
                       <option value="5 Crore+">5 Crore+</option>
@@ -227,14 +232,16 @@ export function RequirementModal({ isOpen, onClose }: RequirementModalProps) {
                     ) : (
                       <Icons.alertCircle size={16} />
                     )}
-                    <span className="text-xs sm:text-sm font-medium">{message}</span>
+                    <span className="text-xs sm:text-sm font-medium">
+                      {message}
+                    </span>
                   </div>
                 )}
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 sm:py-4 text-sm sm:text-base text-primary-on-primary transition-colors hover:bg-primary/90 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 sm:py-4 text-sm sm:text-base text-white transition-colors hover:bg-primary/90 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>

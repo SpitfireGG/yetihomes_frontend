@@ -25,13 +25,19 @@ import {
   IconRocket,
   IconWorld,
   IconLayoutGrid,
-  IconBolt,
   IconChevronRight,
   IconPlus,
   IconMinus,
   IconFileText,
+  IconCash,
 } from "@tabler/icons-react";
-import { getNewListings, SearchProperty, searchProperties, submitSupportTicket, getPrimaryImageUrl } from "@/lib/api";
+import {
+  getNewListings,
+  SearchProperty,
+  searchProperties,
+  submitSupportTicket,
+  getPrimaryImageUrl,
+} from "@/lib/api";
 
 const Icons = {
   building: IconBuildingSkyscraper,
@@ -55,7 +61,7 @@ const Icons = {
   sparkles: IconSparkles,
   rocket: IconRocket,
   grid: IconLayoutGrid,
-  bolt: IconBolt,
+  cash: IconCash,
   plus: IconPlus,
   minus: IconMinus,
   file: IconFileText,
@@ -380,7 +386,14 @@ export default function Navbar({
   const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Support ticket state
-  const [supportForm, setSupportForm] = useState({ name: "", email: "", phone: "", subject: "", category: "GENERAL", message: "" });
+  const [supportForm, setSupportForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    category: "GENERAL",
+    message: "",
+  });
   const [isSupportSubmitting, setIsSupportSubmitting] = useState(false);
   const [supportSuccess, setSupportSuccess] = useState(false);
   const router = useRouter();
@@ -400,12 +413,22 @@ export default function Navbar({
   // Lock scroll for full-screen overlays.
   useEffect(() => {
     const lock =
-      isMobileMenuOpen || isChatOpen || isSupportOpen || isSearchOpen || isInvestmentModalOpen;
+      isMobileMenuOpen ||
+      isChatOpen ||
+      isSupportOpen ||
+      isSearchOpen ||
+      isInvestmentModalOpen;
     document.body.style.overflow = lock ? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isMobileMenuOpen, isChatOpen, isSupportOpen, isSearchOpen, isInvestmentModalOpen]);
+  }, [
+    isMobileMenuOpen,
+    isChatOpen,
+    isSupportOpen,
+    isSearchOpen,
+    isInvestmentModalOpen,
+  ]);
 
   // Esc closes whatever mega-menu is open.
   useEffect(() => {
@@ -449,7 +472,13 @@ export default function Navbar({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isMobileMenuOpen, isSearchOpen, isChatOpen, isSupportOpen, isInvestmentModalOpen]);
+  }, [
+    isMobileMenuOpen,
+    isSearchOpen,
+    isChatOpen,
+    isSupportOpen,
+    isInvestmentModalOpen,
+  ]);
 
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
@@ -981,9 +1010,13 @@ export default function Navbar({
           {/* Language / currency */}
           <div className="hidden sm:flex items-center gap-3">
             <Icons.globe size={16} strokeWidth={1.5} className="text-outline" />
-            <span className="text-xs font-bold text-on-surface-variant">EN</span>
+            <span className="text-xs font-bold text-on-surface-variant">
+              EN
+            </span>
             <span className="text-xs text-outline">|</span>
-            <span className="text-xs font-bold text-on-surface-variant">NPR</span>
+            <span className="text-xs font-bold text-on-surface-variant">
+              NPR
+            </span>
           </div>
 
           {/* Mobile triggers */}
@@ -1064,7 +1097,12 @@ export default function Navbar({
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 360, damping: 36, mass: 0.8 }}
+              transition={{
+                type: "spring",
+                stiffness: 360,
+                damping: 36,
+                mass: 0.8,
+              }}
               className="fixed top-0 right-0 bottom-0 z-[68] w-full sm:max-w-md bg-surface-container-lowest shadow-2xl shadow-black/25 flex flex-col lg:hidden"
             >
               {/* Drawer header */}
@@ -1153,7 +1191,9 @@ export default function Navbar({
                   badge={null}
                   open={mobileAccordion === "home"}
                   onToggle={() =>
-                    setMobileAccordion(mobileAccordion === "home" ? null : "home")
+                    setMobileAccordion(
+                      mobileAccordion === "home" ? null : "home",
+                    )
                   }
                   isLink
                   href="/"
@@ -1247,7 +1287,10 @@ export default function Navbar({
                     setMobileAccordion(mobileAccordion === "buy" ? null : "buy")
                   }
                 >
-                  <PropertyAccordionBody intent="buy" onSelect={closeMobileMenu} />
+                  <PropertyAccordionBody
+                    intent="buy"
+                    onSelect={closeMobileMenu}
+                  />
                   <Link
                     href="/houses?intent=buy"
                     onClick={closeMobileMenu}
@@ -1259,7 +1302,7 @@ export default function Navbar({
 
                 {/* Rent */}
                 <MobileSection
-                  icon={<Icons.bolt size={20} strokeWidth={2} />}
+                  icon={<Icons.cash size={20} strokeWidth={2} />}
                   label="Rent"
                   badge={
                     <span className="ml-auto text-[10px] font-bold tracking-widest uppercase text-outline">
@@ -1268,10 +1311,15 @@ export default function Navbar({
                   }
                   open={mobileAccordion === "rent"}
                   onToggle={() =>
-                    setMobileAccordion(mobileAccordion === "rent" ? null : "rent")
+                    setMobileAccordion(
+                      mobileAccordion === "rent" ? null : "rent",
+                    )
                   }
                 >
-                  <PropertyAccordionBody intent="rent" onSelect={closeMobileMenu} />
+                  <PropertyAccordionBody
+                    intent="rent"
+                    onSelect={closeMobileMenu}
+                  />
                   <Link
                     href="/houses?intent=rent"
                     onClick={closeMobileMenu}
@@ -1305,7 +1353,9 @@ export default function Navbar({
                   badge={null}
                   open={mobileAccordion === "company"}
                   onToggle={() =>
-                    setMobileAccordion(mobileAccordion === "company" ? null : "company")
+                    setMobileAccordion(
+                      mobileAccordion === "company" ? null : "company",
+                    )
                   }
                 >
                   <div className="px-2 pb-3 pt-1 space-y-1">
@@ -1313,9 +1363,21 @@ export default function Navbar({
                       Who We Are
                     </p>
                     {[
-                      { href: "/about", icon: "building" as const, label: "About Company" },
-                      { href: "/teams", icon: "users" as const, label: "Meet Our Team" },
-                      { href: "/careers", icon: "briefcase" as const, label: "Careers" },
+                      {
+                        href: "/about",
+                        icon: "building" as const,
+                        label: "About Company",
+                      },
+                      {
+                        href: "/teams",
+                        icon: "users" as const,
+                        label: "Meet Our Team",
+                      },
+                      {
+                        href: "/careers",
+                        icon: "briefcase" as const,
+                        label: "Careers",
+                      },
                     ].map((it) => {
                       const I = Icons[it.icon];
                       return (
@@ -1343,8 +1405,14 @@ export default function Navbar({
                     </p>
                     {[
                       { href: "/legal/cookies", label: "Cookies Policy" },
-                      { href: "/legal/terms-conditions", label: "Terms & Conditions" },
-                      { href: "/legal/disclaimer", label: "Disclaimer & Advisory" },
+                      {
+                        href: "/legal/terms-conditions",
+                        label: "Terms & Conditions",
+                      },
+                      {
+                        href: "/legal/disclaimer",
+                        label: "Disclaimer & Advisory",
+                      },
                       { href: "/legal/privacy", label: "Privacy Policy" },
                       { href: "/testimonials", label: "Testimonials" },
                     ].map((it) => (
@@ -1399,10 +1467,18 @@ export default function Navbar({
               {/* Drawer footer: language, currency, contact CTAs */}
               <div className="border-t border-outline-variant/50 bg-surface-container-low/60 backdrop-blur-sm">
                 <div className="px-5 pt-4 pb-2 flex items-center justify-center gap-3">
-                  <Icons.globe size={16} strokeWidth={1.5} className="text-outline" />
-                  <span className="text-xs font-bold text-on-surface-variant">EN</span>
+                  <Icons.globe
+                    size={16}
+                    strokeWidth={1.5}
+                    className="text-outline"
+                  />
+                  <span className="text-xs font-bold text-on-surface-variant">
+                    EN
+                  </span>
                   <span className="text-xs text-outline">|</span>
-                  <span className="text-xs font-bold text-on-surface-variant">NPR</span>
+                  <span className="text-xs font-bold text-on-surface-variant">
+                    NPR
+                  </span>
                 </div>
 
                 <div className="px-5 pb-5 pt-2 grid grid-cols-2 gap-2">
@@ -1439,15 +1515,28 @@ export default function Navbar({
             className="fixed inset-0 z-[70] bg-black/80 backdrop-blur-md flex flex-col"
           >
             <div className="flex items-center justify-between px-6 lg:px-12 py-5 border-b border-white/10">
-              <h3 className="text-white text-lg font-semibold tracking-wide">Search Properties</h3>
-              <button onClick={() => { setIsSearchOpen(false); setSearchQuery(""); setSearchResults([]); }} className="text-white/60 hover:text-white transition-colors">
+              <h3 className="text-white text-lg font-semibold tracking-wide">
+                Search Properties
+              </h3>
+              <button
+                onClick={() => {
+                  setIsSearchOpen(false);
+                  setSearchQuery("");
+                  setSearchResults([]);
+                }}
+                className="text-white/60 hover:text-white transition-colors"
+              >
                 <Icons.close size={24} />
               </button>
             </div>
             <div className="flex-1 overflow-y-auto px-6 lg:px-12 py-8">
               <div className="max-w-2xl mx-auto">
                 <div className="relative mb-8">
-                  <Icons.search size={20} strokeWidth={2} className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40" />
+                  <Icons.search
+                    size={20}
+                    strokeWidth={2}
+                    className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40"
+                  />
                   <input
                     autoFocus
                     type="text"
@@ -1456,49 +1545,88 @@ export default function Navbar({
                     onChange={(e) => {
                       const val = e.target.value;
                       setSearchQuery(val);
-                      if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
-                      if (val.trim().length < 2) { setSearchResults([]); return; }
+                      if (searchTimerRef.current)
+                        clearTimeout(searchTimerRef.current);
+                      if (val.trim().length < 2) {
+                        setSearchResults([]);
+                        return;
+                      }
                       setIsSearching(true);
                       searchTimerRef.current = setTimeout(async () => {
                         try {
                           const trimmed = val.trim();
-                          const filters: Parameters<typeof searchProperties>[0] = trimmed.match(/^[A-Z]{2,4}-\d+$/)
+                          const filters: Parameters<
+                            typeof searchProperties
+                          >[0] = trimmed.match(/^[A-Z]{2,4}-\d+$/)
                             ? { propertyCode: trimmed, limit: 10 }
                             : { q: trimmed, limit: 10 };
                           const res = await searchProperties(filters);
                           setSearchResults(res.data);
-                        } catch { setSearchResults([]); }
-                        finally { setIsSearching(false); }
+                        } catch {
+                          setSearchResults([]);
+                        } finally {
+                          setIsSearching(false);
+                        }
                       }, 400);
                     }}
                     className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-2xl pl-14 pr-5 py-4 text-lg focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>
-                {isSearching && <p className="text-white/50 text-sm text-center">Searching...</p>}
-                {!isSearching && searchQuery.length >= 2 && searchResults.length === 0 && (
-                  <p className="text-white/50 text-sm text-center">No properties found matching &quot;{searchQuery}&quot;</p>
+                {isSearching && (
+                  <p className="text-white/50 text-sm text-center">
+                    Searching...
+                  </p>
                 )}
+                {!isSearching &&
+                  searchQuery.length >= 2 &&
+                  searchResults.length === 0 && (
+                    <p className="text-white/50 text-sm text-center">
+                      No properties found matching &quot;{searchQuery}&quot;
+                    </p>
+                  )}
                 <div className="space-y-3">
                   {searchResults.map((p) => (
                     <Link
                       key={p.id}
                       href={`/${p.propertyType.toLowerCase()}s/${p.slug}`}
-                      onClick={() => { setIsSearchOpen(false); setSearchQuery(""); setSearchResults([]); }}
+                      onClick={() => {
+                        setIsSearchOpen(false);
+                        setSearchQuery("");
+                        setSearchResults([]);
+                      }}
                       className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all group"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white/10 overflow-hidden shrink-0 relative">
                         {p.images?.[0]?.url ? (
-                          <Image src={p.images[0].url} alt={p.title} fill sizes="56px" className="object-cover" />
+                          <Image
+                            src={p.images[0].url}
+                            alt={p.title}
+                            fill
+                            sizes="56px"
+                            className="object-cover"
+                          />
                         ) : (
-                          <span className="absolute inset-0 grid place-items-center text-white/30"><Icons.building size={20} /></span>
+                          <span className="absolute inset-0 grid place-items-center text-white/30">
+                            <Icons.building size={20} />
+                          </span>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-white font-bold truncate group-hover:text-primary transition-colors">{p.title}</p>
-                        <p className="text-white/50 text-xs truncate">{p.locationText || p.city}</p>
-                        {p.propertyCode && <p className="text-white/40 text-[11px] mt-0.5">ID: {p.propertyCode}</p>}
+                        <p className="text-white font-bold truncate group-hover:text-primary transition-colors">
+                          {p.title}
+                        </p>
+                        <p className="text-white/50 text-xs truncate">
+                          {p.locationText || p.city}
+                        </p>
+                        {p.propertyCode && (
+                          <p className="text-white/40 text-[11px] mt-0.5">
+                            ID: {p.propertyCode}
+                          </p>
+                        )}
                       </div>
-                      <span className="text-white/60 text-sm font-semibold shrink-0">रु {Number(p.priceAmount).toLocaleString()}</span>
+                      <span className="text-white/60 text-sm font-semibold shrink-0">
+                        रु {Number(p.priceAmount).toLocaleString()}
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -1525,27 +1653,43 @@ export default function Navbar({
               className="bg-surface-container-lowest rounded-[2rem] p-10 max-w-md w-full editorial-shadow"
               onClick={(e) => e.stopPropagation()}
             >
-              <button onClick={() => setIsChatOpen(false)} className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors">
+              <button
+                onClick={() => setIsChatOpen(false)}
+                className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
+              >
                 <Icons.close size={24} />
               </button>
               <div className="text-center mb-8">
                 <div className="w-16 h-16 bg-[#25D366]/10 rounded-full flex items-center justify-center mx-auto mb-5">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="#25D366">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="#25D366"
+                  >
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-medium tracking-tight mb-3 text-on-surface">Chat with Us</h3>
+                <h3 className="text-2xl font-medium tracking-tight mb-3 text-on-surface">
+                  Chat with Us
+                </h3>
                 <p className="text-on-surface-variant text-sm leading-relaxed">
-                  Connect with our property experts on WhatsApp for instant assistance.
+                  Connect with our property experts on WhatsApp for instant
+                  assistance.
                 </p>
               </div>
               <a
-                href="https://wa.me/9779768998508?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20properties."
+                href="https://wa.me/9779851446901?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20properties."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-xl bg-[#25D366] text-white py-4 text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-[#20BD5A] transition-colors"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
                 Open WhatsApp
@@ -1563,7 +1707,10 @@ export default function Navbar({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
-            onClick={() => { setIsSupportOpen(false); setSupportSuccess(false); }}
+            onClick={() => {
+              setIsSupportOpen(false);
+              setSupportSuccess(false);
+            }}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -1572,7 +1719,13 @@ export default function Navbar({
               className="bg-surface-container-lowest rounded-[2rem] p-8 max-w-md w-full editorial-shadow max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <button onClick={() => { setIsSupportOpen(false); setSupportSuccess(false); }} className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors">
+              <button
+                onClick={() => {
+                  setIsSupportOpen(false);
+                  setSupportSuccess(false);
+                }}
+                className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
+              >
                 <Icons.close size={24} />
               </button>
 
@@ -1581,7 +1734,9 @@ export default function Navbar({
                   <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Icons.check size={40} strokeWidth={2} />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3 tracking-tight text-black">Ticket Submitted!</h3>
+                  <h3 className="text-2xl font-bold mb-3 tracking-tight text-black">
+                    Ticket Submitted!
+                  </h3>
                   <p className="text-gray-600 leading-relaxed font-medium">
                     Our support team will get back to you within 24 hours.
                   </p>
@@ -1590,9 +1745,15 @@ export default function Navbar({
                 <>
                   <div className="text-center mb-8">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
-                      <Icons.help size={28} strokeWidth={1.5} className="text-primary" />
+                      <Icons.help
+                        size={28}
+                        strokeWidth={1.5}
+                        className="text-primary"
+                      />
                     </div>
-                    <h3 className="text-2xl font-medium tracking-tight mb-2 text-on-surface">Support Ticket</h3>
+                    <h3 className="text-2xl font-medium tracking-tight mb-2 text-on-surface">
+                      Support Ticket
+                    </h3>
                     <p className="text-on-surface-variant text-sm leading-relaxed">
                       Fill out the form below and our team will assist you.
                     </p>
@@ -1615,20 +1776,72 @@ export default function Navbar({
                     className="flex flex-col gap-4"
                   >
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Name</label>
-                      <input required type="text" value={supportForm.name} onChange={(e) => setSupportForm({ ...supportForm, name: e.target.value })} className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm" placeholder="Your full name" />
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">
+                        Name
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        value={supportForm.name}
+                        onChange={(e) =>
+                          setSupportForm({
+                            ...supportForm,
+                            name: e.target.value,
+                          })
+                        }
+                        className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm"
+                        placeholder="Your full name"
+                      />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Email</label>
-                      <input required type="email" value={supportForm.email} onChange={(e) => setSupportForm({ ...supportForm, email: e.target.value })} className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm" placeholder="your@email.com" />
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">
+                        Email
+                      </label>
+                      <input
+                        required
+                        type="email"
+                        value={supportForm.email}
+                        onChange={(e) =>
+                          setSupportForm({
+                            ...supportForm,
+                            email: e.target.value,
+                          })
+                        }
+                        className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm"
+                        placeholder="your@email.com"
+                      />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Phone (Optional)</label>
-                      <input type="tel" value={supportForm.phone} onChange={(e) => setSupportForm({ ...supportForm, phone: e.target.value })} className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm" placeholder="Your phone number" />
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">
+                        Phone (Optional)
+                      </label>
+                      <input
+                        type="tel"
+                        value={supportForm.phone}
+                        onChange={(e) =>
+                          setSupportForm({
+                            ...supportForm,
+                            phone: e.target.value,
+                          })
+                        }
+                        className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm"
+                        placeholder="Your phone number"
+                      />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Category</label>
-                      <select value={supportForm.category} onChange={(e) => setSupportForm({ ...supportForm, category: e.target.value })} className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm">
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">
+                        Category
+                      </label>
+                      <select
+                        value={supportForm.category}
+                        onChange={(e) =>
+                          setSupportForm({
+                            ...supportForm,
+                            category: e.target.value,
+                          })
+                        }
+                        className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm"
+                      >
                         <option value="GENERAL">General Inquiry</option>
                         <option value="PROPERTY">Property Question</option>
                         <option value="BOOKING">Booking Issue</option>
@@ -1637,14 +1850,45 @@ export default function Navbar({
                       </select>
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Subject</label>
-                      <input required type="text" value={supportForm.subject} onChange={(e) => setSupportForm({ ...supportForm, subject: e.target.value })} className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm" placeholder="Brief description" />
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">
+                        Subject
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        value={supportForm.subject}
+                        onChange={(e) =>
+                          setSupportForm({
+                            ...supportForm,
+                            subject: e.target.value,
+                          })
+                        }
+                        className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm"
+                        placeholder="Brief description"
+                      />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">Message</label>
-                      <textarea required value={supportForm.message} onChange={(e) => setSupportForm({ ...supportForm, message: e.target.value })} className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm min-h-[80px] resize-y" placeholder="Describe your issue..." />
+                      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">
+                        Message
+                      </label>
+                      <textarea
+                        required
+                        value={supportForm.message}
+                        onChange={(e) =>
+                          setSupportForm({
+                            ...supportForm,
+                            message: e.target.value,
+                          })
+                        }
+                        className="w-full border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-black transition-colors bg-gray-50/50 text-sm min-h-[80px] resize-y"
+                        placeholder="Describe your issue..."
+                      />
                     </div>
-                    <button disabled={isSupportSubmitting} type="submit" className="w-full bg-black text-white font-bold tracking-widest uppercase text-[11px] rounded-xl py-3.5 mt-2 hover:bg-gray-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+                    <button
+                      disabled={isSupportSubmitting}
+                      type="submit"
+                      className="w-full bg-black text-white font-bold tracking-widest uppercase text-[11px] rounded-xl py-3.5 mt-2 hover:bg-gray-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
                       <Icons.send size={14} strokeWidth={2} />
                       {isSupportSubmitting ? "Submitting..." : "Submit Ticket"}
                     </button>
@@ -1682,13 +1926,19 @@ export default function Navbar({
 
               <div className="text-center mb-8">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
-                  <Icons.building size={28} strokeWidth={1.5} className="text-primary" />
+                  <Icons.building
+                    size={28}
+                    strokeWidth={1.5}
+                    className="text-primary"
+                  />
                 </div>
                 <h3 className="text-2xl font-medium tracking-tight mb-3 text-on-surface">
                   Exciting Projects Coming Soon
                 </h3>
                 <p className="text-on-surface-variant text-sm leading-relaxed">
-                  We have some amazing investment projects in the pipeline. Stay tuned for exclusive opportunities that could transform your portfolio.
+                  We have some amazing investment projects in the pipeline. Stay
+                  tuned for exclusive opportunities that could transform your
+                  portfolio.
                 </p>
               </div>
 
@@ -1699,7 +1949,12 @@ export default function Navbar({
                   rel="noopener noreferrer"
                   className="w-full rounded-xl bg-[#25D366] text-white py-4 text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-[#20BD5A] transition-colors"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                   </svg>
                   Connect on WhatsApp

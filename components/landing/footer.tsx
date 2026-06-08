@@ -12,6 +12,8 @@ import {
   IconBrandInstagram,
   IconBrandX,
   IconBrandLinkedin,
+  IconBrandTiktok,
+  IconBrandYoutube,
 } from "@tabler/icons-react";
 import { subscribeToNewsletter } from "@/lib/api";
 
@@ -363,6 +365,14 @@ export default function Footer() {
                 {
                   icon: IconBrandLinkedin,
                   href: "https://linkedin.com/company/yetihomes",
+                },
+                {
+                  icon: IconBrandYoutube,
+                  href: "https://www.youtube.com/@YetiHomesEstate",
+                },
+                {
+                  icon: IconBrandTiktok,
+                  href: "https://www.tiktok.com/@yetihomesestate",
                 },
               ].map((item, i) => (
                 <Link
