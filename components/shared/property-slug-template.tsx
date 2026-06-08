@@ -10,7 +10,6 @@ import Footer from "@/components/landing/footer";
 
 import type { SearchProperty } from "@/lib/api";
 import { formatNprPrice, getPrimaryImageUrl, submitInquiry } from "@/lib/api";
-import { IconBrandZoom } from "@tabler/icons-react";
 
 type SpecItem = {
   icon: React.ComponentType<{
@@ -888,13 +887,33 @@ export default function PropertySlugTemplate({
               <SectionTitle lines={["Services", "Nearby"]} />
             </div>
             <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
-              {property.servicesNearby.map((service) => (
+              {property.servicesNearby.map((service) => {
+                const iconMap: Record<string, keyof typeof Icons> = {
+                  SCHOOL: "graduationCap",
+                  HOSPITAL: "activity",
+                  PHARMACY: "thermometer",
+                  SUPERMARKET: "store",
+                  PARK: "palmTree",
+                  TEMPLE: "landmark",
+                  MOSQUE: "landmark",
+                  CHURCH: "landmark",
+                  GYM: "gym",
+                  RESTAURANT: "chefHat",
+                  BANK: "banknote",
+                  ATM: "wallet",
+                  GAS_STATION: "car",
+                  BUS_STOP: "navigation",
+                  AIRPORT: "anchor",
+                };
+                const iconKey = iconMap[service.serviceType] ?? "help";
+                const ServiceIcon = Icons[iconKey];
+                return (
                 <div
                   key={service.id}
                   className="flex items-center gap-3 p-4 rounded-xl transition-colors group"
                 >
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-                    <Icons.mapPin size={18} strokeWidth={1.5} />
+                    <ServiceIcon size={18} strokeWidth={1.5} />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
@@ -905,7 +924,7 @@ export default function PropertySlugTemplate({
                     </p>
                   </div>
                 </div>
-              ))}
+              );})}
             </div>
           </div>
         </div>
@@ -922,21 +941,26 @@ export default function PropertySlugTemplate({
                 href={property.videoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-6 py-4 rounded-xl hover:bg-gray-50 transition-all group"
+                className="group relative flex items-center gap-5 p-6 rounded-2xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-md transition-all"
               >
-                <div className="w-10 h-10 text-red flex items-center justify-center shrink-0">
-                  <IconBrandZoom size="46" />
+                <div className="w-14 h-14 rounded-xl bg-black flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+                    <polygon points="5,3 19,12 5,21" />
+                  </svg>
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <p className="text-base font-bold text-black group-hover:text-primary transition-colors">
                     Watch Property Video
                   </p>
-                  <p className="text-sm text-gray-500">Opens in a new tab</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-1.5 mt-0.5">
+                    <Icons.externalLink size={13} strokeWidth={1.5} />
+                    Opens in new tab
+                  </p>
                 </div>
-                <Icons.arrowRight
-                  size={16}
+                <Icons.chevronRight
+                  size={18}
                   strokeWidth={1.5}
-                  className="text-gray-400 group-hover:text-black transition-colors ml-2"
+                  className="text-gray-300 group-hover:text-black transition-colors shrink-0"
                 />
               </a>
             </div>

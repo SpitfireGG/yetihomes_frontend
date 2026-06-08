@@ -1404,18 +1404,14 @@ export default function Navbar({
                       Trust & Security
                     </p>
                     {[
-                      { href: "/legal/cookies", label: "Cookies Policy" },
-                      {
-                        href: "/legal/terms-conditions",
-                        label: "Terms & Conditions",
-                      },
-                      {
-                        href: "/legal/disclaimer",
-                        label: "Disclaimer & Advisory",
-                      },
-                      { href: "/legal/privacy", label: "Privacy Policy" },
-                      { href: "/testimonials", label: "Testimonials" },
-                    ].map((it) => (
+                      { href: "/legal/cookies", label: "Cookies Policy", icon: "shield" as const },
+                      { href: "/legal/terms-conditions", label: "Terms & Conditions", icon: "file" as const },
+                      { href: "/legal/disclaimer", label: "Disclaimer & Advisory", icon: "help" as const },
+                      { href: "/legal/privacy", label: "Privacy Policy", icon: "search" as const },
+                      { href: "/testimonials", label: "Testimonials", icon: "users" as const },
+                    ].map((it) => {
+                      const IconComp = Icons[it.icon];
+                      return (
                       <Link
                         key={it.href}
                         href={it.href}
@@ -1423,7 +1419,7 @@ export default function Navbar({
                         className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-surface-container transition-colors group"
                       >
                         <span className="w-8 h-8 rounded-lg bg-secondary-container/60 grid place-items-center text-secondary">
-                          <Icons.shield size={15} strokeWidth={2} />
+                          <IconComp size={15} strokeWidth={2} />
                         </span>
                         <span className="text-sm font-semibold text-on-surface group-hover:text-secondary transition-colors">
                           {it.label}
@@ -1433,7 +1429,7 @@ export default function Navbar({
                           className="ml-auto text-outline group-hover:text-secondary group-hover:translate-x-0.5 transition-all"
                         />
                       </Link>
-                    ))}
+                    );})}
                   </div>
                 </MobileSection>
 
