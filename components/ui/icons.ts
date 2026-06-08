@@ -74,7 +74,6 @@ import {
   IconStar,
   IconQuote,
   IconMaximize,
-  IconNavigation,
   IconBath,
   IconCar,
   IconArmchair,
@@ -158,6 +157,7 @@ export const ShowcaseStatIcons: Record<string, ComponentType<{ className?: strin
   electricity: IconBolt,
   listingType: IconCash,
   titleStatus: IconFileCheck,
+  plot: IconCertificate,
 };
 
 export const PropertyTypeIcons = {
@@ -304,7 +304,6 @@ export const UIIcons = {
   star: IconStar,
   quote: IconQuote,
   maximize: IconResize,
-  layers: IconNavigation,
   navigation: IconRoad,
   armchair: IconArmchair,
   compass: IconCompass,

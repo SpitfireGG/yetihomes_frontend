@@ -12,7 +12,8 @@ export type PropertyShowcaseStatKind =
   | "water"
   | "electricity"
   | "listingType"
-  | "titleStatus";
+  | "titleStatus"
+  | "plot";
 
 export type PropertyShowcaseListing = {
   id: string;

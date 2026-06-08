@@ -12,6 +12,7 @@ import type {
   PropertyShowcaseListing,
 } from "@/components/landing/property-showcase-types";
 import { getAllProperties } from "@/lib/property-server-cache";
+import { getPropertyStats } from "@/lib/property-stats";
 
 type ApiPropertyType = NonNullable<SearchFilters["propertyType"]>;
 type ShowcaseSectionKind =
@@ -84,35 +85,6 @@ function sortByPriceAsc(properties: SearchProperty[]) {
 
     return parseCreatedAt(right.createdAt) - parseCreatedAt(left.createdAt);
   });
-}
-
-function formatEnumLabel(value: string | null | undefined) {
-  if (!value) {
-    return null;
-  }
-
-  return value
-    .split("_")
-    .map((part) => part.charAt(0) + part.slice(1).toLowerCase())
-    .join(" ");
-}
-
-function formatNumericValue(value: string | null | undefined) {
-  if (!value) {
-    return null;
-  }
-
-  const numericValue = Number.parseFloat(value);
-
-  if (!Number.isFinite(numericValue)) {
-    return value;
-  }
-
-  if (Number.isInteger(numericValue)) {
-    return String(numericValue);
-  }
-
-  return String(Number(numericValue.toFixed(2)));
 }
 
 function mapBadgeTone(
@@ -204,112 +176,8 @@ function resolvePropertyImages(property: SearchProperty) {
   };
 }
 
-function buildResidentialStats(property: SearchProperty) {
-  const stats: PropertyShowcaseListing["stats"] = [];
-  const isApartment = property.propertyType === "APARTMENT";
-  const details = isApartment ? property.apartmentDetails : property.houseDetails;
-
-  const areaValue = formatNumericValue(property.areaValue);
-  const areaUnit = formatEnumLabel(property.areaUnit);
-  if (areaValue && areaUnit) {
-    stats.push({ kind: "area", value: areaValue, label: areaUnit });
-  } else if (property.listingType === "RENT") {
-    stats.push({ kind: "listingType", value: "", label: "For Rent" });
-  } else {
-    stats.push({ kind: "listingType", value: "", label: "For Sale" });
-  }
-
-  if (isApartment) {
-    if (property.apartmentDetails?.floorNumber != null) {
-      stats.push({ kind: "floor", value: property.apartmentDetails.floorNumber, label: property.apartmentDetails.floorNumber === 1 ? "Floor" : "Floors" });
-    } else if (property.apartmentDetails?.bedrooms != null) {
-      stats.push({ kind: "bed", value: property.apartmentDetails.bedrooms, label: property.apartmentDetails.bedrooms === 1 ? "Bed" : "Beds" });
-    } else if (details?.bathrooms != null) {
-      stats.push({ kind: "bath", value: details.bathrooms, label: details.bathrooms === 1 ? "Bath" : "Baths" });
-    }
-  } else if (property.houseDetails?.floors != null) {
-    stats.push({ kind: "floor", value: property.houseDetails.floors, label: property.houseDetails.floors === 1 ? "Floor" : "Floors" });
-  } else if (property.houseDetails?.bedrooms != null) {
-    stats.push({ kind: "bed", value: property.houseDetails.bedrooms, label: property.houseDetails.bedrooms === 1 ? "Bed" : "Beds" });
-  } else if (details?.bathrooms != null) {
-    stats.push({ kind: "bath", value: details.bathrooms, label: details.bathrooms === 1 ? "Bath" : "Baths" });
-  }
-
-  const facing = formatEnumLabel(details?.facingDirection);
-  if (facing) {
-    stats.push({ kind: "facing", value: facing, label: "Facing" });
-  } else {
-    const furnishing = formatEnumLabel(details?.furnishingStatus);
-    if (furnishing) {
-      stats.push({ kind: "furnishing", value: "", label: furnishing });
-    } else if (property.electricity) {
-      stats.push({ kind: "electricity", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
-    } else if (property.waterAvailability) {
-      stats.push({ kind: "water", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
-    }
-  }
-
-  const roadSize = details?.roadSize;
-  if (roadSize != null) {
-    stats.push({ kind: "road", value: roadSize, label: "Ft Road" });
-  } else if (details?.roadType) {
-    stats.push({ kind: "road", value: "", label: formatEnumLabel(details.roadType) ?? "Road" });
-  } else if (isApartment ? property.apartmentDetails?.hasParking : property.houseDetails?.parkingSpaces) {
-    const parkingValue = isApartment ? 1 : property.houseDetails?.parkingSpaces;
-    stats.push({ kind: "parking", value: parkingValue ?? 1, label: parkingValue === 1 ? "Parking" : "Parkings" });
-  } else if (details?.bathrooms != null) {
-    stats.push({ kind: "bath", value: details.bathrooms, label: details.bathrooms === 1 ? "Bath" : "Baths" });
-  } else if (property.titleStatus) {
-    stats.push({ kind: "titleStatus", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
-  }
-
-  return stats.slice(0, 4);
-}
-
-function buildLandStats(property: SearchProperty) {
-  const stats: PropertyShowcaseListing["stats"] = [];
-  const land = property.landDetails;
-
-  const areaValue = formatNumericValue(property.areaValue);
-  const areaUnit = formatEnumLabel(property.areaUnit);
-  if (areaValue && areaUnit) {
-    stats.push({ kind: "area", value: areaValue, label: areaUnit });
-  } else if (property.listingType === "RENT") {
-    stats.push({ kind: "listingType", value: "", label: "For Rent" });
-  } else {
-    stats.push({ kind: "listingType", value: "", label: "For Sale" });
-  }
-
-  const roadAccess = formatNumericValue(land?.roadAccessFeet);
-  if (roadAccess) {
-    stats.push({ kind: "road", value: roadAccess, label: "Ft Road" });
-  } else {
-    const frontage = formatNumericValue(land?.frontageFeet);
-    if (frontage) {
-      stats.push({ kind: "road", value: frontage, label: "Ft Frontage" });
-    } else if (property.electricity) {
-      stats.push({ kind: "electricity", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
-    }
-  }
-
-  const facingDirection = formatEnumLabel(land?.facingDirection);
-  if (facingDirection) {
-    stats.push({ kind: "facing", value: facingDirection, label: "Facing" });
-  } else if (land?.plotShape) {
-    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(land.plotShape) ?? "Plot" });
-  }
-
-  if (land?.isCornerPlot) {
-    stats.push({ kind: "parking", value: 1, label: "Corner Plot" });
-  } else if (land?.zoningType) {
-    stats.push({ kind: "titleStatus", value: "", label: formatEnumLabel(land.zoningType) ?? "Zoned" });
-  } else if (property.waterAvailability) {
-    stats.push({ kind: "water", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
-  } else if (property.titleStatus) {
-    stats.push({ kind: "titleStatus", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
-  }
-
-  return stats.slice(0, 4);
+function showcaseStats(property: SearchProperty): PropertyShowcaseListing["stats"] {
+  return getPropertyStats(property) as PropertyShowcaseListing["stats"];
 }
 
 function toShowcaseListing(
@@ -332,10 +200,7 @@ function toShowcaseListing(
     images: images.images,
     offset: index % 2 === 1,
     eyebrow: resolveEyebrow(property, section, index),
-    stats:
-      property.propertyType === "LAND"
-        ? buildLandStats(property)
-        : buildResidentialStats(property),
+    stats: showcaseStats(property),
   };
 }
 

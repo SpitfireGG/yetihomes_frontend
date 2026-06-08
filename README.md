@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# YetiHomes Frontend
+
+Next.js (App Router) frontend for the YetiHomes real estate platform. Talks to a NestJS backend.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+cp .env.example .env
+# edit .env with your backend URL
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See `.env.example` for all required vars:
 
-## Learn More
+| Variable | Required | Description |
+|---|---|---|
+| `NEXT_PUBLIC_API_URL` | Yes | NestJS backend URL (e.g. `https://api.example.com/api`) |
+| `REVALIDATION_SECRET` | Yes | Shared secret for on-demand revalidation (see below) |
+| `RESEND_API_KEY` | No | Transactional email provider key |
 
-To learn more about Next.js, take a look at the following resources:
+## On-Demand Revalidation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The backend calls `POST /api/revalidate` after any property **create / update / delete** to instantly purge Next.js server caches:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```json
+{
+  "secret": "<REVALIDATION_SECRET>",
+  "tag": "properties",
+  "slug": "optional-property-slug"
+}
+```
 
-## Deploy on Vercel
+- `tag: "properties"` clears all cached property lists and details.
+- `slug` additionally clears the cache for a specific property detail page.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Without this, stale data survives for the configured revalidate windows (5 min for lists, 10 min for details, 1 hr for the home page).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Production Build
+
+```bash
+npm run build
+npm run start
+```
+
+For standalone deployment, set `output: "standalone"` in `next.config.ts` and copy the `.next/standalone` directory.
+
+## Architecture
+
+- **Cache layers:** Server fetch cache (tags + revalidate windows) → client in-memory Map → `sessionStorage`
+- **Client stale-while-revalidate:** stale data is shown immediately while a background refetch updates the cache
+- **Property stats:** Both the landing page showcases and browse listings derive icons/values from `lib/property-stats.ts` — a single shared function, so all surfaces render identically
+- **Icons:** Tabler Icons, mapped via `components/ui/icons.ts`. The `Icons` merge object spreads maps in order: `PropertyTypeIcons`, `PropertyDetailIcons`, `AmenityIcons`, `StatusIcons`, `UIIcons`. No duplicate keys between maps.

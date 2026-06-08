@@ -46,7 +46,7 @@ function readDetailEntryFromStorage(slug: string) {
   }
 }
 
-function removeDetailEntry(slug: string) {
+export function removePropertyDetailCacheEntry(slug: string) {
   propertyDetailMemoryCache.delete(slug);
 
   if (!isBrowser()) {
@@ -85,7 +85,7 @@ export function readPropertyDetailCache(
   const ageMs = Date.now() - entry.savedAt;
 
   if (ageMs > PROPERTY_DETAIL_CLIENT_TTL_MS) {
-    removeDetailEntry(normalizedSlug);
+    removePropertyDetailCacheEntry(normalizedSlug);
     return null;
   }
 

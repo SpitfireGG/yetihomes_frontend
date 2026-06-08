@@ -17,6 +17,7 @@ import type { PropertyType } from "@/data/property-catalog";
 import {
   propertyTypeToApiPropertyType,
 } from "@/lib/property-cache-utils";
+import { clearPropertySearchCache } from "@/lib/property-client-cache";
 
 export default function PropertyBrowserPage({
   propertyType,
@@ -60,6 +61,17 @@ export default function PropertyBrowserPage({
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
+
+  useEffect(() => {
+    function onVisibilityChange() {
+      if (document.visibilityState === "visible") {
+        clearPropertySearchCache();
+      }
+    }
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, []);
 
   const handlePageChange = useCallback(
     (page: number) => {

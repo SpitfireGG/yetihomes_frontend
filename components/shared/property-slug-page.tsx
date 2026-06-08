@@ -7,6 +7,7 @@ import { getPropertyBySlug, type SearchProperty } from "@/lib/api";
 import {
   primePropertyDetailCache,
   readPropertyDetailCache,
+  removePropertyDetailCacheEntry,
   writePropertyDetailCache,
 } from "@/lib/property-detail-cache";
 
@@ -50,6 +51,7 @@ export default function PropertySlugPage({
       if (!isActiveRef.current) return;
 
       if (!result) {
+        removePropertyDetailCacheEntry(slug);
         setProperty(null);
         setError("Property not found.");
         return;
