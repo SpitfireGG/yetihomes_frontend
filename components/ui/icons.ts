@@ -1,3 +1,4 @@
+import { type ComponentType } from "react";
 import {
   IconHome2,
   IconBuildingSkyscraper,
@@ -143,6 +144,21 @@ import {
   IconPlant,
   IconResize,
 } from "@tabler/icons-react";
+
+export const ShowcaseStatIcons: Record<string, ComponentType<{ className?: string }>> = {
+  bed: IconBed,
+  bath: IconBath,
+  area: IconRulerMeasure,
+  road: IconRoad,
+  facing: IconCompass,
+  parking: IconCar,
+  floor: IconStairs,
+  furnishing: IconSofa,
+  water: IconDroplets,
+  electricity: IconBolt,
+  listingType: IconCash,
+  titleStatus: IconFileCheck,
+};
 
 export const PropertyTypeIcons = {
   house: IconHome2,

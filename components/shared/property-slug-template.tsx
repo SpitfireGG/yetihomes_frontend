@@ -44,7 +44,9 @@ type PageContent = {
 };
 
 function getGalleryImages(property: SearchProperty) {
-  return property.images.map((img) => getPrimaryImageUrl([img])).filter((url) => url.length > 0);
+  return property.images
+    .map((img) => getPrimaryImageUrl([img]))
+    .filter((url) => url.length > 0);
 }
 
 function getPageContent(
@@ -206,7 +208,7 @@ function getPageContent(
           },
         ],
         agentRole: "Residential Advisory Team",
-        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.`,
+        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We help buyers validate floor planning, neighborhood fit, and visit timing before moving forward with a home purchase.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -317,7 +319,7 @@ function getPageContent(
           },
         ],
         agentRole: "Land Advisory Team",
-        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.`,
+        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We facilitate the acquisition of land parcels and help buyers review site access, owner paperwork, and utility readiness before due diligence.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -464,7 +466,7 @@ function getPageContent(
           },
         ],
         agentRole: "Apartment Sales Team",
-        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.`,
+        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We help buyers review floor plans, maintenance expectations, and possession details before booking a private apartment tour.`,
         primaryAction: "Schedule Tour",
         secondaryAction: "Request Details",
       };
@@ -480,8 +482,8 @@ function getPageContent(
         quickSpecs: [],
         detailSpecs: [],
         otherDetails: [],
-        agentRole: "YetiHomes Team",
-        agentDescription: `Hi, I'm ${agentName} from YetiHomes Estate. We can help you with this property.`,
+        agentRole: "Yeti Homes Estate Team",
+        agentDescription: `Hi, I'm ${agentName} from Yeti Homes Estate Estate. We can help you with this property.`,
         primaryAction: "Contact",
         secondaryAction: "Details",
       };
@@ -727,7 +729,7 @@ export default function PropertySlugTemplate({
             <div className="w-24 h-24 rounded-full overflow-hidden mb-6 relative border-4 border-surface shadow-sm bg-gray-100">
               <Image
                 src={assignedAgent.image}
-                alt={`${assignedAgent.name} from YetiHomes Estate`}
+                alt={`${assignedAgent.name} from Yeti Homes Estate Estate`}
                 fill
                 sizes="96px"
                 className="object-cover"
@@ -736,7 +738,7 @@ export default function PropertySlugTemplate({
             <h4 className="text-2xl font-medium tracking-tight text-black mb-1">
               {assignedAgent.name}{" "}
               <span className="text-sm text-gray-500 block text-center mt-1">
-                YetiHomes Estate
+                Yeti Homes Estate Estate
               </span>
             </h4>
             <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold mb-8 mt-2">

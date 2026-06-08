@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Careers | YetiHomes",
+  title: "Careers | Yeti Homes Estate",
   description:
-    "Join the YetiHomes team. Explore career opportunities in real estate, technology, and client services in Nepal.",
+    "Join the Yeti Homes Estate team. Explore career opportunities in real estate, technology, and client services in Nepal.",
 };
 
 const openings = [
@@ -47,7 +47,7 @@ export default function CareersPage() {
       <section className="relative h-[40vh] min-h-[280px] overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=2000&q=80"
-          alt="YetiHomes Team"
+          alt="Yeti Homes Estate Team"
           fill
           priority
           sizes="100vw"
@@ -71,7 +71,7 @@ export default function CareersPage() {
           <div className="max-w-3xl mb-16">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-6">Shape the Future of Real Estate in Nepal</h2>
             <p className="text-on-surface-variant leading-relaxed text-lg">
-              At YetiHomes, we&apos;re building the most trusted real estate platform in Nepal. We&apos;re looking for passionate individuals who share our commitment to excellence, integrity, and innovation.
+              At Yeti Homes Estate, we&apos;re building the most trusted real estate platform in Nepal. We&apos;re looking for passionate individuals who share our commitment to excellence, integrity, and innovation.
             </p>
           </div>
 

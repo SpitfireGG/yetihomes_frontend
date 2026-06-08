@@ -56,7 +56,7 @@ export default function InteractiveMap() {
             </div>
             <div>
               <h4 className="font-extrabold text-on-surface text-xl">
-                YetiHomes Base
+                Yeti Homes Estate Base
               </h4>
               <p className="text-xs text-on-surface-variant font-bold uppercase tracking-widest mt-1">
                 Heart of Kathmandu

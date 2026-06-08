@@ -7,13 +7,12 @@ import {
   type LandingCity,
   type LandingCategory,
 } from "@/lib/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFacebookF,
-  faInstagram,
-  faXTwitter,
-  faLinkedinIn,
-} from "@fortawesome/free-brands-svg-icons";
+  IconBrandFacebook,
+  IconBrandInstagram,
+  IconBrandX,
+  IconBrandLinkedin,
+} from "@tabler/icons-react";
 import { subscribeToNewsletter } from "@/lib/api";
 
 export default function Footer() {
@@ -132,7 +131,7 @@ export default function Footer() {
               <div className="relative w-16 h-16 group-hover:scale-105 transition-transform duration-500">
                 <Image
                   src="/Yeti-Logo-02.svg"
-                  alt="YetiHomes Logo"
+                  alt="Yeti Homes Estate Logo"
                   fill
                   sizes="64px"
                   className="object-contain drop-shadow-lg"
@@ -352,11 +351,17 @@ export default function Footer() {
             </h4>
             <div className="flex items-center gap-5">
               {[
-                { icon: faFacebookF, href: "https://facebook.com/yetihomes" },
-                { icon: faInstagram, href: "https://instagram.com/yetihomes" },
-                { icon: faXTwitter, href: "https://x.com/yetihomes" },
                 {
-                  icon: faLinkedinIn,
+                  icon: IconBrandFacebook,
+                  href: "https://facebook.com/yetihomes",
+                },
+                {
+                  icon: IconBrandInstagram,
+                  href: "https://instagram.com/yetihomes",
+                },
+                { icon: IconBrandX, href: "https://x.com/yetihomes" },
+                {
+                  icon: IconBrandLinkedin,
                   href: "https://linkedin.com/company/yetihomes",
                 },
               ].map((item, i) => (
@@ -367,7 +372,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-brand-400/30 flex items-center justify-center text-brand-300 hover:bg-brand-accent-500 hover:text-white hover:border-brand-accent-500 transition-all duration-300"
                 >
-                  <FontAwesomeIcon icon={item.icon} className="w-4 h-4" />
+                  <item.icon className="w-4 h-4" />
                 </Link>
               ))}
             </div>
@@ -396,7 +401,7 @@ export default function Footer() {
                 +977 9851446902
               </p>
               <p className="text-sm text-white font-medium hover:text-brand-accent-300 transition-colors cursor-pointer w-fit">
-                +977 9851361431"
+                +977 9851361431
               </p>
               <p className="text-sm text-brand-300 hover:text-brand-accent-300 transition-colors cursor-pointer mt-3 w-fit">
                 Estateyetihomes@gmail.com

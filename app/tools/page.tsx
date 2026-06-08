@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 export default function ToolsPage() {
   useEffect(() => {
-    document.title = "Property Tools | YetiHomes";
+    document.title = "Property Tools | Yeti Homes Estate";
   }, []);
   const toolStats = [
     {
@@ -46,7 +46,7 @@ export default function ToolsPage() {
                 Practical calculators for Nepali real estate decisions.
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-on-surface-variant sm:text-lg">
-                Use YetiHomes tools to estimate cash exposure before a deal and
+                Use Yeti Homes Estate tools to estimate cash exposure before a deal and
                 translate land measurements across hill, Terai, and metric
                 systems without leaving the site.
               </p>

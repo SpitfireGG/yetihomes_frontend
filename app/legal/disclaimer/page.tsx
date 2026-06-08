@@ -1,8 +1,8 @@
 import LegalLayout from "@/components/shared/legal-layouts";
 
 export const metadata = {
-  title: "Disclaimer | YetiHomes",
-  description: "YetiHomes disclaimer regarding property listings and website information.",
+  title: "Disclaimer | Yeti Homes Estate",
+  description: "Yeti Homes Estate disclaimer regarding property listings and website information.",
 };
 
 export default async function DisclaimerPage() {

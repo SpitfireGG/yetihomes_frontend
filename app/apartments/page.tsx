@@ -9,8 +9,8 @@ const INTENT_TITLES: Record<string, string> = {
 };
 
 const INTENT_DESCRIPTIONS: Record<string, string> = {
-  buy: "Discover modern apartments for sale in Nepal. YetiHomes features curated apartments in Kathmandu, Pokhara, and beyond.",
-  rent: "Find apartments for rent in Nepal. YetiHomes features curated rental apartments in Kathmandu, Pokhara, and beyond.",
+  buy: "Discover modern apartments for sale in Nepal. Yeti Homes Estate features curated apartments in Kathmandu, Pokhara, and beyond.",
+  rent: "Find apartments for rent in Nepal. Yeti Homes Estate features curated rental apartments in Kathmandu, Pokhara, and beyond.",
 };
 
 export async function generateMetadata({
@@ -24,10 +24,10 @@ export async function generateMetadata({
   const title = INTENT_TITLES[intent] ?? "Apartments";
   const description =
     INTENT_DESCRIPTIONS[intent] ??
-    "Discover modern apartments for sale in Nepal. YetiHomes features curated apartments in Kathmandu, Pokhara, and beyond.";
+    "Discover modern apartments for sale in Nepal. Yeti Homes Estate features curated apartments in Kathmandu, Pokhara, and beyond.";
 
   return {
-    title: `${title} in Nepal | YetiHomes`,
+    title: `${title} in Nepal | Yeti Homes Estate`,
     description,
   };
 }

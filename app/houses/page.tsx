@@ -7,8 +7,8 @@ const INTENT_TITLES: Record<string, string> = {
 };
 
 const INTENT_DESCRIPTIONS: Record<string, string> = {
-  buy: "Browse curated houses and villas across Nepal. Find your dream home to buy with YetiHomes — editorial real estate for discerning buyers.",
-  rent: "Find houses for rent across Nepal. Browse curated rental homes with YetiHomes — editorial real estate for discerning tenants.",
+  buy: "Browse curated houses and villas across Nepal. Find your dream home to buy with Yeti Homes Estate — editorial real estate for discerning buyers.",
+  rent: "Find houses for rent across Nepal. Browse curated rental homes with Yeti Homes Estate — editorial real estate for discerning tenants.",
 };
 
 export async function generateMetadata({
@@ -22,10 +22,10 @@ export async function generateMetadata({
   const title = INTENT_TITLES[intent] ?? "Houses";
   const description =
     INTENT_DESCRIPTIONS[intent] ??
-    "Browse curated houses and villas across Nepal. Find your dream home with YetiHomes — editorial real estate for discerning buyers.";
+    "Browse curated houses and villas across Nepal. Find your dream home with Yeti Homes Estate — editorial real estate for discerning buyers.";
 
   return {
-    title: `${title} in Nepal | YetiHomes`,
+    title: `${title} in Nepal | Yeti Homes Estate`,
     description,
   };
 }

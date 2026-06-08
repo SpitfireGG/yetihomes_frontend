@@ -214,9 +214,9 @@ function buildResidentialStats(property: SearchProperty) {
   if (areaValue && areaUnit) {
     stats.push({ kind: "area", value: areaValue, label: areaUnit });
   } else if (property.listingType === "RENT") {
-    stats.push({ kind: "furnishing", value: "", label: "For Rent" });
+    stats.push({ kind: "listingType", value: "", label: "For Rent" });
   } else {
-    stats.push({ kind: "furnishing", value: "", label: "For Sale" });
+    stats.push({ kind: "listingType", value: "", label: "For Sale" });
   }
 
   if (isApartment) {
@@ -243,9 +243,9 @@ function buildResidentialStats(property: SearchProperty) {
     if (furnishing) {
       stats.push({ kind: "furnishing", value: "", label: furnishing });
     } else if (property.electricity) {
-      stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
+      stats.push({ kind: "electricity", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
     } else if (property.waterAvailability) {
-      stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
+      stats.push({ kind: "water", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
     }
   }
 
@@ -260,7 +260,7 @@ function buildResidentialStats(property: SearchProperty) {
   } else if (details?.bathrooms != null) {
     stats.push({ kind: "bath", value: details.bathrooms, label: details.bathrooms === 1 ? "Bath" : "Baths" });
   } else if (property.titleStatus) {
-    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
+    stats.push({ kind: "titleStatus", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
   }
 
   return stats.slice(0, 4);
@@ -275,9 +275,9 @@ function buildLandStats(property: SearchProperty) {
   if (areaValue && areaUnit) {
     stats.push({ kind: "area", value: areaValue, label: areaUnit });
   } else if (property.listingType === "RENT") {
-    stats.push({ kind: "furnishing", value: "", label: "For Rent" });
+    stats.push({ kind: "listingType", value: "", label: "For Rent" });
   } else {
-    stats.push({ kind: "furnishing", value: "", label: "For Sale" });
+    stats.push({ kind: "listingType", value: "", label: "For Sale" });
   }
 
   const roadAccess = formatNumericValue(land?.roadAccessFeet);
@@ -288,7 +288,7 @@ function buildLandStats(property: SearchProperty) {
     if (frontage) {
       stats.push({ kind: "road", value: frontage, label: "Ft Frontage" });
     } else if (property.electricity) {
-      stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
+      stats.push({ kind: "electricity", value: "", label: formatEnumLabel(property.electricity) ?? "Electricity" });
     }
   }
 
@@ -301,14 +301,12 @@ function buildLandStats(property: SearchProperty) {
 
   if (land?.isCornerPlot) {
     stats.push({ kind: "parking", value: 1, label: "Corner Plot" });
-  } else if (land?.plotShape) {
-    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(land.plotShape) ?? "Plot" });
   } else if (land?.zoningType) {
-    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(land.zoningType) ?? "Zoned" });
+    stats.push({ kind: "titleStatus", value: "", label: formatEnumLabel(land.zoningType) ?? "Zoned" });
   } else if (property.waterAvailability) {
-    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
+    stats.push({ kind: "water", value: "", label: formatEnumLabel(property.waterAvailability) ?? "Water" });
   } else if (property.titleStatus) {
-    stats.push({ kind: "furnishing", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
+    stats.push({ kind: "titleStatus", value: "", label: formatEnumLabel(property.titleStatus) ?? "Titled" });
   }
 
   return stats.slice(0, 4);

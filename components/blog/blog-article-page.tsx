@@ -5,12 +5,11 @@ import { Icons } from "@/components/ui/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFacebookF,
-  faLinkedinIn,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+  IconBrandFacebook,
+  IconBrandLinkedin,
+  IconBrandTwitter,
+} from "@tabler/icons-react";
 import Footer from "@/components/landing/footer";
 import type { BlogArticle } from "@/lib/api";
 
@@ -105,13 +104,13 @@ export default function BlogArticlePage({
         <div className="hidden w-full shrink-0 lg:flex lg:w-[60px] lg:flex-col lg:items-center">
           <div className="sticky top-32 flex flex-col items-center gap-6 rounded-full border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <button className="text-outline transition-colors hover:text-primary">
-              <FontAwesomeIcon icon={faFacebookF} className="h-5 w-5" />
+              <IconBrandFacebook className="h-5 w-5" />
             </button>
             <button className="text-outline transition-colors hover:text-primary">
-              <FontAwesomeIcon icon={faTwitter} className="h-5 w-5" />
+              <IconBrandTwitter className="h-5 w-5" />
             </button>
             <button className="text-outline transition-colors hover:text-primary">
-              <FontAwesomeIcon icon={faLinkedinIn} className="h-5 w-5" />
+              <IconBrandLinkedin className="h-5 w-5" />
             </button>
             <div className="my-2 h-[1px] w-8 bg-outline-variant/50" />
             <button className="text-outline transition-colors hover:text-primary">
@@ -180,7 +179,7 @@ export default function BlogArticlePage({
                 {article.author}
               </h4>
               <p className="text-sm leading-relaxed text-on-surface-variant">
-                {article.authorRole} at YetiHomes. Bridging the gap between
+                {article.authorRole} at Yeti Homes Estate. Bridging the gap between
                 market data and real-world real estate opportunities for buyers
                 and sellers across Nepal.
               </p>

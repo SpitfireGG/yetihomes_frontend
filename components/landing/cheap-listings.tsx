@@ -2,22 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ShowcaseStatIcons } from "@/components/ui/icons";
 import { useState, type MouseEvent } from "react";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBed,
-  faBath,
-  faRulerCombined,
-  faHeart,
-  faChevronLeft,
-  faChevronRight,
-  faRoad,
-  faCompass,
-  faCar,
-  faLayerGroup,
-  faCouch,
-} from "@fortawesome/free-solid-svg-icons";
+  IconHeart,
+  IconChevronLeft,
+  IconChevronRight,
+} from "@tabler/icons-react";
 import {
   LandingCarouselSection,
   LandingCarouselViewAllCard,
@@ -25,19 +16,7 @@ import {
 import type {
   PropertyShowcaseEyebrowTone,
   PropertyShowcaseListing,
-  PropertyShowcaseStatKind,
 } from "./property-showcase-types";
-
-const statIcons: Record<PropertyShowcaseStatKind, IconDefinition> = {
-  bed: faBed,
-  bath: faBath,
-  area: faRulerCombined,
-  road: faRoad,
-  facing: faCompass,
-  parking: faCar,
-  floor: faLayerGroup,
-  furnishing: faCouch,
-};
 
 function getBadgeClasses(tone: PropertyShowcaseEyebrowTone) {
   if (tone === "warm") {
@@ -109,7 +88,7 @@ function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
             event.stopPropagation();
           }}
         >
-          <FontAwesomeIcon icon={faHeart} className="text-sm" />
+          <IconHeart className="text-sm" />
         </button>
 
         {listing.images.length > 1 ? (
@@ -118,19 +97,13 @@ function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
               onClick={prevImage}
               className="flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-on-surface shadow-sm backdrop-blur-sm transition-all hover:scale-105 hover:bg-white"
             >
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className="text-xs -ml-0.5"
-              />
+              <IconChevronLeft className="text-xs -ml-0.5" />
             </button>
             <button
               onClick={nextImage}
               className="flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-on-surface shadow-sm backdrop-blur-sm transition-all hover:scale-105 hover:bg-white"
             >
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className="text-xs -mr-0.5"
-              />
+              <IconChevronRight className="text-xs -mr-0.5" />
             </button>
           </div>
         ) : null}
@@ -172,14 +145,14 @@ function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
 
         <div className="flex flex-wrap gap-4 pt-2 text-on-surface-variant">
           {listing.stats.map((stat) => {
-            const Icon = statIcons[stat.kind];
+            const Icon = ShowcaseStatIcons[stat.kind];
 
             return (
               <span
-                key={`${listing.id}-${stat.kind}`}
+                key={`${listing.id}-${stat.kind}-${stat.label}`}
                 className="inline-flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-widest"
               >
-                <FontAwesomeIcon icon={Icon} className="text-outline" />
+                <Icon className="text-outline" />
                 {stat.value} {stat.label}
               </span>
             );

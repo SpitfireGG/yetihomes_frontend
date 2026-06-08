@@ -1,8 +1,8 @@
 import LegalLayout from "@/components/shared/legal-layouts";
 
 export const metadata = {
-  title: "Privacy Policy | YetiHomes",
-  description: "YetiHomes Privacy Policy - How we handle and protect your personal data.",
+  title: "Privacy Policy | Yeti Homes Estate",
+  description: "Yeti Homes Estate Privacy Policy - How we handle and protect your personal data.",
 };
 
 export default async function PrivacyPolicyPage() {

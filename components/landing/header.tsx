@@ -590,7 +590,7 @@ export default function Navbar({
             >
               <Image
                 src="/Yeti-Logo-01.svg"
-                alt="YetiHomes"
+                alt="Yeti Homes Estate"
                 fill
                 sizes="44px"
                 className="object-contain"
@@ -822,7 +822,7 @@ export default function Navbar({
                             href: "/about",
                             icon: "building" as const,
                             t: "About Company",
-                            d: "Learn about YetiHomes.",
+                            d: "Learn about Yeti Homes Estate.",
                           },
                           {
                             href: "/teams",
@@ -834,7 +834,7 @@ export default function Navbar({
                             href: "/careers",
                             icon: "briefcase" as const,
                             t: "Careers",
-                            d: "Join the YetiHomes family.",
+                            d: "Join the Yeti Homes Estate family.",
                           },
                         ].map((it) => {
                           const I = Icons[it.icon];
@@ -1158,7 +1158,7 @@ export default function Navbar({
                   <div className="relative w-9 h-9">
                     <Image
                       src="/Yeti-Logo-01.svg"
-                      alt="YetiHomes"
+                      alt="Yeti Homes Estate"
                       fill
                       sizes="36px"
                       className="object-contain"

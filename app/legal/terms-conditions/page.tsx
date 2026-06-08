@@ -1,8 +1,8 @@
 import LegalLayout from "@/components/shared/legal-layouts";
 
 export const metadata = {
-  title: "Terms of Service | YetiHomes",
-  description: "YetiHomes Terms of Service - Platform usage terms and conditions.",
+  title: "Terms of Service | Yeti Homes Estate",
+  description: "Yeti Homes Estate Terms of Service - Platform usage terms and conditions.",
 };
 
 export default async function TermsOfServicePage() {

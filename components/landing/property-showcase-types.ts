@@ -8,7 +8,11 @@ export type PropertyShowcaseStatKind =
   | "facing"
   | "parking"
   | "floor"
-  | "furnishing";
+  | "furnishing"
+  | "water"
+  | "electricity"
+  | "listingType"
+  | "titleStatus";
 
 export type PropertyShowcaseListing = {
   id: string;

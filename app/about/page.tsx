@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About Us | YetiHomes",
+  title: "About Us | Yeti Homes Estate",
   description:
-    "YetiHomes is Nepal's premier editorial real estate platform, connecting discerning buyers with exceptional properties through local expertise and deep-rooted trust.",
+    "Yeti Homes Estate is Nepal's premier editorial real estate platform, connecting discerning buyers with exceptional properties through local expertise and deep-rooted trust.",
 };
 
 export default function AboutPage() {
@@ -14,7 +14,7 @@ export default function AboutPage() {
       <section className="relative h-[50vh] min-h-[320px] overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80"
-          alt="YetiHomes Office"
+          alt="Yeti Homes Estate Office"
           fill
           priority
           sizes="100vw"
@@ -42,7 +42,7 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-5 text-on-surface-variant leading-relaxed">
                 <p>
-                  YetiHomes was founded with a singular vision: to transform Nepal&apos;s real estate market through transparency, editorial quality, and unmatched local expertise.
+                  Yeti Homes Estate was founded with a singular vision: to transform Nepal&apos;s real estate market through transparency, editorial quality, and unmatched local expertise.
                 </p>
                 <p>
                   We believe that finding the right property should be an inspiring journey, not a daunting task. Our team of experienced professionals brings together decades of combined experience in real estate, architecture, and market analysis to serve discerning buyers and sellers.

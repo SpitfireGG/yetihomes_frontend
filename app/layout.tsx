@@ -22,32 +22,32 @@ const siteUrl = "https://yetihomes.com";
 
 export const metadata: Metadata = {
   title: {
-    default: "YetiHomes | Premium Real Estate in Nepal",
-    template: "%s | YetiHomes",
+    default: "Yeti Homes Estate | Premium Real Estate in Nepal",
+    template: "%s | Yeti Homes Estate",
   },
   description:
-    "Discover curated homes, apartments, and land for sale in Nepal. YetiHomes offers editorial real estate listings with expert guidance for discerning buyers.",
+    "Discover curated homes, apartments, and land for sale in Nepal. Yeti Homes Estate offers editorial real estate listings with expert guidance for discerning buyers.",
   metadataBase: new URL(siteUrl),
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "YetiHomes",
-    title: "YetiHomes | Premium Real Estate in Nepal",
+    siteName: "Yeti Homes Estate",
+    title: "Yeti Homes Estate | Premium Real Estate in Nepal",
     description:
-      "Discover curated homes, apartments, and land for sale in Nepal. YetiHomes offers editorial real estate listings with expert guidance for discerning buyers.",
+      "Discover curated homes, apartments, and land for sale in Nepal. Yeti Homes Estate offers editorial real estate listings with expert guidance for discerning buyers.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "YetiHomes",
+        alt: "Yeti Homes Estate",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "YetiHomes | Premium Real Estate in Nepal",
+    title: "Yeti Homes Estate | Premium Real Estate in Nepal",
     description:
       "Discover curated homes, apartments, and land for sale in Nepal.",
   },

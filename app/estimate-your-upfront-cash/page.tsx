@@ -2,7 +2,7 @@ import ToolPageShell from "@/components/tools/tool-page-shell";
 import UpfrontCashCalculator from "@/components/tools/upfront-cash-calculator";
 
 export const metadata = {
-  title: "Estimate Your Upfront Cash | YetiHomes",
+  title: "Estimate Your Upfront Cash | Yeti Homes Estate",
   description:
     "Calculate token deposit, registration reference, and advisory fees before you move ahead with a Nepal property deal.",
 };

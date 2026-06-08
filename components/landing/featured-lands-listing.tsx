@@ -1,26 +1,10 @@
-import { Icons } from "@/components/ui/icons";
+import { ShowcaseStatIcons } from "@/components/ui/icons";
 import Image from "next/image";
 import Link from "next/link";
-import type { ComponentType } from "react";
-import { IconHeart, IconRulerMeasure } from "@tabler/icons-react";
+import { IconHeart } from "@tabler/icons-react";
 import type {
   PropertyShowcaseListing,
-  PropertyShowcaseStatKind,
 } from "./property-showcase-types";
-
-const statIcons: Record<
-  PropertyShowcaseStatKind,
-  ComponentType<{ className?: string }>
-> = {
-  bed: IconRulerMeasure,
-  bath: IconRulerMeasure,
-  area: IconRulerMeasure,
-  road: Icons.navigation,
-  facing: Icons.compass,
-  parking: IconRulerMeasure,
-  floor: IconRulerMeasure,
-  furnishing: IconRulerMeasure,
-};
 
 export function LandListingCard({
   listing,
@@ -90,11 +74,11 @@ export function LandListingCard({
 
         <div className="flex flex-wrap gap-4 pt-2 text-outline">
           {listing.stats.map((stat) => {
-            const Icon = statIcons[stat.kind];
+            const Icon = ShowcaseStatIcons[stat.kind];
 
             return (
               <span
-                key={`${listing.title}-${stat.kind}`}
+                key={`${listing.id}-${stat.kind}-${stat.label}`}
                 className="inline-flex items-center gap-2 font-label text-[0.72rem] font-semibold uppercase tracking-[0.2em]"
               >
                 <Icon className="size-4" />

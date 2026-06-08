@@ -49,7 +49,7 @@ export default function ClientReviews({ reviews }: { reviews: Review[] }) {
         <div className="text-center mb-16 lg:mb-20">
           <SectionHeading
             title="Don't just take our words"
-            description="Discover why thousands of investors and families trust YetiHomes to navigate Nepal's complex real estate market."
+            description="Discover why thousands of investors and families trust Yeti Homes Estate to navigate Nepal's complex real estate market."
             align="center"
           />
         </div>

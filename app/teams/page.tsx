@@ -5,9 +5,9 @@ import { getCachedTeamMembers } from "@/lib/team-server-cache";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Our Team | YetiHomes",
+  title: "Our Team | Yeti Homes Estate",
   description:
-    "Meet the YetiHomes team — experienced real estate professionals dedicated to helping you find the perfect property in Nepal.",
+    "Meet the Yeti Homes Estate team — experienced real estate professionals dedicated to helping you find the perfect property in Nepal.",
 };
 
 export default async function CompanyTeam() {

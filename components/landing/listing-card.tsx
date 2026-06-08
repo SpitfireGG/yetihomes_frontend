@@ -1,23 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { ShowcaseStatIcons } from "@/components/ui/icons";
 import type {
   PropertyShowcaseListing,
-  PropertyShowcaseStatKind,
 } from "./property-showcase-types";
 
-import { IconBath, IconBed, IconHeart, IconRulerMeasure, IconSofa, IconLayersSelected, IconCar } from "@tabler/icons-react";
-
-const statIcons: Record<PropertyShowcaseStatKind, typeof IconBed> = {
-  bed: IconBed,
-  bath: IconBath,
-  area: IconRulerMeasure,
-  road: IconRulerMeasure,
-  facing: IconRulerMeasure,
-  parking: IconCar,
-  floor: IconLayersSelected,
-  furnishing: IconSofa,
-};
+import {
+  IconHeart,
+} from "@tabler/icons-react";
 
 export function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
   return (
@@ -83,11 +74,11 @@ export function ListingCard({ listing }: { listing: PropertyShowcaseListing }) {
 
         <div className="flex flex-wrap gap-4 pt-2 text-outline">
           {listing.stats.map((stat) => {
-            const Icon = statIcons[stat.kind];
+            const Icon = ShowcaseStatIcons[stat.kind];
 
             return (
               <span
-                key={`${listing.title}-${stat.kind}`}
+                key={`${listing.id}-${stat.kind}-${stat.label}`}
                 className="inline-flex items-center gap-2 font-label text-[0.72rem] font-semibold uppercase tracking-[0.2em]"
               >
                 <Icon className="size-4" />

@@ -5,9 +5,9 @@ import { getCachedReviews } from "@/lib/review-server-cache";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Testimonials | YetiHomes",
+  title: "Testimonials | Yeti Homes Estate",
   description:
-    "Hear from our clients. YetiHomes has helped hundreds of buyers and sellers across Nepal find their ideal property.",
+    "Hear from our clients. Yeti Homes Estate has helped hundreds of buyers and sellers across Nepal find their ideal property.",
 };
 
 const Page = async () => {

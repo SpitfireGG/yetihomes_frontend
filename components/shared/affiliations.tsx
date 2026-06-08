@@ -40,7 +40,7 @@ export default function TrustHub() {
           <SectionHeading title="Buy with Absolute Confidence" align="center" />
           <p className="text-on-surface-variant text-lg leading-relaxed mt-4">
             Navigating Nepal&apos;s real estate market can be complex. Every
-            property on YetiHomes goes through a rigorous multi-point legal and
+            property on Yeti Homes Estate goes through a rigorous multi-point legal and
             physical verification process before it reaches your screen.
           </p>
         </div>

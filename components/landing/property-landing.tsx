@@ -69,7 +69,7 @@ function CustomRequirementCTA({
           <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
             <button
               onClick={onSendRequirement}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-surface-container-lowest px-6 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-primary-container sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-surface-container-lowest px-6 py-3 text-sm font-bold text-brand shadow-sm transition-colors hover:bg-primary-container sm:w-auto"
             >
               Send us your Requirement
               <Icons.arrowRight size={16} />

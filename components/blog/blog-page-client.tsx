@@ -125,7 +125,7 @@ function EmptyBlogHero() {
       <div className="absolute inset-0 z-0">
         <Image
           src="/HERO.jpg"
-          alt="YetiHomes journal"
+          alt="Yeti Homes Estate journal"
           fill
           priority
           sizes="100vw"
@@ -138,7 +138,7 @@ function EmptyBlogHero() {
         <div className="max-w-2xl">
           <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] text-white uppercase">
             <Icons.trendingUp size={12} strokeWidth={2.5} />
-            YetiHomes Journal
+            Yeti Homes Estate Journal
           </span>
           <h1 className="mb-6 text-3xl leading-[1.1] font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
             No blog articles have been published yet
@@ -493,7 +493,7 @@ export default function BlogPageClient({
             <SectionHeading
               title="Latest Articles"
               description="Expert insights, market analysis, and practical guides for navigating Nepal's real estate landscape."
-              badge="YetiHomes Journal"
+              badge="Yeti Homes Estate Journal"
             />
           </div>
 

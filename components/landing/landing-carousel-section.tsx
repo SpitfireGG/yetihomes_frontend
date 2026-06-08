@@ -1,11 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import SectionHeading from "../shared/sectionHeading";
 
@@ -127,14 +123,14 @@ export function LandingCarouselSection<T>({
               onClick={() => scroll("left")}
               className="flex h-12 w-12 items-center justify-center rounded-full border border-outline-variant text-on-surface-variant transition-colors hover:bg-primary-container hover:text-primary"
             >
-              <FontAwesomeIcon icon={faChevronLeft} />
+              <IconChevronLeft />
             </button>
             <button
               type="button"
               onClick={() => scroll("right")}
               className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white shadow-md transition-colors hover:bg-brand-800"
             >
-              <FontAwesomeIcon icon={faChevronRight} />
+              <IconChevronRight />
             </button>
           </div>
         </div>
@@ -176,7 +172,7 @@ export function LandingCarouselViewAllCard({
         className="flex flex-col items-center justify-center gap-4 group"
       >
         <div className="w-20 h-20 rounded-full border-2 border-dashed border-outline flex items-center justify-center text-outline group-hover:border-primary group-hover:text-primary group-hover:bg-primary-container transition-all duration-300">
-          <FontAwesomeIcon icon={faChevronRight} className="text-2xl" />
+          <IconChevronRight className="text-2xl" />
         </div>
         <span className="font-serif font-medium text-xl text-on-surface-variant group-hover:text-primary transition-colors">
           {label}

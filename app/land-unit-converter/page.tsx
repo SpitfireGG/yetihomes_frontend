@@ -2,7 +2,7 @@ import ToolPageShell from "@/components/tools/tool-page-shell";
 import LandUnitConverter from "@/components/tools/land-unit-converter";
 
 export const metadata = {
-  title: "Land Unit Converter | YetiHomes",
+  title: "Land Unit Converter | Yeti Homes Estate",
   description:
     "Convert Ropani, Aana, Paisa, Daam, Bigha, Kattha, Dhur, square feet, and square meter instantly.",
 };
