@@ -127,6 +127,19 @@ export default function TeamMemberProfilePage({
             variants={fadeUp}
             className="mb-12 grid grid-cols-1 gap-8 border-t border-gray-100 pt-8 md:grid-cols-2"
           >
+            {member.phone && (
+              <div>
+                <h3 className="mb-4 flex items-center gap-2 text-sm font-bold tracking-widest text-gray-400 uppercase">
+                  <Icons.phone size={16} /> Phone
+                </h3>
+                <a
+                  href={`tel:${member.phone}`}
+                  className="flex items-center gap-3 font-medium text-gray-700 hover:text-black transition-colors"
+                >
+                  {member.phone}
+                </a>
+              </div>
+            )}
             <div>
               <h3 className="mb-4 flex items-center gap-2 text-sm font-bold tracking-widest text-gray-400 uppercase">
                 <Icons.briefcase size={16} /> Areas of Expertise

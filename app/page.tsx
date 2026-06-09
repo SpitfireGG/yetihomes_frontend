@@ -30,9 +30,9 @@ export default async function Home() {
   const hasFeaturedListings = propertyShowcases.featuredListings.length > 0;
   const hasFeaturedLandListings =
     propertyShowcases.featuredLandListings.length > 0;
-  const hasApartmentListings =
-    propertyShowcases.apartmentListings.length > 0;
-  const hasTopCollections = hasFeaturedListings || hasFeaturedLandListings || hasApartmentListings;
+  const hasApartmentListings = propertyShowcases.apartmentListings.length > 0;
+  const hasTopCollections =
+    hasFeaturedListings || hasFeaturedLandListings || hasApartmentListings;
   const hasSimilarListings = propertyShowcases.similarListings.length > 0;
   const hasPropertyShowcases =
     propertyShowcases.residentialPlotListings.length > 0 ||

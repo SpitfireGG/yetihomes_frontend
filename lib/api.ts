@@ -186,7 +186,7 @@ export type RawTeamMember = {
   email: string;
   bio: string;
   expertise: string[];
-  education: string;
+  phone?: string;
   thumbnail: string | null;
   image: string | null;
   createdAt: string;
