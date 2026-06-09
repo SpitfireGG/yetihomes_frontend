@@ -594,7 +594,7 @@ export default function PropertySlugTemplate({
             <Icons.share size={16} strokeWidth={1.5} />
           </button>
           <a
-            href="tel:+9779768998508"
+            href="tel:+9779851446901"
             className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center hover:border-black transition-colors text-gray-700 hover:text-black"
           >
             <Icons.phone size={16} strokeWidth={1.5} />
@@ -734,7 +734,7 @@ export default function PropertySlugTemplate({
 
             <div className="flex flex-col gap-4 w-full">
               <a
-                href={`https://wa.me/9779768998508?text=${encodeURIComponent(`Hello, I would like to schedule a tour for ${property.title}`)}`}
+                href={`https://wa.me/9779851446901?text=${encodeURIComponent(`Hello, I would like to schedule a tour for ${property.title}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-xl border border-outline-variant/40 bg-black py-4 text-white text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-gray-800 transition-colors flex items-center justify-center gap-3"
@@ -753,11 +753,11 @@ export default function PropertySlugTemplate({
 
             <div className="mt-8 pt-6 border-t border-outline-variant/30 w-full text-center flex flex-col gap-3">
               <a
-                href="tel:+9779768998508"
+                href="tel:+9779851446901"
                 className="inline-flex items-center justify-center gap-2 text-gray-800 hover:text-black transition-colors text-sm font-bold tracking-wider"
               >
                 <Icons.phoneCall size={16} strokeWidth={2} />
-                +977 9768998508
+                +977 9851446901
               </a>
               <a
                 href="tel:+9779851446901"

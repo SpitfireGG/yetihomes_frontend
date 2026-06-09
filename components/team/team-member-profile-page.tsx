@@ -147,12 +147,7 @@ export default function TeamMemberProfilePage({
               </ul>
             </div>
 
-            <div>
-              <h3 className="mb-4 flex items-center gap-2 text-sm font-bold tracking-widest text-gray-400 uppercase">
-                <Icons.graduationCap size={16} /> Education
-              </h3>
-              <p className="font-medium text-gray-700">{member.education}</p>
-            </div>
+
           </motion.div>
 
           <motion.div variants={fadeUp} className="flex items-center gap-4">
