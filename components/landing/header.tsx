@@ -1479,14 +1479,14 @@ export default function Navbar({
 
                 <div className="px-5 pb-5 pt-2 grid grid-cols-2 gap-2">
                   <a
-                    href="tel:+9779851446901"
+                    href="tel:+9779851446902"
                     className="flex items-center justify-center gap-2 py-3 rounded-xl border border-outline-variant/60 text-on-surface text-xs font-bold tracking-widest uppercase hover:border-primary hover:text-primary transition-colors"
                   >
                     <Icons.phone size={15} strokeWidth={2.2} />
                     Call
                   </a>
                   <a
-                    href="https://wa.me/9779851446901?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20properties."
+                    href="https://wa.me/9779851446902?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20properties."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#25D366] text-white text-xs font-bold tracking-widest uppercase hover:bg-[#20BD5A] transition-colors"
@@ -1675,7 +1675,7 @@ export default function Navbar({
                 </p>
               </div>
               <a
-                href="https://wa.me/9779851446901?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20properties."
+                href="https://wa.me/9779851446902?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20your%20properties."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-xl bg-[#25D366] text-white py-4 text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-[#20BD5A] transition-colors"
@@ -1940,7 +1940,7 @@ export default function Navbar({
 
               <div className="flex flex-col gap-3">
                 <a
-                  href="https://wa.me/9779851446901?text=Hi%2C%20I%27m%20interested%20in%20your%20upcoming%20investment%20projects."
+                  href="https://wa.me/9779851446902?text=Hi%2C%20I%27m%20interested%20in%20your%20upcoming%20investment%20projects."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full rounded-xl bg-[#25D366] text-white py-4 text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-[#20BD5A] transition-colors"
@@ -1956,7 +1956,7 @@ export default function Navbar({
                   Connect on WhatsApp
                 </a>
                 <a
-                  href="tel:+9779851446901"
+                  href="tel:+9779851446902"
                   className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-lowest py-4 text-black text-[11px] font-bold tracking-[0.2em] uppercase hover:border-black transition-colors flex items-center justify-center gap-3"
                 >
                   <Icons.phone size={16} strokeWidth={2} />
