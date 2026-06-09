@@ -20,12 +20,14 @@ type ShowcaseSectionKind =
   | "featured_land"
   | "value_land"
   | "value_home"
+  | "apartment"
   | "similar";
 
 const FEATURED_LISTING_COUNT = 6;
 const FEATURED_LAND_COUNT = 4;
 const VALUE_LAND_COUNT = 4;
 const VALUE_HOME_COUNT = 4;
+const APARTMENT_LISTING_COUNT = 6;
 const SIMILAR_LISTING_COUNT = 4;
 
 const propertyHrefByType: Record<ApiPropertyType, string> = {
@@ -144,6 +146,11 @@ function resolveEyebrow(
       }
 
       return { label: "Plot Pick", tone: "neutral" };
+    case "apartment":
+      return {
+        label: property.isFeatured ? "Featured" : "New Arrival",
+        tone: property.isFeatured ? "cool" : "neutral",
+      };
     case "similar":
       return {
         label: index === 0 ? "Just Listed" : "Recommended",
@@ -253,21 +260,27 @@ export const getHomePropertyShowcaseData = cache(
       getAllCachedPropertiesForType("LAND"),
     ]);
 
-    const residentialProperties = sortByCreatedDesc(
-      dedupeProperties([...houses, ...apartments]),
-    );
+    const sortedHouses = sortByCreatedDesc(houses);
+    const sortedApartments = sortByCreatedDesc(apartments);
     const landProperties = sortByCreatedDesc(lands);
-    const featuredResidential = residentialProperties.filter(
+    const featuredHouses = sortedHouses.filter(
+      (property) => property.isFeatured,
+    );
+    const featuredApartments = sortedApartments.filter(
       (property) => property.isFeatured,
     );
     const featuredLands = landProperties.filter((property) => property.isFeatured);
-    const cheapestResidential = sortByPriceAsc(residentialProperties);
+    const cheapestHouses = sortByPriceAsc(sortedHouses);
     const cheapestLands = sortByPriceAsc(landProperties);
+    const residentialProperties = sortByCreatedDesc(
+      dedupeProperties([...houses, ...apartments]),
+    );
+    const cheapestResidential = sortByPriceAsc(residentialProperties);
     const reservedIds = new Set<string>();
 
     const featuredListings = selectUniqueProperties(
-      featuredResidential,
-      residentialProperties,
+      featuredHouses,
+      sortedHouses,
       FEATURED_LISTING_COUNT,
       reservedIds,
     );
@@ -277,6 +290,12 @@ export const getHomePropertyShowcaseData = cache(
       FEATURED_LAND_COUNT,
       reservedIds,
     );
+    const apartmentListings = selectUniqueProperties(
+      featuredApartments,
+      sortedApartments,
+      APARTMENT_LISTING_COUNT,
+      reservedIds,
+    );
     const residentialPlotListings = selectUniqueProperties(
       cheapestLands,
       landProperties,
@@ -284,8 +303,8 @@ export const getHomePropertyShowcaseData = cache(
       reservedIds,
     );
     const valueHomeListings = selectUniqueProperties(
-      cheapestResidential,
-      residentialProperties,
+      cheapestHouses,
+      sortedHouses,
       VALUE_HOME_COUNT,
       reservedIds,
     );
@@ -304,6 +323,10 @@ export const getHomePropertyShowcaseData = cache(
       featuredLandListings: mapSectionListings(
         featuredLandListings,
         "featured_land",
+      ),
+      apartmentListings: mapSectionListings(
+        apartmentListings,
+        "apartment",
       ),
       similarListings: mapSectionListings(similarListings, "similar"),
       residentialPlotListings: mapSectionListings(

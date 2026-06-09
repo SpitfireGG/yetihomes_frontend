@@ -40,6 +40,7 @@ export type PropertyShowcaseListing = {
 export type HomePropertyShowcaseData = {
   featuredListings: PropertyShowcaseListing[];
   featuredLandListings: PropertyShowcaseListing[];
+  apartmentListings: PropertyShowcaseListing[];
   similarListings: PropertyShowcaseListing[];
   residentialPlotListings: PropertyShowcaseListing[];
   valueHomeListings: PropertyShowcaseListing[];

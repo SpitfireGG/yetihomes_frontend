@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import PropertyShowcases from "@/components/landing/cheap-listings";
 import { FeaturedListingsSection } from "@/components/landing/featured-listings-section";
 import Footer from "@/components/landing/footer";
@@ -29,7 +30,9 @@ export default async function Home() {
   const hasFeaturedListings = propertyShowcases.featuredListings.length > 0;
   const hasFeaturedLandListings =
     propertyShowcases.featuredLandListings.length > 0;
-  const hasTopCollections = hasFeaturedListings || hasFeaturedLandListings;
+  const hasApartmentListings =
+    propertyShowcases.apartmentListings.length > 0;
+  const hasTopCollections = hasFeaturedListings || hasFeaturedLandListings || hasApartmentListings;
   const hasSimilarListings = propertyShowcases.similarListings.length > 0;
   const hasPropertyShowcases =
     propertyShowcases.residentialPlotListings.length > 0 ||
@@ -45,7 +48,15 @@ export default async function Home() {
             <div className={`${shellClassName} space-y-24 lg:space-y-28`}>
               {hasFeaturedListings ? (
                 <div className="space-y-10">
-                  <SectionHeading title="Featured Listings" />
+                  <div className="flex items-end justify-between">
+                    <SectionHeading title="Featured Houses" />
+                    <Link
+                      href="/houses"
+                      className="shrink-0 text-sm font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors"
+                    >
+                      View All Houses
+                    </Link>
+                  </div>
                   <div className="grid grid-cols-1 gap-10 pb-16 md:grid-cols-2 xl:grid-cols-3">
                     {propertyShowcases.featuredListings.map(
                       (listing, index) => (
@@ -64,7 +75,36 @@ export default async function Home() {
 
               <FeaturedListingsSection
                 listings={propertyShowcases.featuredLandListings}
+                title="Featured Lands"
+                viewAllHref="/lands"
               />
+
+              {hasApartmentListings ? (
+                <div className="space-y-10">
+                  <div className="flex items-end justify-between">
+                    <SectionHeading title="Apartments" />
+                    <Link
+                      href="/apartments"
+                      className="shrink-0 text-sm font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors"
+                    >
+                      View All Apartments
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-1 gap-10 pb-16 md:grid-cols-2 xl:grid-cols-3">
+                    {propertyShowcases.apartmentListings.map(
+                      (listing, index) => (
+                        <ListingCard
+                          key={listing.id}
+                          listing={{
+                            ...listing,
+                            offset: index % 3 === 1,
+                          }}
+                        />
+                      ),
+                    )}
+                  </div>
+                </div>
+              ) : null}
             </div>
           </section>
         ) : null}

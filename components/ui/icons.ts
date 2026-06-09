@@ -147,7 +147,7 @@ import {
 export const ShowcaseStatIcons: Record<string, ComponentType<{ className?: string }>> = {
   bed: IconBed,
   bath: IconBath,
-  area: IconRulerMeasure,
+  area: IconMaximize,
   road: IconRoad,
   facing: IconCompass,
   parking: IconCar,
@@ -155,9 +155,9 @@ export const ShowcaseStatIcons: Record<string, ComponentType<{ className?: strin
   furnishing: IconSofa,
   water: IconDroplets,
   electricity: IconBolt,
-  listingType: IconCash,
+  listingType: IconFileDescription,
   titleStatus: IconFileCheck,
-  plot: IconCertificate,
+  plot: IconGridPattern,
 };
 
 export const PropertyTypeIcons = {

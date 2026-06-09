@@ -57,11 +57,13 @@ export function getPropertyStats(property: SearchProperty): PropertyStatItem[] {
 
     const roadAccess = land?.roadAccessFeet;
 
-    stats.push({
-      kind: "road",
-      value: roadAccess ?? PLACEHOLDER,
-      label: roadAccess ? "Ft Road" : "Road",
-    });
+    if (roadAccess) {
+      stats.push({
+        kind: "road",
+        value: roadAccess ?? PLACEHOLDER,
+        label: roadAccess ? "Ft Road" : "Road",
+      });
+    }
 
     const facing = land?.facingDirection?.replace("_", " ") || PLACEHOLDER;
 
@@ -70,22 +72,6 @@ export function getPropertyStats(property: SearchProperty): PropertyStatItem[] {
       value: facing,
       label: "Facing",
     });
-
-    const isCorner = land?.isCornerPlot;
-
-    if (isCorner) {
-      stats.push({
-        kind: "plot",
-        value: "Corner",
-        label: "Plot",
-      });
-    } else {
-      stats.push({
-        kind: "plot",
-        value: land?.plotShape ?? PLACEHOLDER,
-        label: "Shape",
-      });
-    }
   }
 
   return stats;

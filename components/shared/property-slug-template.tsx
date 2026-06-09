@@ -222,15 +222,6 @@ function getPageContent(
                 },
               ]
             : []),
-          ...(property.landDetails?.roadAccessFeet
-            ? [
-                {
-                  icon: Icons.navigation,
-                  label: "Access",
-                  value: `${property.landDetails.roadAccessFeet}ft Road`,
-                },
-              ]
-            : []),
           ...(property.landDetails?.facingDirection
             ? [
                 {
@@ -250,11 +241,6 @@ function getPageContent(
               : "N/A",
           },
           {
-            icon: Icons.navigation,
-            label: "Road Access",
-            value: `${property.landDetails?.roadAccessFeet || "N/A"}ft Road`,
-          },
-          {
             icon: Icons.maximize,
             label: "Frontage",
             value: property.landDetails?.frontageFeet
@@ -266,11 +252,6 @@ function getPageContent(
             label: "Facing",
             value:
               property.landDetails?.facingDirection?.replace("_", " ") || "N/A",
-          },
-          {
-            icon: Icons.building,
-            label: "Plot Shape",
-            value: property.landDetails?.plotShape || "N/A",
           },
           {
             icon: Icons.file,
