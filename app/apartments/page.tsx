@@ -29,6 +29,20 @@ export async function generateMetadata({
   return {
     title: `${title} in Nepal | Yeti Homes Estate`,
     description,
+    alternates: { canonical: `https://www.yetihomesestate.com.np/apartments` },
+    openGraph: {
+      title: `${title} in Nepal | Yeti Homes Estate`,
+      description,
+      url: `https://www.yetihomesestate.com.np/apartments`,
+      siteName: "Yeti Homes Estate",
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} in Nepal | Yeti Homes Estate`,
+      description,
+    },
   };
 }
 

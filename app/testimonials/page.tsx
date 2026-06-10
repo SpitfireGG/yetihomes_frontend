@@ -8,6 +8,24 @@ export const metadata: Metadata = {
   title: "Testimonials | Yeti Homes Estate",
   description:
     "Hear from our clients. Yeti Homes Estate has helped hundreds of buyers and sellers across Nepal find their ideal property.",
+  alternates: {
+    canonical: "https://www.yetihomesestate.com.np/testimonials",
+  },
+  openGraph: {
+    title: "Testimonials | Yeti Homes Estate",
+    description:
+      "Hear from our clients. Yeti Homes Estate has helped hundreds of buyers and sellers across Nepal find their ideal property.",
+    url: "https://www.yetihomesestate.com.np/testimonials",
+    siteName: "Yeti Homes Estate",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Testimonials | Yeti Homes Estate",
+    description:
+      "Client testimonials for Yeti Homes Estate in Nepal.",
+  },
 };
 
 const Page = async () => {

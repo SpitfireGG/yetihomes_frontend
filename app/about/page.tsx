@@ -6,6 +6,24 @@ export const metadata: Metadata = {
   title: "About Us | Yeti Homes Estate",
   description:
     "Yeti Homes Estate is Nepal's premier editorial real estate platform, connecting discerning buyers with exceptional properties through local expertise and deep-rooted trust.",
+  alternates: {
+    canonical: "https://www.yetihomesestate.com.np/about",
+  },
+  openGraph: {
+    title: "About Us | Yeti Homes Estate",
+    description:
+      "Yeti Homes Estate is Nepal's premier editorial real estate platform, connecting discerning buyers with exceptional properties through local expertise and deep-rooted trust.",
+    url: "https://www.yetihomesestate.com.np/about",
+    siteName: "Yeti Homes Estate",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | Yeti Homes Estate",
+    description:
+      "Yeti Homes Estate is Nepal's premier editorial real estate platform.",
+  },
 };
 
 export default function AboutPage() {

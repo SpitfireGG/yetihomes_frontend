@@ -39,7 +39,64 @@ export default async function Home() {
     propertyShowcases.valueHomeListings.length > 0;
 
   return (
-    <div className="min-h-screen bg-[#F8F8F5] text-gray-900 font-sans selection:bg-primary selection:text-white">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.yetihomesestate.com.np/#organization",
+                name: "Yeti Homes Estate Pvt. Ltd",
+                url: "https://www.yetihomesestate.com.np",
+                logo: "https://www.yetihomesestate.com.np/Yeti-Logo-02.svg",
+                description:
+                  "Premium real estate in Nepal — houses, apartments, and land for sale. Expert guidance for discerning buyers.",
+                address: {
+                  "@type": "PostalAddress",
+                  streetAddress: "Chuchepati, Chabahil",
+                  addressLocality: "Kathmandu",
+                  addressCountry: "NP",
+                  postalCode: "44600",
+                },
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  telephone: "+977-9851446901",
+                  contactType: "sales",
+                },
+                sameAs: [
+                  "https://facebook.com/yetihomes",
+                  "https://instagram.com/yetihomes",
+                  "https://x.com/yetihomes",
+                  "https://linkedin.com/company/yetihomes",
+                  "https://www.youtube.com/@YetiHomesEstate",
+                ],
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://www.yetihomesestate.com.np/#website",
+                url: "https://www.yetihomesestate.com.np",
+                name: "Yeti Homes Estate",
+                description:
+                  "Premium Real Estate in Nepal — Houses, Apartments & Land for Sale",
+                publisher: { "@id": "https://www.yetihomesestate.com.np/#organization" },
+              },
+              {
+                "@type": "RealEstateAgent",
+                "@id": "https://www.yetihomesestate.com.np/#realestateagent",
+                name: "Yeti Homes Estate",
+                url: "https://www.yetihomesestate.com.np",
+                image: "https://www.yetihomesestate.com.np/Yeti-Logo-02.svg",
+                areaServed: "NP",
+                priceRange: "₹₹₹₹₹",
+              },
+            ],
+          }),
+        }}
+      />
+      <div className="min-h-screen bg-[#F8F8F5] text-gray-900 font-sans selection:bg-primary selection:text-white">
       <AnimatedHeroSearch />
 
       <main>
@@ -121,24 +178,15 @@ export default async function Home() {
           <div className="absolute inset-0 w-full h-full z-0">
             <Image
               src="/banner_yt.jpeg"
-              alt="AdvLife Cityscape"
+              alt=""
               fill
               priority
               sizes="100vw"
-              /* Using object-center usually works best for strip banners so the focal point stays in the middle when cropped on mobile */
               className="object-cover object-center"
             />
           </div>
-
           <div className="absolute inset-0 bg-brand-900/30 mix-blend-overlay z-10 pointer-events-none"></div>
-
           <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-brand-900/80 via-brand-900/30 to-transparent z-20 pointer-events-none"></div>
-
-          <div className="relative z-30 w-full h-full max-w-[1600px] mx-auto px-6 lg:px-12 flex flex-col justify-end pb-6 sm:pb-8">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white drop-shadow-md">
-              Page Title
-            </h1>
-          </div>
         </section>
 
         {hasPropertyShowcases ? (
@@ -183,5 +231,6 @@ export default async function Home() {
 
       <Footer />
     </div>
+    </>
   );
 }

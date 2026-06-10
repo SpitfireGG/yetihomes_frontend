@@ -6,6 +6,24 @@ export const metadata: Metadata = {
   title: "Careers | Yeti Homes Estate",
   description:
     "Join the Yeti Homes Estate team. Explore career opportunities in real estate, technology, and client services in Nepal.",
+  alternates: {
+    canonical: "https://www.yetihomesestate.com.np/careers",
+  },
+  openGraph: {
+    title: "Careers | Yeti Homes Estate",
+    description:
+      "Join the Yeti Homes Estate team. Explore career opportunities in real estate, technology, and client services in Nepal.",
+    url: "https://www.yetihomesestate.com.np/careers",
+    siteName: "Yeti Homes Estate",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Careers | Yeti Homes Estate",
+    description:
+      "Join the Yeti Homes Estate team in Nepal.",
+  },
 };
 
 const openings = [

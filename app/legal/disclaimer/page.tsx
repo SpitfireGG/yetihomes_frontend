@@ -1,8 +1,12 @@
+import type { Metadata } from "next";
 import LegalLayout from "@/components/shared/legal-layouts";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Disclaimer | Yeti Homes Estate",
   description: "Yeti Homes Estate disclaimer regarding property listings and website information.",
+  alternates: {
+    canonical: "https://www.yetihomesestate.com.np/legal/disclaimer",
+  },
 };
 
 export default async function DisclaimerPage() {

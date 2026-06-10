@@ -1,10 +1,23 @@
+import type { Metadata } from "next";
 import ToolPageShell from "@/components/tools/tool-page-shell";
 import UpfrontCashCalculator from "@/components/tools/upfront-cash-calculator";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Estimate Your Upfront Cash | Yeti Homes Estate",
   description:
     "Calculate token deposit, registration reference, and advisory fees before you move ahead with a Nepal property deal.",
+  alternates: {
+    canonical: "https://www.yetihomesestate.com.np/estimate-your-upfront-cash",
+  },
+  openGraph: {
+    title: "Estimate Your Upfront Cash | Yeti Homes Estate",
+    description:
+      "Calculate token deposit, registration reference, and advisory fees before you move ahead with a Nepal property deal.",
+    url: "https://www.yetihomesestate.com.np/estimate-your-upfront-cash",
+    siteName: "Yeti Homes Estate",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function EstimateYourUpfrontCashPage() {

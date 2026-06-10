@@ -5,6 +5,28 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "yetihomesestate.com.np" }],
+        destination: "https://www.yetihomesestate.com.np/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "yetihomes.com" }],
+        destination: "https://www.yetihomesestate.com.np/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.yetihomes.com" }],
+        destination: "https://www.yetihomesestate.com.np/:path*",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     dangerouslyAllowLocalIP: true,

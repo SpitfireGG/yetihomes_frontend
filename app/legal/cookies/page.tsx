@@ -1,8 +1,12 @@
+import type { Metadata } from "next";
 import LegalLayout from "@/components/shared/legal-layouts";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Cookie Policy | Yeti Homes Estate",
   description: "Yeti Homes Estate Cookie Policy - How we use cookies and tracking technologies.",
+  alternates: {
+    canonical: "https://www.yetihomesestate.com.np/legal/cookies",
+  },
 };
 
 export default async function CookiePolicyPage() {
