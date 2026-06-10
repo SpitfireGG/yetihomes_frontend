@@ -18,7 +18,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   fallback: ["sans-serif"],
 });
 
-const siteUrl = "https://yetihomes.com";
+const siteUrl = "https://www.yetihomesestate.com.np";
 
 export const metadata: Metadata = {
   title: {
@@ -36,14 +36,6 @@ export const metadata: Metadata = {
     title: "Yeti Homes Estate | Premium Real Estate in Nepal",
     description:
       "Discover curated homes, apartments, and land for sale in Nepal. Yeti Homes Estate offers editorial real estate listings with expert guidance for discerning buyers.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Yeti Homes Estate",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
