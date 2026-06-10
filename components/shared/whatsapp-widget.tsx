@@ -53,6 +53,16 @@ export default function WhatsAppWidget() {
   // Authentic Agent Data
   const agents = [
     {
+      name: "Customer Care",
+      role: "Customer Care Representative",
+      phone: "9779851446901",
+      img: "/Yeti-Logo-02.svg",
+      status: "online",
+      message:
+        "Hello! I am available 24/7 for any queries, and respond back ASAP.",
+    },
+
+    {
       name: "Yasub Sunuwar",
       role: "Managing Director",
       phone: "9779851446902",
@@ -71,7 +81,7 @@ export default function WhatsAppWidget() {
     {
       name: "Ngima Sherpa",
       role: "Founder & CEO",
-      phone: "9779",
+      phone: "9779851361431",
       img: "/teams/ngimaFace.jpeg",
       status: "online",
       message: "Hi there! Are you looking to buy sell or rent properties?",
