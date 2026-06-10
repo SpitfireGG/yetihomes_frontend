@@ -10,7 +10,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  return generatePropertyMetadata(slug);
+  return generatePropertyMetadata(slug, "lands");
 }
 
 export default async function LandPropertyPage({
