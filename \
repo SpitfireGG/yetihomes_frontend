@@ -67,14 +67,10 @@ export default function MeetOurTeamSection({
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount =
-        clientWidth > 768 ? clientWidth / 2 : clientWidth * 0.8;
+      const scrollAmount = clientWidth > 768 ? clientWidth / 2 : clientWidth * 0.8;
 
       scrollRef.current.scrollTo({
-        left:
-          direction === "left"
-            ? scrollLeft - scrollAmount
-            : scrollLeft + scrollAmount,
+        left: direction === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
         behavior: "smooth",
       });
     }
@@ -83,6 +79,7 @@ export default function MeetOurTeamSection({
   return (
     <div className="font-sans antialiased text-on-surface">
       <div className="w-full max-w-[1600px] mx-auto overflow-hidden flex flex-col pt-0 pb-0 relative group">
+        
         {/* Desktop Navigation Arrows - Visible by default (opacity-50) so users know they can click */}
         <button
           onClick={() => scroll("left")}
