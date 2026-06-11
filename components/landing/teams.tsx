@@ -1,7 +1,6 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
-
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,27 +10,16 @@ import type { TeamMember } from "@/lib/api";
 
 function TeamHero() {
   return (
-    <div className="text-center mb-16 space-y-3 px-6">
+    <div className="text-center mb-10 md:mb-16 space-y-3 px-6">
       <SectionHeading
         title="Meet Our Team"
-        description="
-
-        Meet our exceptional team at Designflow! Comprising diverse talents and
-        expertise, we are a dedicated group committed to delivering excellence
-        in every project.
-                "
+        description="Meet our exceptional team at Designflow! Comprising diverse talents and expertise, we are a dedicated group committed to delivering excellence in every project."
       />
     </div>
   );
 }
 
-function MemberCard({
-  member,
-  index,
-}: {
-  member: TeamMember;
-  index: number;
-}) {
+function MemberCard({ member, index }: { member: TeamMember; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 30 }}
@@ -74,12 +62,12 @@ export default function MeetOurTeamSection({
   members: TeamMember[];
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const previewMembers = members.slice(0, 4);
+  // Show slightly more members before the "See all" card to encourage scrolling
+  const previewMembers = members.slice(0, 6);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-
       const scrollAmount =
         clientWidth > 768 ? clientWidth / 2 : clientWidth * 0.8;
 
@@ -96,20 +84,28 @@ export default function MeetOurTeamSection({
   return (
     <div className="font-sans antialiased text-on-surface">
       <div className="w-full max-w-[1600px] mx-auto overflow-hidden flex flex-col pt-0 pb-0 relative group">
+        {/* Desktop Navigation Arrows - Now slightly visible by default (opacity-40) */}
         <button
           onClick={() => scroll("left")}
-          className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
+          className="hidden md:flex absolute left-4 top-[60%] -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-40 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
         >
           <Icons.chevronLeft size={24} strokeWidth={1.5} />
         </button>
         <button
           onClick={() => scroll("right")}
-          className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
+          className="hidden md:flex absolute right-4 top-[60%] -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-40 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
         >
           <Icons.chevronRight size={24} strokeWidth={1.5} />
         </button>
 
         <TeamHero />
+
+        {/* Mobile Swipe Hint */}
+        <div className="flex md:hidden items-center justify-end px-6 mb-4">
+          <p className="text-xs font-medium text-on-surface-variant/70 flex items-center gap-1.5 animate-pulse">
+            Swipe to explore <Icons.chevronRight size={14} />
+          </p>
+        </div>
 
         <div className="w-full relative">
           <div
@@ -124,15 +120,21 @@ export default function MeetOurTeamSection({
             {previewMembers.map((member, index) => (
               <div
                 key={member.id}
-                className="w-[85vw] sm:w-[calc(50%-1.5rem)] md:w-[calc(33.33%-1.5rem)] lg:w-[calc(25%-1.5rem)] shrink-0 snap-start"
+                // Width adjusted to force a "peek" of the next card on all breakpoints
+                className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0 snap-start"
               >
                 <MemberCard member={member} index={index} />
               </div>
             ))}
 
+            {/* "See More" Card */}
             <motion.div
-              className="w-[85vw] sm:w-[calc(50%-1.5rem)] md:w-[calc(33.33%-1.5rem)] lg:w-[calc(25%-1.5rem)] shrink-0 snap-start flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
-              whileHover={{ scale: 1.02, backgroundColor: "var(--surface-container-lowest)" }}
+              // Matches the new width classes above
+              className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0 snap-start flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
+              whileHover={{
+                scale: 1.02,
+                backgroundColor: "var(--surface-container-lowest)",
+              }}
             >
               <Link
                 href="/teams"
@@ -146,12 +148,13 @@ export default function MeetOurTeamSection({
                   />
                 </div>
                 <p className="font-sans font-medium text-lg text-on-surface-variant group-hover:text-primary transition-colors tracking-tight">
-                  See more members
+                  See all teams
                 </p>
               </Link>
             </motion.div>
 
-            <div className="w-1 shrink-0"></div>
+            {/* Spacer to ensure the last card isn't completely flush against the right edge when fully scrolled */}
+            <div className="w-6 shrink-0 md:w-12"></div>
           </div>
         </div>
       </div>
