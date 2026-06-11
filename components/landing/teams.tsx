@@ -128,7 +128,7 @@ export default function MeetOurTeamSection({
 
             {/* Original "See More" Card Layout */}
             <motion.div
-              className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0 snap-start flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
+              className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[14vw] shrink-0 snap-start flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
               whileHover={{
                 scale: 1.02,
                 backgroundColor: "var(--surface-container-lowest)",
