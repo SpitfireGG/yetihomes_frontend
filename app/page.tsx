@@ -81,7 +81,9 @@ export default async function Home() {
                 name: "Yeti Homes Estate",
                 description:
                   "Premium Real Estate in Nepal — Houses, Apartments & Land for Sale",
-                publisher: { "@id": "https://www.yetihomesestate.com.np/#organization" },
+                publisher: {
+                  "@id": "https://www.yetihomesestate.com.np/#organization",
+                },
               },
               {
                 "@type": "RealEstateAgent",
@@ -97,140 +99,140 @@ export default async function Home() {
         }}
       />
       <div className="min-h-screen bg-[#F8F8F5] text-gray-900 font-sans selection:bg-primary selection:text-white">
-      <AnimatedHeroSearch />
+        <AnimatedHeroSearch />
 
-      <main>
-        {hasTopCollections ? (
-          <section className="pb-20 pt-10 lg:pb-24 lg:pt-16">
-            <div className={`${shellClassName} space-y-24 lg:space-y-28`}>
-              {hasFeaturedListings ? (
-                <div className="space-y-10">
-                  <div className="flex items-end justify-between">
-                    <SectionHeading title="Featured Houses" />
-                    <Link
-                      href="/houses"
-                      className="shrink-0 text-sm font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors"
-                    >
-                      View All Houses
-                    </Link>
+        <main>
+          {hasTopCollections ? (
+            <section className="pb-20 pt-10 lg:pb-24 lg:pt-16">
+              <div className={`${shellClassName} space-y-24 lg:space-y-28`}>
+                {hasFeaturedListings ? (
+                  <div className="space-y-10">
+                    <div className="flex items-end justify-between">
+                      <SectionHeading title="Featured Houses" />
+                      <Link
+                        href="/houses"
+                        className="shrink-0 text-sm font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors"
+                      >
+                        View All Houses
+                      </Link>
+                    </div>
+                    <div className="grid grid-cols-1 gap-10 pb-16 md:grid-cols-2 xl:grid-cols-3">
+                      {propertyShowcases.featuredListings.map(
+                        (listing, index) => (
+                          <ListingCard
+                            key={listing.id}
+                            listing={{
+                              ...listing,
+                              offset: index % 3 === 1,
+                            }}
+                          />
+                        ),
+                      )}
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 gap-10 pb-16 md:grid-cols-2 xl:grid-cols-3">
-                    {propertyShowcases.featuredListings.map(
-                      (listing, index) => (
-                        <ListingCard
-                          key={listing.id}
-                          listing={{
-                            ...listing,
-                            offset: index % 3 === 1,
-                          }}
-                        />
-                      ),
-                    )}
+                ) : null}
+
+                <FeaturedListingsSection
+                  listings={propertyShowcases.featuredLandListings}
+                  title="Featured Lands"
+                  viewAllHref="/lands"
+                />
+
+                {hasApartmentListings ? (
+                  <div className="space-y-10">
+                    <div className="flex items-end justify-between">
+                      <SectionHeading title="Apartments" />
+                      <Link
+                        href="/apartments"
+                        className="shrink-0 text-sm font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors"
+                      >
+                        View All Apartments
+                      </Link>
+                    </div>
+                    <div className="grid grid-cols-1 gap-10 pb-16 md:grid-cols-2 xl:grid-cols-3">
+                      {propertyShowcases.apartmentListings.map(
+                        (listing, index) => (
+                          <ListingCard
+                            key={listing.id}
+                            listing={{
+                              ...listing,
+                              offset: index % 3 === 1,
+                            }}
+                          />
+                        ),
+                      )}
+                    </div>
                   </div>
-                </div>
-              ) : null}
+                ) : null}
+              </div>
+            </section>
+          ) : null}
 
-              <FeaturedListingsSection
-                listings={propertyShowcases.featuredLandListings}
-                title="Featured Lands"
-                viewAllHref="/lands"
-              />
+          {hasSimilarListings ? (
+            <section className="border-t border-outline-variant/50 bg-surface-container-lowest py-20 lg:py-24">
+              <div className={shellClassName}>
+                <SimilarListings listings={propertyShowcases.similarListings} />
+              </div>
+            </section>
+          ) : null}
 
-              {hasApartmentListings ? (
-                <div className="space-y-10">
-                  <div className="flex items-end justify-between">
-                    <SectionHeading title="Apartments" />
-                    <Link
-                      href="/apartments"
-                      className="shrink-0 text-sm font-bold tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors"
-                    >
-                      View All Apartments
-                    </Link>
-                  </div>
-                  <div className="grid grid-cols-1 gap-10 pb-16 md:grid-cols-2 xl:grid-cols-3">
-                    {propertyShowcases.apartmentListings.map(
-                      (listing, index) => (
-                        <ListingCard
-                          key={listing.id}
-                          listing={{
-                            ...listing,
-                            offset: index % 3 === 1,
-                          }}
-                        />
-                      ),
-                    )}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          </section>
-        ) : null}
-
-        {hasSimilarListings ? (
-          <section className="border-t border-outline-variant/50 bg-surface-container-lowest py-20 lg:py-24">
-            <div className={shellClassName}>
-              <SimilarListings listings={propertyShowcases.similarListings} />
-            </div>
-          </section>
-        ) : null}
-
-        <section className="relative w-full h-[160px] sm:h-[200px] md:h-[264px] -mt-24 overflow-hidden bg-brand-900">
-          <div className="absolute inset-0 w-full h-full z-0">
-            <Image
-              src="/banner_yt.jpeg"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </div>
-          <div className="absolute inset-0 bg-brand-900/30 mix-blend-overlay z-10 pointer-events-none"></div>
-          <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-brand-900/80 via-brand-900/30 to-transparent z-20 pointer-events-none"></div>
-        </section>
-
-        {hasPropertyShowcases ? (
-          <section className="border-t border-outline-variant/50 bg-surface-container-low py-20 lg:py-24">
-            <div className={shellClassName}>
-              <PropertyShowcases
-                residentialPlotListings={
-                  propertyShowcases.residentialPlotListings
-                }
-                valueHomeListings={propertyShowcases.valueHomeListings}
+          <section className="relative w-full h-[160px] sm:h-[200px] md:h-[264px] -mt-24 overflow-hidden bg-brand-900">
+            <div className="absolute inset-0 w-full h-full z-0">
+              <Image
+                src="/banner_yt.jpeg"
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center"
               />
             </div>
+            <div className="absolute inset-0 bg-brand-900/30 mix-blend-overlay z-10 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-brand-900/80 via-brand-900/30 to-transparent z-20 pointer-events-none"></div>
           </section>
-        ) : null}
 
-        <section className="py-20 lg:py-24">
-          <div className={shellClassName}>
-            <PropertyLanding
-              categories={landingPageData?.categories}
-              cities={landingPageData?.cities}
-            />
-          </div>
-        </section>
+          {hasPropertyShowcases ? (
+            <section className="border-t border-outline-variant/50 bg-surface-container-low py-20 lg:py-24">
+              <div className={shellClassName}>
+                <PropertyShowcases
+                  residentialPlotListings={
+                    propertyShowcases.residentialPlotListings
+                  }
+                  valueHomeListings={propertyShowcases.valueHomeListings}
+                />
+              </div>
+            </section>
+          ) : null}
 
-        <section className="border-t border-outline-variant/50 bg-surface-container-low py-24 lg:py-28">
-          <div className="space-y-20 lg:space-y-24">
+          <section className="py-20 lg:py-24">
             <div className={shellClassName}>
-              <TrustHub />
+              <PropertyLanding
+                categories={landingPageData?.categories}
+                cities={landingPageData?.cities}
+              />
             </div>
+          </section>
+
+          <section className="border-t border-outline-variant/50 bg-surface-container-low py-24 lg:py-28">
+            <div className="space-y-20 lg:space-y-24">
+              <div className={shellClassName}>
+                <TrustHub />
+              </div>
+              <div className={shellClassName}>
+                <MeetOurTeamSection members={teamMembers} />
+              </div>
+            </div>
+          </section>
+
+          <section className="border-t border-outline-variant/50 bg-surface-container-low py-24 lg:py-28">
             <div className={shellClassName}>
-              <MeetOurTeamSection members={teamMembers} />
+              <ClientReviews reviews={reviews} />
             </div>
-          </div>
-        </section>
+          </section>
+        </main>
 
-        <section className="border-t border-outline-variant/50 bg-surface-container-low py-24 lg:py-28">
-          <div className={shellClassName}>
-            <ClientReviews reviews={reviews} />
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </>
   );
 }

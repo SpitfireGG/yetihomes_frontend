@@ -1,16 +1,16 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "../shared/sectionHeading";
 import type { TeamMember } from "@/lib/api";
 
 function TeamHero() {
   return (
-    <div className="text-center mb-10 md:mb-16 space-y-3 px-6">
+    <div className="text-center mb-8 md:mb-12 space-y-3 px-6">
       <SectionHeading
         title="Meet Our Team"
         description="Meet our exceptional team at Designflow! Comprising diverse talents and expertise, we are a dedicated group committed to delivering excellence in every project."
@@ -21,13 +21,7 @@ function TeamHero() {
 
 function MemberCard({ member, index }: { member: TeamMember; index: number }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
-      className="flex flex-col items-center gap-4 shrink-0"
-    >
+    <div className="flex flex-col items-center gap-4 shrink-0">
       <Link href={member.profileHref} className="w-full">
         <motion.div
           className="group relative aspect-[4/5] w-full cursor-pointer overflow-hidden rounded-[32px] bg-surface-container-high shadow-inner"
@@ -52,7 +46,7 @@ function MemberCard({ member, index }: { member: TeamMember; index: number }) {
           {member.role}
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -61,76 +55,67 @@ export default function MeetOurTeamSection({
 }: {
   members: TeamMember[];
 }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  // Show slightly more members before the "See all" card to encourage scrolling
+  const targetRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [scrollRange, setScrollRange] = useState(0);
+
   const previewMembers = members.slice(0, 6);
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount =
-        clientWidth > 768 ? clientWidth / 2 : clientWidth * 0.8;
+  // Dynamically calculate how far the element needs to slide horizontally
+  useEffect(() => {
+    const calculateRange = () => {
+      if (carouselRef.current) {
+        const totalWidth = carouselRef.current.scrollWidth;
+        const viewportWidth = carouselRef.current.clientWidth;
+        // The distance to scroll is the total content width minus what's already visible
+        setScrollRange(totalWidth - viewportWidth);
+      }
+    };
 
-      scrollRef.current.scrollTo({
-        left:
-          direction === "left"
-            ? scrollLeft - scrollAmount
-            : scrollLeft + scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
+    calculateRange();
+    
+    window.addEventListener("resize", calculateRange);
+    return () => window.removeEventListener("resize", calculateRange);
+  }, [previewMembers]);
+
+  // Track vertical scroll progress of the main container
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
+
+  // Map vertical scroll progress (0 to 1) to horizontal pixel translation (0 to -scrollRange)
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
 
   return (
-    <div className="font-sans antialiased text-on-surface">
-      <div className="w-full max-w-[1600px] mx-auto overflow-hidden flex flex-col pt-0 pb-0 relative group">
-        {/* Desktop Navigation Arrows - Now slightly visible by default (opacity-40) */}
-        <button
-          onClick={() => scroll("left")}
-          className="hidden md:flex absolute left-4 top-[60%] -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-40 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
-        >
-          <Icons.chevronLeft size={24} strokeWidth={1.5} />
-        </button>
-        <button
-          onClick={() => scroll("right")}
-          className="hidden md:flex absolute right-4 top-[60%] -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-40 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
-        >
-          <Icons.chevronRight size={24} strokeWidth={1.5} />
-        </button>
-
+    // h-[250vh] controls the duration/speed of the horizontal scroll. 
+    // Increase to make it scroll slower, decrease to make it scroll faster.
+    <div ref={targetRef} className="relative h-[250vh] font-sans antialiased text-on-surface">
+      
+      {/* Sticky wrapper keeps the section locked on screen while translating horizontally */}
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-background">
+        
         <TeamHero />
 
-        {/* Mobile Swipe Hint */}
-        <div className="flex md:hidden items-center justify-end px-6 mb-4">
-          <p className="text-xs font-medium text-on-surface-variant/70 flex items-center gap-1.5 animate-pulse">
-            Swipe to explore <Icons.chevronRight size={14} />
-          </p>
-        </div>
-
-        <div className="w-full relative">
-          <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto px-6 lg:px-12 pb-8 -mb-8 snap-x snap-mandatory hide-scrollbar"
-            style={{
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-              WebkitOverflowScrolling: "touch",
-            }}
+        <div className="w-full max-w-[1600px] mx-auto relative px-6 lg:px-12">
+          {/* Animated horizontal strip */}
+          <motion.div
+            ref={carouselRef}
+            style={{ x }}
+            className="flex gap-6 pb-4"
           >
             {previewMembers.map((member, index) => (
               <div
                 key={member.id}
-                // Width adjusted to force a "peek" of the next card on all breakpoints
-                className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0 snap-start"
+                // Fixed sizing ensures smooth, predictable layout calculations
+                className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0"
               >
                 <MemberCard member={member} index={index} />
               </div>
             ))}
 
-            {/* "See More" Card */}
+            {/* "See More" Card integrated into the track */}
             <motion.div
-              // Matches the new width classes above
-              className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0 snap-start flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
+              className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0 flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
               whileHover={{
                 scale: 1.02,
                 backgroundColor: "var(--surface-container-lowest)",
@@ -152,22 +137,9 @@ export default function MeetOurTeamSection({
                 </p>
               </Link>
             </motion.div>
-
-            {/* Spacer to ensure the last card isn't completely flush against the right edge when fully scrolled */}
-            <div className="w-6 shrink-0 md:w-12"></div>
-          </div>
+          </motion.div>
         </div>
       </div>
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `,
-        }}
-      />
     </div>
   );
 }
