@@ -1,14 +1,10 @@
 "use client";
 
 import { Icons } from "@/components/ui/icons";
-
 import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import type { TeamMember } from "@/lib/api";
-
-const BRAND_PRIMARY = "var(--primary)";
-const BRAND_SUPPORT = "var(--secondary)";
 
 export default function TeamMemberProfilePage({
   member,
@@ -18,11 +14,11 @@ export default function TeamMemberProfilePage({
   index: number;
 }) {
   const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" as const },
+      transition: { duration: 0.6, ease: [0.25, 1, 0.5, 1] },
     },
   };
 
@@ -30,154 +26,172 @@ export default function TeamMemberProfilePage({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 },
+      transition: { staggerChildren: 0.08 },
     },
   };
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-white font-sans">
-      <div className="pointer-events-none absolute top-10 right-10 z-0 overflow-hidden lg:top-[-40px] lg:right-[10%]">
-        <motion.span
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="text-[250px] leading-none font-black tracking-tighter lg:text-[400px]"
-          style={{
-            color: "transparent",
-            WebkitTextStroke: "2px #f3f4f6",
-          }}
-        >
+    <main className="relative min-h-screen w-full bg-background font-sans text-foreground">
+      {/* Editorial Decorative Background Number */}
+      <div className="pointer-events-none absolute -right-8 -top-16 z-0 select-none overflow-hidden opacity-[0.03] lg:-top-32 lg:right-12">
+        <span className="font-headline text-[280px] font-black leading-none tracking-tighter lg:text-[500px]">
           {String(index + 1).padStart(2, "0")}
-        </motion.span>
+        </span>
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-[1600px] flex-col gap-16 px-6 pt-10 pb-20 lg:flex-row lg:gap-24 lg:px-16 lg:pt-16">
-        <div className="relative flex w-full justify-center lg:w-5/12 lg:justify-start">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-12 sm:px-10 lg:px-16 lg:py-20">
+        {/* Navigation Action Row */}
+        <div className="mb-12 flex items-center justify-between border-b border-outline-variant pb-5">
           <Link
             href="/teams"
-            className="absolute top-0 left-0 z-30 flex items-center gap-2 text-sm font-semibold tracking-widest text-gray-500 uppercase transition-colors hover:text-gray-900 lg:-left-4"
+            className="group inline-flex items-center gap-2 font-label text-xs font-bold uppercase tracking-[0.2em] text-outline transition-colors hover:text-foreground"
           >
-            <Icons.arrowLeft size={16} /> Back to Team
-          </Link>
-
-          <div className="relative mt-16 h-[500px] w-full max-w-md lg:mt-24 lg:h-[650px]">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="absolute top-10 -left-6 inset-0 z-0 lg:top-20 lg:-left-12"
-              style={{
-                backgroundColor: BRAND_SUPPORT,
-                clipPath: "polygon(0 0, 100% 15%, 100% 100%, 0% 85%)",
-              }}
+            <Icons.arrowLeft
+              size={14}
+              className="transition-transform group-hover:-translate-x-0.5"
             />
-
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="relative z-10 h-full w-full shadow-2xl"
-            >
-              <Image
-                src={member.image}
-                alt={member.name}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover object-top grayscale mix-blend-luminosity"
-              />
-            </motion.div>
-          </div>
+            Back to Team Portfolio
+          </Link>
+          <span className="font-label text-xs font-bold uppercase tracking-widest text-outline">
+            Profile / {String(index + 1).padStart(2, "0")}
+          </span>
         </div>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="mt-10 flex w-full flex-col justify-center lg:mt-0 lg:w-7/12"
-        >
-          <motion.div variants={fadeUp} className="mb-10">
-            <h1 className="mb-4 text-4xl font-black tracking-tight text-gray-900 lg:text-6xl">
-              {member.name}
-            </h1>
-            <div className="flex flex-col gap-2">
-              <p
-                className="text-xl font-bold lg:text-2xl"
-                style={{ color: BRAND_SUPPORT }}
+        {/* MAIN SPLIT LAYOUT */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* LEFT COLUMN: MINIMAL IMAGE FRAME */}
+          <div className="flex flex-col items-center lg:col-span-5 lg:items-start">
+            <div className="relative aspect-[4/5] w-full max-w-md overflow-hidden bg-surface-container-low lg:max-w-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.75, ease: "easeOut" }}
+                className="relative h-full w-full"
               >
-                {member.role}
-              </p>
-              <div className="flex items-center gap-2 font-medium text-gray-500">
-                <Icons.mapPin size={18} strokeWidth={2.5} />
-                <span>{member.location}</span>
-              </div>
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover object-top grayscale transition-all duration-700 ease-in-out hover:grayscale-0"
+                />
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div variants={fadeUp} className="mb-12">
-            <h3 className="mb-4 text-sm font-bold tracking-widest text-gray-400 uppercase">
-              Biography
-            </h3>
-            <p className="max-w-2xl text-lg leading-relaxed text-gray-600">
-              {member.bio}
-            </p>
-          </motion.div>
-
+          {/* RIGHT COLUMN: TYPOGRAPHIC CONTENT */}
           <motion.div
-            variants={fadeUp}
-            className="mb-12 grid grid-cols-1 gap-8 border-t border-gray-100 pt-8 md:grid-cols-2"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col justify-center lg:col-span-7"
           >
-            {member.phone && (
-              <div>
-                <h3 className="mb-4 flex items-center gap-2 text-sm font-bold tracking-widest text-gray-400 uppercase">
-                  <Icons.phone size={16} /> Phone
-                </h3>
-                <a
-                  href={`tel:${member.phone}`}
-                  className="flex items-center gap-3 font-medium text-gray-700 hover:text-black transition-colors"
-                >
-                  {member.phone}
-                </a>
+            {/* Name & Role Header */}
+            <motion.div variants={fadeUp} className="mb-10">
+              <span className="mb-2 block font-label text-xs font-bold uppercase tracking-[0.25em] text-outline">
+                Expert Team Professional
+              </span>
+              <h1 className="font-headline text-4xl font-black uppercase tracking-tight text-foreground sm:text-5xl xl:text-6xl mb-4">
+                {member.name}
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 font-label text-sm font-semibold">
+                <span className="font-label text-xs font-bold uppercase tracking-wider text-primary">
+                  {member.role}
+                </span>
+                <div className="flex items-center gap-1.5 text-on-surface-variant">
+                  <Icons.mapPin size={15} className="text-outline" />
+                  <span>{member.location}</span>
+                </div>
               </div>
-            )}
-            <div>
-              <h3 className="mb-4 flex items-center gap-2 text-sm font-bold tracking-widest text-gray-400 uppercase">
-                <Icons.briefcase size={16} /> Areas of Expertise
-              </h3>
-              <ul className="space-y-3">
-                {member.expertise.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-3 font-medium text-gray-700"
+            </motion.div>
+
+            {/* Minimal Content Fields (No heavy card boxes) */}
+            <div className="mb-10 space-y-8">
+              {/* Biography Section */}
+              <motion.div variants={fadeUp}>
+                <h3 className="mb-3 block font-label text-[10px] font-bold uppercase tracking-[0.25em] text-outline">
+                  Professional Biography
+                </h3>
+                <p className="font-body text-sm font-normal leading-relaxed text-on-surface-variant sm:text-base">
+                  {member.bio ||
+                    `${member.name} serves a critical role driving execution workflows and offering specialized transactional counsel within our property divisions.`}
+                </p>
+              </motion.div>
+
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 border-t border-outline-variant pt-8">
+                {/* Contact Line Section */}
+                {member.phone && (
+                  <motion.div
+                    variants={fadeUp}
+                    className="flex flex-col justify-between"
                   >
-                    <div
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: BRAND_PRIMARY }}
-                    />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+                    <div>
+                      <h3 className="mb-2 flex items-center gap-1.5 font-label text-[10px] font-bold uppercase tracking-[0.25em] text-outline">
+                        <Icons.phone size={12} /> Contact Line
+                      </h3>
+                    </div>
+                    <a
+                      href={`tel:${member.phone}`}
+                      className="group inline-flex items-center gap-2 font-body text-sm font-bold text-foreground transition-colors hover:text-primary"
+                    >
+                      {member.phone}
+                      <Icons.arrowRight
+                        size={14}
+                        className="text-outline transition-transform group-hover:translate-x-1"
+                      />
+                    </a>
+                  </motion.div>
+                )}
+
+                {/* Expertise Section */}
+                <motion.div variants={fadeUp}>
+                  <h3 className="mb-3 flex items-center gap-1.5 font-label text-[10px] font-bold uppercase tracking-[0.25em] text-outline">
+                    <Icons.briefcase size={12} /> Areas of Expertise
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {(member.expertise && member.expertise.length > 0
+                      ? member.expertise
+                      : [
+                          "Client Management",
+                          "Negotiations",
+                          "Property Marketing",
+                        ]
+                    ).map((item, i, arr) => (
+                      <span
+                        key={item}
+                        className="font-body text-xs font-medium text-on-surface-variant"
+                      >
+                        {item}
+                        {i < arr.length - 1 && (
+                          <span className="text-outline ml-1.5">•</span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
             </div>
 
-
-          </motion.div>
-
-          <motion.div variants={fadeUp} className="flex items-center gap-4">
-            <a
-              href={`mailto:${member.email}`}
-              className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-sm font-bold tracking-widest text-white uppercase transition-colors hover:bg-brand-800"
+            {/* Action Interface Strip */}
+            <motion.div
+              variants={fadeUp}
+              className="flex items-center gap-6 border-t border-outline-variant pt-8"
             >
-              <Icons.mail size={18} /> Contact {member.name.split(" ")[0]}
-            </a>
-            <a
-              href="#"
-              className="inline-flex h-14 w-14 items-center justify-center border-2 border-outline-variant text-on-surface-variant transition-colors hover:border-primary hover:text-primary"
-            >
-              <Icons.leafyGreen size={20} />
-            </a>
+              <a
+                href={`mailto:${member.email}`}
+                className="group inline-flex items-center gap-3 font-label text-xs font-bold uppercase tracking-[0.25em] text-foreground transition-colors hover:text-primary"
+              >
+                <Icons.mail size={14} />
+                Send Email
+                <Icons.arrowRight
+                  size={14}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </a>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </main>
   );
