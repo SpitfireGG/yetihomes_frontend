@@ -120,7 +120,7 @@ export default function MeetOurTeamSection({
               <div
                 key={member.id}
                 // Width adjustments to guarantee that the next card always peeks out from the screen edge
-                className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[22vw] shrink-0 snap-start"
+                className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[14vw] shrink-0 snap-start"
               >
                 <MemberCard member={member} index={index} />
               </div>
