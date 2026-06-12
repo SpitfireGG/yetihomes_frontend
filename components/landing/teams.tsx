@@ -13,7 +13,7 @@ function TeamHero() {
     <div className="text-center mb-16 space-y-3 px-6">
       <SectionHeading
         title="Meet Our Team"
-        description="Meet our exceptional team at Designflow! Comprising diverse talents and expertise, we are a dedicated group committed to delivering excellence in every project."
+        description="Meet the Yeti Homes team—trusted real estate professionals with diverse expertise and deep local insight. We're dedicated to guiding every client home with clarity, care, and results that exceed expectations."
       />
     </div>
   );
