@@ -1,5 +1,4 @@
 "use client";
-
 import { Icons } from "@/components/ui/icons";
 import { useRef } from "react";
 import Image from "next/image";
@@ -7,7 +6,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import SectionHeading from "../shared/sectionHeading";
 import type { TeamMember } from "@/lib/api";
-
 function TeamHero() {
   return (
     <div className="text-center mb-16 space-y-3 px-6">
@@ -18,7 +16,6 @@ function TeamHero() {
     </div>
   );
 }
-
 function MemberCard({ member, index }: { member: TeamMember; index: number }) {
   return (
     <motion.div
@@ -37,13 +34,12 @@ function MemberCard({ member, index }: { member: TeamMember; index: number }) {
             src={member.thumbnail}
             alt={`Team member: ${member.name}`}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            sizes="(max-width: 640px) 55vw, (max-width: 768px) 32vw, (max-width: 1024px) 22vw, 10vw"
             className="object-cover"
           />
           <div className="absolute inset-0 bg-black/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </motion.div>
       </Link>
-
       <div className="text-center px-1 max-w-full">
         <h3 className="font-sans font-medium text-xl text-on-surface tracking-tight truncate">
           {member.name}
@@ -55,7 +51,6 @@ function MemberCard({ member, index }: { member: TeamMember; index: number }) {
     </motion.div>
   );
 }
-
 export default function MeetOurTeamSection({
   members,
 }: {
@@ -63,13 +58,11 @@ export default function MeetOurTeamSection({
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const previewMembers = members.slice(0, 5);
-
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
       const scrollAmount =
         clientWidth > 768 ? clientWidth / 2 : clientWidth * 0.8;
-
       scrollRef.current.scrollTo({
         left:
           direction === "left"
@@ -79,11 +72,9 @@ export default function MeetOurTeamSection({
       });
     }
   };
-
   return (
     <div className="font-sans antialiased text-on-surface">
       <div className="w-full max-w-[1600px] mx-auto overflow-hidden flex flex-col pt-0 pb-0 relative group">
-        {/* Desktop Navigation Arrows - Visible by default (opacity-50) so users know they can click */}
         <button
           onClick={() => scroll("left")}
           className="hidden md:flex absolute left-4 top-[55%] -translate-y-1/2 z-20 w-12 h-12 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant rounded-full items-center justify-center text-on-surface-variant shadow-lg opacity-50 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:text-primary"
@@ -96,16 +87,12 @@ export default function MeetOurTeamSection({
         >
           <Icons.chevronRight size={24} strokeWidth={1.5} />
         </button>
-
         <TeamHero />
-
-        {/* Mobile/Tablet Swipe Hint */}
         <div className="flex md:hidden items-center justify-end px-6 mb-3">
           <p className="text-xs font-medium text-on-surface-variant/60 flex items-center gap-1 animate-pulse">
             Swipe to explore <Icons.chevronRight size={14} />
           </p>
         </div>
-
         <div className="w-full relative">
           <div
             ref={scrollRef}
@@ -119,16 +106,13 @@ export default function MeetOurTeamSection({
             {previewMembers.map((member, index) => (
               <div
                 key={member.id}
-                // Width adjustments to guarantee that the next card always peeks out from the screen edge
-                className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[14vw] shrink-0 snap-start"
+                className="w-[55vw] sm:w-[32vw] md:w-[22vw] lg:w-[10vw] shrink-0 snap-start"
               >
                 <MemberCard member={member} index={index} />
               </div>
             ))}
-
-            {/* Original "See More" Card Layout */}
             <motion.div
-              className="w-[75vw] sm:w-[45vw] md:w-[30vw] lg:w-[14vw] shrink-0 snap-start flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
+              className="w-[55vw] sm:w-[32vw] md:w-[22vw] lg:w-[10vw] shrink-0 snap-start flex items-center justify-center p-6 border-2 border-dashed border-outline-variant rounded-[32px] aspect-[4/5] cursor-pointer"
               whileHover={{
                 scale: 1.02,
                 backgroundColor: "var(--surface-container-lowest)",
@@ -150,13 +134,10 @@ export default function MeetOurTeamSection({
                 </p>
               </Link>
             </motion.div>
-
-            {/* End Spacer */}
             <div className="w-4 shrink-0 md:w-8"></div>
           </div>
         </div>
       </div>
-
       <style
         dangerouslySetInnerHTML={{
           __html: `
