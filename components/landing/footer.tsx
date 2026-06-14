@@ -290,14 +290,6 @@ export default function Footer() {
                     href="/contact"
                     className="text-brand-300 hover:text-white transition-colors"
                   >
-                    Vastu Consultation
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/contact"
-                    className="text-brand-300 hover:text-white transition-colors"
-                  >
                     Schedule Site Visit
                   </Link>
                 </li>
@@ -360,10 +352,6 @@ export default function Footer() {
                 {
                   icon: IconBrandInstagram,
                   href: "https://www.instagram.com/yetihomesestate?igsh=MWJmcnFvZnF4N2ZiaA==",
-                },
-                {
-                  icon: IconBrandLinkedin,
-                  href: "https://linkedin.com/company/yetihomes",
                 },
                 {
                   icon: IconBrandYoutube,

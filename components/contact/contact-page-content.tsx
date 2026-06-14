@@ -113,12 +113,6 @@ export default function ContactPageContent() {
             className="max-w-md"
           >
             <motion.div variants={fadeUp} className="mb-8">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/15 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="font-label text-[0.6rem] font-bold tracking-[0.2em] uppercase text-primary">
-                  Available Now
-                </span>
-              </span>
               <h1 className="font-headline text-5xl md:text-6xl font-bold tracking-[-0.04em] text-on-surface leading-[1.08]">
                 Private
                 <br />
@@ -236,10 +230,10 @@ export default function ContactPageContent() {
                     Office Hours
                   </h3>
                   <p className="text-on-surface font-medium">
-                    Mon – Fri, 09:00 – 18:00 NPT
+                    Sun – Fri, 10:00 – 17:00 NPT
                   </p>
                   <p className="text-on-surface-variant text-sm mt-1">
-                    Weekends by appointment only
+                    Occasions may effect working hours.
                   </p>
                 </div>
               </motion.div>
@@ -390,7 +384,7 @@ export default function ContactPageContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group relative flex items-center justify-between w-full md:w-auto md:min-w-[260px] px-8 py-5 bg-on-surface text-background rounded-full overflow-hidden transition-all duration-500 disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-xl hover:shadow-on-surface/15"
+                  className="group relative flex items-center justify-between w-full md:w-auto md:min-w-[260px] px-8 py-5 bg-on-surface text-background rounded-full overflow-hidden transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-xl hover:shadow-on-surface/15"
                 >
                   <span className="relative z-10 font-label text-[0.7rem] font-bold tracking-[0.2em] uppercase">
                     {isSubmitting ? "Transmitting..." : "Submit Inquiry"}
@@ -448,7 +442,7 @@ export default function ContactPageContent() {
                 {[
                   { value: "24hr", label: "Response time" },
                   { value: "100%", label: "Confidential" },
-                  { value: "15+", label: "Years experience" },
+                  { value: "10+", label: "Years experience" },
                 ].map((stat) => (
                   <div key={stat.label}>
                     <p className="font-headline text-2xl md:text-3xl font-bold tracking-tight text-on-surface">
