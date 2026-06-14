@@ -3,7 +3,8 @@ import LegalLayout from "@/components/shared/legal-layouts";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Yeti Homes Estate",
-  description: "Yeti Homes Estate Privacy Policy - How we handle and protect your personal data.",
+  description:
+    "Yeti Homes Estate Privacy Policy - How we handle and protect your personal data.",
   alternates: {
     canonical: "https://www.yetihomesestate.com.np/legal/privacy",
   },
@@ -11,92 +12,106 @@ export const metadata: Metadata = {
 
 export default async function PrivacyPolicyPage() {
   return (
-    <LegalLayout
-      title="Privacy Policy"
-      lastUpdated="April 26, 2026"
-    >
+    <LegalLayout title="Privacy Policy" lastUpdated="June 14, 2026">
       <h2>1. Introduction</h2>
       <p>
-        At <strong>Yeti Homes</strong>, we respect your privacy and are
-        committed to protecting your personal data. This privacy policy will
-        inform you as to how we look after your personal data when you visit our
-        website (regardless of where you visit it from) and tell you about your
-        privacy rights and how the law protects you, in compliance with the
-        privacy laws of Nepal.
+        <strong>Yeti Homes Estate Pvt. Ltd.</strong> (&ldquo;we&rdquo;,
+        &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your
+        privacy in compliance with{" "}
+        <strong>The Privacy Act, 2075 (2018) of Nepal</strong>.
+      </p>
+      <p>
+        This policy explains how we collect and use your data when you visit our
+        website or use our services.
       </p>
 
-      <h2>2. The Data We Collect About You</h2>
+      <h2>2. The Data We Collect</h2>
       <p>
-        Personal data, or personal information, means any information about an
-        individual from which that person can be identified. We may collect,
-        use, store and transfer different kinds of personal data about you which
-        we have grouped together follows:
+        We collect the following information to provide our real estate
+        services:
       </p>
       <ul>
         <li>
-          <strong>Identity Data:</strong> includes first name, last name,
-          username or similar identifier, marital status, title, date of birth
-          and gender.
+          <strong>Identity Data:</strong> Name, date of birth, and gender.
         </li>
         <li>
-          <strong>Contact Data:</strong> includes billing address, delivery
-          address (within Kathmandu Valley or elsewhere in Nepal), email address
-          and telephone numbers.
+          <strong>Contact Data:</strong> Phone numbers, email, and
+          billing/property addresses in Nepal.
         </li>
         <li>
-          <strong>Property Verification Data:</strong> documentation required
-          for standard real estate transactions in Nepal, including copies of
-          Citizenship Certificates and Lal Purja (Land Ownership Certificates)
-          when facilitating a direct purchase.
+          <strong>Property Verification Data:</strong> Legal documents like
+          Citizenship Certificates (Nagarikta) and{" "}
+          <em>Lal Purja</em> (Land Ownership Certificates) required for
+          property transactions.
         </li>
         <li>
-          <strong>Technical Data:</strong> includes internet protocol (IP)
-          address, your login data, browser type and version, time zone setting
-          and location.
+          <strong>Technical Data:</strong> IP address, browser type, and
+          location details.
         </li>
       </ul>
 
       <h2>3. How We Use Your Data</h2>
       <p>
-        We will only use your personal data when the law allows us to. Most
-        commonly, we will use your personal data in the following circumstances:
+        We process your data strictly under Nepalese law for the following
+        purposes:
       </p>
       <ul>
         <li>
-          Where we need to perform the contract we are about to enter into or
-          have entered into with you (e.g., booking a property viewing or
-          processing an earnest money deposit).
+          <strong>Contract Performance:</strong> Processing earnest deposits,
+          scheduling viewings, and managing property listings.
         </li>
         <li>
-          Where it is necessary for our legitimate interests (or those of a
-          third party) and your interests and fundamental rights do not override
-          those interests.
+          <strong>Legal Obligations:</strong> Verifying ownership details with
+          government entities and meeting regulatory checks.
         </li>
         <li>
-          Where we need to comply with a legal or regulatory obligation under
-          the laws of Nepal.
+          <strong>Service Optimization:</strong> Improving our website features
+          and customer support.
         </li>
       </ul>
 
-      <h2>4. Data Security</h2>
+      <h2>4. Data Security &amp; Retention</h2>
       <p>
-        We have put in place appropriate security measures to prevent your
-        personal data from being accidentally lost, used or accessed in an
-        unauthorised way, altered or disclosed. In addition, we limit access to
-        your personal data to those employees, agents, contractors and other
-        third parties who have a business need to know.
+        We use strong security protocols to prevent your data from being lost,
+        leaked, or accessed without authorization.
+      </p>
+      <p>
+        Access to sensitive legal documents (Lal Purja / Citizenship copies) is
+        strictly restricted to employees and agents with a verified business
+        need.<br />
+        We only retain your data for as long as required by Nepalese financial
+        and property laws.
       </p>
 
-      <h2>5. Contact Us</h2>
+      <h2>5. Your Rights</h2>
       <p>
-        If you have any questions about this privacy policy or our privacy
-        practices, please contact our data privacy manager in the following
-        ways:
+        Under <strong>The Privacy Act, 2075</strong>, you have the right to:
+      </p>
+      <ul>
+        <li>Access your personal data held by us.</li>
+        <li>Request corrections to inaccurate information.</li>
+        <li>Withdraw your consent at any time.</li>
+      </ul>
+
+      <h2>6. Contact Us</h2>
+      <p>
+        For any questions or data requests, please contact us:
       </p>
       <p>
-        Email address: privacy@yetihomes.com.np
+        <strong>Email:</strong>{" "}
+        <a href="mailto:estateyetihomes@gmail.com">
+          estateyetihomes@gmail.com
+        </a>
         <br />
-        Postal address: Baluwatar, Kathmandu, Nepal
+        <strong>CC:</strong>{" "}
+        <a href="mailto:privacy@yetihomes.com.np">
+          privacy@yetihomes.com.np
+        </a>
+      </p>
+      <p>
+        <strong>Phone:</strong> +977 9851446901&nbsp;|&nbsp;+977 9851446902
+        <br />
+        <strong>Office:</strong> Chuchepati, Chabahil, Kathmandu, Nepal
       </p>
     </LegalLayout>
   );

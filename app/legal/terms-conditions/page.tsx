@@ -19,6 +19,8 @@ export default async function TermsOfServicePage() {
       <p>
         By accessing or using the <strong>Yeti Homes</strong> website and our
         real estate services, you agree to be bound by these Terms of Service.
+      </p>
+      <p>
         If you disagree with any part of the terms, you may not access our
         platform or use our services.
       </p>
@@ -26,8 +28,9 @@ export default async function TermsOfServicePage() {
       <h2>2. Use of the Platform</h2>
       <p>
         Our platform serves as a digital intermediary connecting property
-        buyers, sellers, and renters across Nepal. You agree to use this
-        platform only for lawful purposes and in accordance with these Terms.
+        buyers, sellers, and renters across Nepal.<br />
+        You agree to use this platform only for lawful purposes and in
+        accordance with these Terms.
       </p>
       <ul>
         <li>
@@ -75,17 +78,21 @@ export default async function TermsOfServicePage() {
       <h2>4. Intellectual Property</h2>
       <p>
         The platform and its original content, features, functionality,
-        architectural photography, and 3D virtual tours are owned by Yeti Homes
-        and are protected by Nepalese and international copyright, trademark,
-        and other intellectual property laws.
+        architectural photography, and 3D virtual tours are owned by Yeti Homes.
+      </p>
+      <p>
+        All content is protected by Nepalese and international copyright,
+        trademark, and other intellectual property laws.
       </p>
 
       <h2>5. Governing Law</h2>
       <p>
         These Terms shall be governed and construed in accordance with the laws
-        of Nepal, without regard to its conflict of law provisions. Our failure
-        to enforce any right or provision of these Terms will not be considered
-        a waiver of those rights.
+        of Nepal, without regard to its conflict of law provisions.
+      </p>
+      <p>
+        Our failure to enforce any right or provision of these Terms will not be
+        considered a waiver of those rights.
       </p>
     </LegalLayout>
   );

@@ -16,10 +16,13 @@ export default async function CookiePolicyPage() {
       <h2>1. What Are Cookies?</h2>
       <p>
         Cookies are small text files stored on your device when you visit a
-        website. They help the site remember your actions and preferences over
-        time so you don&apos;t have to re-enter them each visit. Some cookies are
-        also used to understand how people use a website, which helps improve
-        the experience for everyone.
+        website.<br />
+        They help the site remember your actions and preferences over time so
+        you don&apos;t have to re-enter them each visit.
+      </p>
+      <p>
+        Some cookies are also used to understand how people use a website, which
+        helps improve the experience for everyone.
       </p>
 
       <h2>2. How We Use Cookies</h2>
@@ -51,9 +54,9 @@ export default async function CookiePolicyPage() {
       <h2>3. Types of Cookies We Use</h2>
       <p>
         <strong>Essential Cookies:</strong> Required for core functionality —
-        authentication, security, and session management. Without these, you
-        cannot log in, save properties, or submit enquiries. These cannot be
-        disabled.
+        authentication, security, and session management.<br />
+        Without these, you cannot log in, save properties, or submit enquiries.
+        These cannot be disabled.
       </p>
       <p>
         <strong>Functional Cookies:</strong> Remember your choices and
@@ -64,22 +67,23 @@ export default async function CookiePolicyPage() {
       <p>
         <strong>Analytical / Performance Cookies:</strong> Help us understand
         how visitors navigate the site, which pages are visited most, and where
-        errors occur. This data is aggregated and anonymised, meaning it cannot
-        identify you personally.
+        errors occur.<br />
+        This data is aggregated and anonymised, meaning it cannot identify you
+        personally.
       </p>
       <p>
         <strong>Marketing Cookies:</strong> Used to deliver relevant property
-        recommendations and measure the effectiveness of our campaigns. These
-        may be set by third-party advertising partners and can track your
+        recommendations and measure the effectiveness of our campaigns.<br />
+        These may be set by third-party advertising partners and can track your
         browsing activity across other sites.
       </p>
 
       <h2>4. Third-Party Cookies</h2>
       <p>
         Some cookies are placed by services that appear on our pages but are
-        operated by third parties. We do not control these cookies. Third
-        parties that may set cookies through our site include:
+        operated by third parties. We do not control these cookies.
       </p>
+      <p>Third parties that may set cookies through our site include:</p>
       <ul>
         <li>
           <strong>Google Analytics</strong> — for anonymised traffic and
@@ -95,8 +99,8 @@ export default async function CookiePolicyPage() {
         </li>
       </ul>
       <p>
-        Each third party operates under its own privacy and cookie policy. We
-        encourage you to review their policies directly.
+        Each third party operates under its own privacy and cookie policy.<br />
+        We encourage you to review their policies directly.
       </p>
 
       <h2>5. Cookie Retention</h2>
@@ -111,8 +115,8 @@ export default async function CookiePolicyPage() {
         </li>
         <li>
           <strong>Persistent cookies</strong> remain on your device until they
-          expire or you manually delete them. Our persistent cookies have a
-          maximum lifespan of 12 months.
+          expire or you manually delete them.<br />
+          Our persistent cookies have a maximum lifespan of 12 months.
         </li>
       </ul>
 
@@ -124,9 +128,9 @@ export default async function CookiePolicyPage() {
       <ul>
         <li>
           <strong>Browser settings:</strong> Most browsers allow you to block or
-          delete cookies through their settings. Consult your browser&apos;s help
-          documentation for instructions specific to Chrome, Safari, Firefox, or
-          Edge.
+          delete cookies through their settings.<br />
+          Consult your browser&apos;s help documentation for instructions
+          specific to Chrome, Safari, Firefox, or Edge.
         </li>
         <li>
           <strong>Our cookie banner:</strong> When you first visit Yeti Homes,
@@ -154,20 +158,26 @@ export default async function CookiePolicyPage() {
       <h2>7. Updates to This Policy</h2>
       <p>
         We may update this Cookie Policy from time to time to reflect changes in
-technology, regulation, or our business practices. The &ldquo;Last updated&rdquo;
-date at the top of this page indicates the most recent revision. We
-        encourage you to review this page periodically.
+        technology, regulation, or our business practices.
+      </p>
+      <p>
+        The &ldquo;Last updated&rdquo; date at the top of this page indicates
+        the most recent revision. We encourage you to review this page
+        periodically.
       </p>
 
       <h2>8. Contact Us</h2>
       <p>
         If you have questions about our use of cookies or your privacy, please
-        contact us at{" "}
+        contact us:
+      </p>
+      <p>
+        <strong>Email:</strong>{" "}
         <a href="mailto:Estateyetihomes@gmail.com">
           Estateyetihomes@gmail.com
-        </a>{" "}
-        or visit our{" "}
-        <a href="/contact">contact page</a>.
+        </a>
+        <br />
+        <strong>Web:</strong> <a href="/contact">Contact page</a>
       </p>
     </LegalLayout>
   );
