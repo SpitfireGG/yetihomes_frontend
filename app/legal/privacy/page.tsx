@@ -14,6 +14,7 @@ export default async function PrivacyPolicyPage() {
   return (
     <LegalLayout title="Privacy Policy" lastUpdated="June 14, 2026">
       <h2>1. Introduction</h2>
+      <br />
       <p>
         <strong>Yeti Homes Estate Pvt. Ltd.</strong> (&ldquo;we&rdquo;,
         &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your
@@ -26,6 +27,7 @@ export default async function PrivacyPolicyPage() {
       </p>
 
       <h2>2. The Data We Collect</h2>
+      <br />
       <p>
         We collect the following information to provide our real estate
         services:
@@ -51,6 +53,7 @@ export default async function PrivacyPolicyPage() {
       </ul>
 
       <h2>3. How We Use Your Data</h2>
+      <br />
       <p>
         We process your data strictly under Nepalese law for the following
         purposes:
@@ -71,6 +74,7 @@ export default async function PrivacyPolicyPage() {
       </ul>
 
       <h2>4. Data Security &amp; Retention</h2>
+      <br />
       <p>
         We use strong security protocols to prevent your data from being lost,
         leaked, or accessed without authorization.
@@ -84,6 +88,7 @@ export default async function PrivacyPolicyPage() {
       </p>
 
       <h2>5. Your Rights</h2>
+      <br />
       <p>
         Under <strong>The Privacy Act, 2075</strong>, you have the right to:
       </p>
@@ -94,6 +99,7 @@ export default async function PrivacyPolicyPage() {
       </ul>
 
       <h2>6. Contact Us</h2>
+      <br />
       <p>
         For any questions or data requests, please contact us:
       </p>

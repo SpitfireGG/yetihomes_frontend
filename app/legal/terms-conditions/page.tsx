@@ -16,6 +16,7 @@ export default async function TermsOfServicePage() {
       lastUpdated="April 26, 2026"
     >
       <h2>1. Agreement to Terms</h2>
+      <br />
       <p>
         By accessing or using the <strong>Yeti Homes</strong> website and our
         real estate services, you agree to be bound by these Terms of Service.
@@ -26,6 +27,7 @@ export default async function TermsOfServicePage() {
       </p>
 
       <h2>2. Use of the Platform</h2>
+      <br />
       <p>
         Our platform serves as a digital intermediary connecting property
         buyers, sellers, and renters across Nepal.<br />
@@ -50,6 +52,7 @@ export default async function TermsOfServicePage() {
       </ul>
 
       <h2>3. Property Listings and Transactions</h2>
+      <br />
       <p>
         While we strive to provide the most accurate and up-to-date information,
         Yeti Homes does not guarantee the absolute accuracy, completeness, or
@@ -76,6 +79,7 @@ export default async function TermsOfServicePage() {
       </ul>
 
       <h2>4. Intellectual Property</h2>
+      <br />
       <p>
         The platform and its original content, features, functionality,
         architectural photography, and 3D virtual tours are owned by Yeti Homes.
@@ -86,6 +90,7 @@ export default async function TermsOfServicePage() {
       </p>
 
       <h2>5. Governing Law</h2>
+      <br />
       <p>
         These Terms shall be governed and construed in accordance with the laws
         of Nepal, without regard to its conflict of law provisions.

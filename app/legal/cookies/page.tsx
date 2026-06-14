@@ -14,6 +14,7 @@ export default async function CookiePolicyPage() {
   return (
     <LegalLayout title="Cookie Policy" lastUpdated="April 26, 2026">
       <h2>1. What Are Cookies?</h2>
+      <br />
       <p>
         Cookies are small text files stored on your device when you visit a
         website.<br />
@@ -26,6 +27,7 @@ export default async function CookiePolicyPage() {
       </p>
 
       <h2>2. How We Use Cookies</h2>
+      <br />
       <p>
         Yeti Homes uses cookies and similar technologies to operate, secure, and
         improve our platform. Specifically, cookies help us:
@@ -52,6 +54,7 @@ export default async function CookiePolicyPage() {
       </ul>
 
       <h2>3. Types of Cookies We Use</h2>
+      <br />
       <p>
         <strong>Essential Cookies:</strong> Required for core functionality —
         authentication, security, and session management.<br />
@@ -79,6 +82,7 @@ export default async function CookiePolicyPage() {
       </p>
 
       <h2>4. Third-Party Cookies</h2>
+      <br />
       <p>
         Some cookies are placed by services that appear on our pages but are
         operated by third parties. We do not control these cookies.
@@ -104,6 +108,7 @@ export default async function CookiePolicyPage() {
       </p>
 
       <h2>5. Cookie Retention</h2>
+      <br />
       <p>
         Cookies remain on your device for different periods depending on their
         type:
@@ -121,6 +126,7 @@ export default async function CookiePolicyPage() {
       </ul>
 
       <h2>6. Managing Your Cookie Preferences</h2>
+      <br />
       <p>
         You have control over which cookies are stored on your device. You can
         manage your preferences in the following ways:
@@ -156,6 +162,7 @@ export default async function CookiePolicyPage() {
       </p>
 
       <h2>7. Updates to This Policy</h2>
+      <br />
       <p>
         We may update this Cookie Policy from time to time to reflect changes in
         technology, regulation, or our business practices.
@@ -167,6 +174,7 @@ export default async function CookiePolicyPage() {
       </p>
 
       <h2>8. Contact Us</h2>
+      <br />
       <p>
         If you have questions about our use of cookies or your privacy, please
         contact us:

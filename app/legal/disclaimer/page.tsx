@@ -14,6 +14,7 @@ export default async function DisclaimerPage() {
   return (
     <LegalLayout title="Legal Disclaimer" lastUpdated="April 26, 2026">
       <h2>1. Regulatory Status &amp; Corporate Information</h2>
+      <br />
       <p>
         <strong>Yeti Homes Estate Pvt. Ltd.</strong> is a premier corporate real
         estate firm, fully registered, bonded, and licensed by the Government of
@@ -27,6 +28,7 @@ export default async function DisclaimerPage() {
       </p>
 
       <h2>2. Professional Advisory &amp; Market Volatility Disclosure</h2>
+      <br />
       <p>
         With extensive on-the-field experience and a verified track record in
         the Nepalese property sector, Yeti Homes Estate Pvt. Ltd. provides
@@ -60,6 +62,7 @@ export default async function DisclaimerPage() {
       </ul>
 
       <h2>3. Property Listing &amp; Data Integrity</h2>
+      <br />
       <p>
         Yeti Homes Estate Pvt. Ltd. enforces rigorous internal verification
         standards for all listed properties, structural specifications,
@@ -75,6 +78,7 @@ export default async function DisclaimerPage() {
       </p>
 
       <h2>4. Institutional Indemnity &amp; Third-Party Portals</h2>
+      <br />
       <p>
         For enhanced client convenience, this platform may feature direct
         integrations or hyperlinks to external institutional entities, such as
