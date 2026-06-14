@@ -74,7 +74,7 @@ export default function TeamMemberProfilePage({
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover object-top grayscale transition-all duration-700 ease-in-out hover:grayscale-0"
+                  className="object-cover object-top  transition-all duration-700 ease-in-out"
                 />
               </motion.div>
             </div>

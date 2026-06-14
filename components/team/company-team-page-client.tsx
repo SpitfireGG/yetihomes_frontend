@@ -63,7 +63,7 @@ export default function CompanyTeamPageClient({
                     alt={member.name}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover object-top grayscale transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:grayscale-0"
+                    className="object-cover object-top transition-all duration-700 ease-in-out"
                   />
                 </div>
               </div>

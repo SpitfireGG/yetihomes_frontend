@@ -949,27 +949,6 @@ export default function PropertySlugTemplate({
         </div>
       )}
 
-      {property.mapIframe && (
-        <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-24">
-          <div className="flex flex-col md:flex-row gap-8 md:gap-16 border-t border-gray-200 pt-16">
-            <div className="w-full md:w-1/4 shrink-0">
-              <SectionTitle lines={["Location", "Map"]} />
-            </div>
-            <div className="w-full md:w-3/4">
-              <div className="relative w-full h-[400px] rounded-2xl overflow-hidden bg-gray-100">
-                <iframe
-                  src={property.mapIframe}
-                  className="absolute inset-0 w-full h-full"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Lightbox fixed to close on outside click */}
       <AnimatePresence>
         {selectedImage && (

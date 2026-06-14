@@ -132,7 +132,6 @@ export type SearchProperty = {
   createdAt: string;
   updatedAt: string;
   videoUrl: string | null;
-  mapIframe: string | null;
   houseDetails: HouseDetails | null;
   apartmentDetails: ApartmentDetails | null;
   landDetails: LandDetails | null;

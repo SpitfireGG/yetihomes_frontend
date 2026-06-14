@@ -355,24 +355,23 @@ export default function Footer() {
               {[
                 {
                   icon: IconBrandFacebook,
-                  href: "https://facebook.com/yetihomes",
+                  href: "https://www.facebook.com/share/1CwJVUbJSn/?mibextid=wwXIfr",
                 },
                 {
                   icon: IconBrandInstagram,
-                  href: "https://instagram.com/yetihomes",
+                  href: "https://www.instagram.com/yetihomesestate?igsh=MWJmcnFvZnF4N2ZiaA==",
                 },
-                { icon: IconBrandX, href: "https://x.com/yetihomes" },
                 {
                   icon: IconBrandLinkedin,
                   href: "https://linkedin.com/company/yetihomes",
                 },
                 {
                   icon: IconBrandYoutube,
-                  href: "https://www.youtube.com/@YetiHomesEstate",
+                  href: "https://youtube.com/@yetihomesestate?si=kO0S8Up4EGIYSFcS",
                 },
                 {
                   icon: IconBrandTiktok,
-                  href: "https://www.tiktok.com/@yetihomesestate",
+                  href: "https://www.tiktok.com/@yetihomesestate?_r=1&_t=ZS-97CBPxjXd9Y",
                 },
               ].map((item, i) => (
                 <Link

@@ -1404,32 +1404,53 @@ export default function Navbar({
                       Trust & Security
                     </p>
                     {[
-                      { href: "/legal/cookies", label: "Cookies Policy", icon: "shield" as const },
-                      { href: "/legal/terms-conditions", label: "Terms & Conditions", icon: "file" as const },
-                      { href: "/legal/disclaimer", label: "Disclaimer & Advisory", icon: "help" as const },
-                      { href: "/legal/privacy", label: "Privacy Policy", icon: "search" as const },
-                      { href: "/testimonials", label: "Testimonials", icon: "users" as const },
+                      {
+                        href: "/legal/cookies",
+                        label: "Cookies Policy",
+                        icon: "shield" as const,
+                      },
+                      {
+                        href: "/legal/terms-conditions",
+                        label: "Terms & Conditions",
+                        icon: "file" as const,
+                      },
+                      {
+                        href: "/legal/disclaimer",
+                        label: "Disclaimer & Advisory",
+                        icon: "help" as const,
+                      },
+                      {
+                        href: "/legal/privacy",
+                        label: "Privacy Policy",
+                        icon: "search" as const,
+                      },
+                      {
+                        href: "/testimonials",
+                        label: "Testimonials",
+                        icon: "users" as const,
+                      },
                     ].map((it) => {
                       const IconComp = Icons[it.icon];
                       return (
-                      <Link
-                        key={it.href}
-                        href={it.href}
-                        onClick={closeMobileMenu}
-                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-surface-container transition-colors group"
-                      >
-                        <span className="w-8 h-8 rounded-lg bg-secondary-container/60 grid place-items-center text-secondary">
-                          <IconComp size={15} strokeWidth={2} />
-                        </span>
-                        <span className="text-sm font-semibold text-on-surface group-hover:text-secondary transition-colors">
-                          {it.label}
-                        </span>
-                        <Icons.chevronRight
-                          size={14}
-                          className="ml-auto text-outline group-hover:text-secondary group-hover:translate-x-0.5 transition-all"
-                        />
-                      </Link>
-                    );})}
+                        <Link
+                          key={it.href}
+                          href={it.href}
+                          onClick={closeMobileMenu}
+                          className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-surface-container transition-colors group"
+                        >
+                          <span className="w-8 h-8 rounded-lg bg-secondary-container/60 grid place-items-center text-secondary">
+                            <IconComp size={15} strokeWidth={2} />
+                          </span>
+                          <span className="text-sm font-semibold text-on-surface group-hover:text-secondary transition-colors">
+                            {it.label}
+                          </span>
+                          <Icons.chevronRight
+                            size={14}
+                            className="ml-auto text-outline group-hover:text-secondary group-hover:translate-x-0.5 transition-all"
+                          />
+                        </Link>
+                      );
+                    })}
                   </div>
                 </MobileSection>
 
@@ -1940,7 +1961,7 @@ export default function Navbar({
 
               <div className="flex flex-col gap-3">
                 <a
-                  href="https://wa.me/9779851446902?text=Hi%2C%20I%27m%20interested%20in%20your%20upcoming%20investment%20projects."
+                  href="https://wa.me/9779851361431?text=Hi%2C%20I%27m%20interested%20in%20your%20upcoming%20investment%20projects."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full rounded-xl bg-[#25D366] text-white py-4 text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-[#20BD5A] transition-colors"
