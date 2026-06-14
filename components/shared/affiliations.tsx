@@ -101,7 +101,7 @@ export default function TrustHub({ affiliations }: TrustHubProps) {
               {[...affiliations, ...affiliations].map((logo, index) => (
                 <div
                   key={index}
-                  className="relative w-24 h-16 md:w-32 md:h-20 flex items-center justify-center shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
+                  className="relative w-24 h-16 md:w-32 md:h-20 flex items-center justify-center shrink-0 transition-all duration-300 cursor-pointer"
                 >
                   <Image
                     src={logo.src}
