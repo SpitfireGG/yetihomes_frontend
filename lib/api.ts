@@ -244,6 +244,18 @@ export type LandingPageData = {
   cities: LandingCity[];
 };
 
+export type RawAffiliation = {
+  src: string;
+  alt: string;
+};
+
+export type AffiliationsApiResponse = ApiResponse<RawAffiliation[]>;
+
+export type Affiliation = {
+  src: string;
+  alt: string;
+};
+
 export type LandingPageApiResponse = ApiResponse<LandingPageData>;
 
 const BLOG_COVER_IMAGE_FALLBACK =
@@ -349,6 +361,13 @@ export function mapTeamMember(member: RawTeamMember): TeamMember {
     image,
     thumbnail,
     profileHref: `/teams/${member.id}`,
+  };
+}
+
+export function mapAffiliation(affiliation: RawAffiliation): Affiliation {
+  return {
+    ...affiliation,
+    src: resolveApiAssetUrl(affiliation.src, ""),
   };
 }
 

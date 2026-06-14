@@ -14,17 +14,19 @@ import SectionHeading from "@/components/shared/sectionHeading";
 import { getHomePropertyShowcaseData } from "@/lib/home-property-showcases";
 import { getCachedLandingPageData } from "@/lib/landing-server-cache";
 import { getCachedTeamMembers } from "@/lib/team-server-cache";
+import { getCachedAffiliations } from "@/lib/affiliation-server-cache";
 import { getCachedReviews } from "@/lib/review-server-cache";
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const [teamMembers, reviews, propertyShowcases, landingPageData] =
+  const [teamMembers, reviews, propertyShowcases, landingPageData, affiliations] =
     await Promise.all([
       getCachedTeamMembers(),
       getCachedReviews(),
       getHomePropertyShowcaseData(),
       getCachedLandingPageData(),
+      getCachedAffiliations(),
     ]);
   const shellClassName = "mx-auto w-full max-w-[1440px] px-6 lg:px-10";
   const hasFeaturedListings = propertyShowcases.featuredListings.length > 0;
@@ -216,7 +218,7 @@ export default async function Home() {
           <section className="border-t border-outline-variant/50 bg-surface-container-low py-24 lg:py-28">
             <div className="space-y-20 lg:space-y-24">
               <div className={shellClassName}>
-                <TrustHub />
+                <TrustHub affiliations={affiliations} />
               </div>
               <div className={shellClassName}>
                 <MeetOurTeamSection members={teamMembers} />

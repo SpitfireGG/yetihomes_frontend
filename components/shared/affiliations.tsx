@@ -5,30 +5,16 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionHeading from "./sectionHeading";
 
-const partnerLogos = [
-  {
-    src: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-    alt: "Partner 1",
-  },
-  {
-    src: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-    alt: "Partner 2",
-  },
-  {
-    src: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg",
-    alt: "Partner 3",
-  },
-  {
-    src: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png",
-    alt: "Partner 4",
-  },
-  {
-    src: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg",
-    alt: "Partner 5",
-  },
-];
+type PartnerLogo = {
+  src: string;
+  alt: string;
+};
 
-export default function TrustHub() {
+interface TrustHubProps {
+  affiliations: PartnerLogo[];
+}
+
+export default function TrustHub({ affiliations }: TrustHubProps) {
   return (
     <div className="relative overflow-hidden">
       {/* Decorative Background Elements */}
@@ -112,7 +98,7 @@ export default function TrustHub() {
                 repeat: Infinity,
               }}
             >
-              {[...partnerLogos, ...partnerLogos].map((logo, index) => (
+              {[...affiliations, ...affiliations].map((logo, index) => (
                 <div
                   key={index}
                   className="relative w-24 h-16 md:w-32 md:h-20 flex items-center justify-center shrink-0 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
