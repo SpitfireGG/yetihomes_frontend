@@ -107,6 +107,7 @@ export default function TrustHub({ affiliations }: TrustHubProps) {
                     src={logo.src}
                     alt={logo.alt}
                     fill
+                    unoptimized
                     sizes="(max-width: 768px) 96px, 128px"
                     className="object-contain"
                   />
