@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function DisclaimerPage() {
   return (
     <LegalLayout title="Legal Disclaimer" lastUpdated="April 26, 2026">
-<h2>1. Regulatory Status &amp; Corporate Information</h2>
+      <h2>1. Regulatory Status &amp; Corporate Information</h2>
       <p>
         <strong>Yeti Homes Estate Pvt. Ltd.</strong> is a premier corporate real
         estate firm, fully registered, bonded, and licensed by the Government of
@@ -42,8 +42,8 @@ export default async function DisclaimerPage() {
           statutory mandates.
         </li>
         <li>
-          <strong>Fiscal Dynamics:</strong> Interactive digital tools&mdash;including
-          the &ldquo;Upfront Cash Calculator&rdquo; and
+          <strong>Fiscal Dynamics:</strong> Interactive digital
+          tools&mdash;including the &ldquo;Upfront Cash Calculator&rdquo; and
           &ldquo;Mortgage Calculator&rdquo;&mdash;utilize current market
           averages to provide estimations. Final transaction liabilities,
           including official agency commissions, government land registration
@@ -69,9 +69,9 @@ export default async function DisclaimerPage() {
       </p>
       <p>
         Because property metrics, legal encumbrances, and valuations can be
-        altered by primary owners or municipal zoning updates, Yeti Homes
-        Estate Pvt. Ltd. reserves the right to update property portfolios
-        without prior notice to maintain data accuracy.
+        altered by primary owners or municipal zoning updates, Yeti Homes Estate
+        Pvt. Ltd. reserves the right to update property portfolios without prior
+        notice to maintain data accuracy.
       </p>
 
       <h2>4. Institutional Indemnity &amp; Third-Party Portals</h2>

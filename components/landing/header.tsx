@@ -1977,7 +1977,7 @@ export default function Navbar({
                   Connect on WhatsApp
                 </a>
                 <a
-                  href="tel:+9779851446902"
+                  href="tel:+9779851361431"
                   className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-lowest py-4 text-black text-[11px] font-bold tracking-[0.2em] uppercase hover:border-black transition-colors flex items-center justify-center gap-3"
                 >
                   <Icons.phone size={16} strokeWidth={2} />
