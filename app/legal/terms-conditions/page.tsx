@@ -3,7 +3,8 @@ import LegalLayout from "@/components/shared/legal-layouts";
 
 export const metadata: Metadata = {
   title: "Terms of Service | Yeti Homes Estate",
-  description: "Yeti Homes Estate Terms of Service - Platform usage terms and conditions.",
+  description:
+    "Yeti Homes Estate Terms of Service - Platform usage terms and conditions.",
   alternates: {
     canonical: "https://www.yetihomesestate.com.np/legal/terms-conditions",
   },
@@ -11,93 +12,121 @@ export const metadata: Metadata = {
 
 export default async function TermsOfServicePage() {
   return (
-    <LegalLayout
-      title="Terms of Service"
-      lastUpdated="April 26, 2026"
-    >
-      <h2>1. Agreement to Terms</h2>
+    <LegalLayout title="Terms of Service" lastUpdated="April 26, 2026">
+      <h2>1. Legal Status &amp; Regulatory Compliance</h2>
       <br />
       <p>
-        By accessing or using the <strong>Yeti Homes</strong> website and our
-        real estate services, you agree to be bound by these Terms of Service.
+        Yeti Homes Estate Pvt. Ltd. is a fully registered corporate entity under
+        the laws of Nepal.
       </p>
       <p>
-        If you disagree with any part of the terms, you may not access our
-        platform or use our services.
+        <strong>Licensed Operator:</strong> We are formally licensed by the
+        Department of Land Management and Archive (Bhumi Byabasthapan Tatha
+        Abhilekh Bibag) to legally operate and facilitate real estate
+        transactions in Nepal, strictly adhering to national property regulations
+        and consumer protection frameworks.
       </p>
 
-      <h2>2. Use of the Platform</h2>
+      <h2>2. Agreement to Terms</h2>
       <br />
       <p>
-        Our platform serves as a digital intermediary connecting property
-        buyers, sellers, and renters across Nepal.<br />
-        You agree to use this platform only for lawful purposes and in
-        accordance with these Terms.
+        By accessing this website and using our real estate services, you agree
+        to be bound by these Terms, our Privacy Policy, and our Cookie Policy.
       </p>
+      <p>
+        If you disagree with any part, you must immediately cease using our
+        platform.
+      </p>
+
+      <h2>3. Platform Use &amp; Eligibility</h2>
+      <br />
       <ul>
         <li>
-          You must be at least 18 years of age and capable of forming a binding
-          contract under the laws of Nepal to use our services.
+          <strong>Eligibility:</strong> You must be at least 18 years old and
+          legally capable of forming contracts under Nepalese law.
         </li>
         <li>
-          You are responsible for maintaining the confidentiality of your
-          account credentials and for all activities that occur under your
-          account.
+          <strong>Purpose:</strong> Our platform serves as a licensed digital
+          intermediary connecting property buyers, sellers, landlords, and
+          renters across Nepal.
         </li>
         <li>
-          You agree not to use the platform in any way that could disable,
-          overburden, damage, or impair the site or interfere with any other
-          party&apos;s use of the platform.
+          <strong>Account Security:</strong> You are solely responsible for
+          maintaining the confidentiality of your account credentials.
         </li>
       </ul>
 
-      <h2>3. Property Listings and Transactions</h2>
+      <h2>4. Listings, Pricing, and Mandatory Verification</h2>
       <br />
-      <p>
-        While we strive to provide the most accurate and up-to-date information,
-        Yeti Homes does not guarantee the absolute accuracy, completeness, or
-        reliability of any property listings.
-      </p>
       <ul>
         <li>
-          <strong>Pricing:</strong> All prices listed in Nepalese Rupees (NPR)
-          are subject to change without prior notice depending on market
-          fluctuations or seller adjustments.
+          <strong>Listing Accuracy:</strong> While we maintain strict standards
+          as a licensed agency, Yeti Homes does not guarantee the absolute
+          perfection, completeness, or stability of every property listing.
         </li>
         <li>
-          <strong>Verification:</strong> Buyers are strongly encouraged to
-          independently verify all property details, including but not limited
-          to, physical boundaries, road access, and the legal status of the{" "}
-          <em>Lal Purja</em> (Land Ownership Certificate) before making any
-          financial commitments.
+          <strong>Currency &amp; Volatility:</strong> All prices are in Nepalese
+          Rupees (NPR) and subject to change without prior notice.
         </li>
         <li>
-          <strong>Agreements:</strong> Yeti Homes is not a party to the final
-          legal agreements between buyers and sellers unless explicitly stated
-          in a separate brokerage contract.
+          <strong>Mandatory Due Diligence:</strong> Users are strictly required
+          to independently verify all property details before making financial
+          commitments.<br />
+          This includes physical boundaries, road access, and the legal status
+          of the <em>Lal Purja</em> (Land Ownership Certificate) at the local
+          Malpot Karyalaya (Land Revenue Office).
+        </li>
+        <li>
+          <strong>Intermediary Status:</strong> Unless explicitly stated in a
+          separate, written corporate brokerage contract with Yeti Homes Estate
+          Pvt. Ltd., we are not a direct party to final transaction agreements
+          between users.
         </li>
       </ul>
 
-      <h2>4. Intellectual Property</h2>
+      <h2>5. Intellectual Property</h2>
       <br />
       <p>
-        The platform and its original content, features, functionality,
-        architectural photography, and 3D virtual tours are owned by Yeti Homes.
+        All platform content&mdash;including text, logos, layout, architectural
+        photography, and proprietary 3D virtual tours&mdash;is the exclusive
+        property of Yeti Homes Estate Pvt. Ltd.
       </p>
       <p>
-        All content is protected by Nepalese and international copyright,
-        trademark, and other intellectual property laws.
+        All content is protected under Nepalese and international copyright
+        laws.
       </p>
 
-      <h2>5. Governing Law</h2>
+      <h2>6. Limitation of Liability</h2>
       <br />
       <p>
-        These Terms shall be governed and construed in accordance with the laws
-        of Nepal, without regard to its conflict of law provisions.
+        To the maximum extent permitted by law, Yeti Homes shall not be liable
+        for any financial losses, unauthorized platform access, or property
+        disputes resulting from your transaction arrangements or reliance on
+        unverified listing data.
+      </p>
+
+      <h2>7. Governing Law &amp; Jurisdiction</h2>
+      <br />
+      <p>
+        These Terms are governed by the laws of Nepal. Any legal disputes
+        arising from the use of this platform shall fall under the exclusive
+        jurisdiction of the competent courts in Kathmandu, Nepal.
+      </p>
+
+      <h2>8. Contact Our Compliance Office</h2>
+      <br />
+      <p>
+        For inquiries, legal compliance checks, or corporate details, please
+        contact us:
       </p>
       <p>
-        Our failure to enforce any right or provision of these Terms will not be
-        considered a waiver of those rights.
+        <strong>Email:</strong>{" "}
+        <a href="mailto:estateyetihomes@gmail.com">
+          estateyetihomes@gmail.com
+        </a>
+        <br />
+        <strong>Office Address:</strong> Chuchepati, Chabahil, Kathmandu-06,
+        Nepal
       </p>
     </LegalLayout>
   );
