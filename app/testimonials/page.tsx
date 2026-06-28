@@ -23,8 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Testimonials | Yeti Homes Estate",
-    description:
-      "Client testimonials for Yeti Homes Estate in Nepal.",
+    description: "Client testimonials for Yeti Homes Estate in Nepal.",
   },
 };
 
